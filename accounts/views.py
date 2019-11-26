@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from .forms import LoginForm
 
 def user_login(request):
@@ -8,7 +8,7 @@ def user_login(request):
         form = LoginForm(request.POST)
         if form.is_valid():
             clean = form.cleaned_data
-            user = authenticate(username=clean['username'], password=clean['password'])
+            user = authenticate(email=clean['email'], password=clean['password'])
             if user is not None:
                 if user.is_active:
                     login(request, user)
@@ -21,3 +21,6 @@ def user_login(request):
         form = LoginForm()
     return render(request, 'accounts/login.html', {'form': form})
 
+def user_logout(request):
+    logout(request)
+    return render(request, 'accounts/logout.html')
