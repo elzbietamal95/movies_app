@@ -3,13 +3,22 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-    <h1>Login</h1>
-    <div class="login-form">
-        <form action="{% url 'accounts:login' %}" method="post">
-            {{ form.as_p }}
-            {% csrf_token %}
-            <input type="hidden" name="next" value="{{ next }}" />
-            <p><input type="submit" value="Log in"></p>
-        </form>
-    </div>
+    {% if user.is_authenticated %}
+        <h2>You are logged in as {{ user.username }}!</h2>
+        <p>Do you want to <a href="{% url 'accounts:logout' %}">log out</a>?</p>
+    {% else %}
+        <h1>Login</h1>
+        <p>If you don't have an account yet, you can create one <a href="{% url 'accounts:signup' %}">here.</a></p>
+        <div class="login-form">
+            <form action="{% url 'accounts:login' %}" method="post">
+                {{ form.as_p }}
+                {% csrf_token %}
+                {% if form.is_valid %}
+                    <span id="alert">Invalid credentials. Try again.</span>
+                {% endif %}
+                <input type="hidden" name="next" value="{{ next }}" />
+                <p><input type="submit" value="Log in"></p>
+            </form>
+        </div>
+    {% endif %}
 {% endblock %}

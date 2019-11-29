@@ -1,7 +1,10 @@
-{% extends base.html %}
+{% extends "base.html" %}
 
 {% block title %}User panel{% endblock %}
 
 {% block content %}
-    <h1>User Panel</h1>
+    <form action="{% url 'accounts:panel' %}" method="post">
+        <h1>User Panel</h1>
+        <h2>Welcome, {{ user.username }}!</h2>
+    </form>
 {% endblock %}

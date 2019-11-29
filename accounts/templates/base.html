@@ -11,6 +11,7 @@
         <span class="logo">Movies App</span>
         <span class="action">
             {% if user.is_authenticated %}
+            <span class="logged">Logged in: {{ user.username }}</span>
                 <a href="{% url 'accounts:logout' %}">Log out</a>
             {% else %}
                 <a href="{% url 'accounts:login' %}">Log in</a>  <a href="{% url 'accounts:signup' %}">Register</a>
@@ -21,6 +22,9 @@
         {% block content %}
         {% endblock %}
     </div>
+    <footer>
+        <p>Internship at Idego - Elżbieta Malinowska</p>
+    </footer>
 
 </body>
 </html>

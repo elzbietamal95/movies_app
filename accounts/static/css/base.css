@@ -7,7 +7,7 @@ html {
 body {
     margin: 0;
     padding: 0;
-    font-family: helvetica, sans-serif;
+    font-family: 'Montserrat', sans-serif;
 }
 
 p {
@@ -23,12 +23,14 @@ a:hover {
     color: #333333;
 }
 
-h1, h2 {
+h2 {
     font-family: 'Montserrat', sans-serif;
     font-weight: normal;
 }
 
 h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: normal;
     border-bottom: 1px solid #a3a3c2;
     padding: 0 0 10px 0;
     margin: 5px 0 20px 0;
@@ -47,7 +49,7 @@ header .logo {
     font-family: 'Montserrat', sans-serif;
     float: left;
     color: #ffffff;
-    font-size: 26px;
+    font-size: 27px;
     margin-right: 10%;
 }
 
@@ -55,6 +57,10 @@ header .action {
     float: right;
     font-size: 16px;
     margin: 6px;
+}
+
+header .logged {
+    margin-right: 6px;
 }
 
 header a {
@@ -69,7 +75,7 @@ header a:hover {
 }
 
 #content {
-    padding:30px 100px;
+    padding: 30px 100px;
 }
 
 form {
@@ -89,13 +95,14 @@ label {
 }
 
 input, textarea {
+    font-family: 'Montserrat', sans-serif;
     clear: both;
     float: left;
-    margin: 0 0 10px;
+    margin: 0 0 8px;
     background: #efefef;
-    border: 0.5px solid #a3a3c2;
+    border: 0.5px solid #8080ff;
     padding: 6px 10px;
-    font-size: 14px;
+    font-size: 15px;
     border-radius: 3px;
 }
 
@@ -109,10 +116,12 @@ input[type=submit], a.button {
 }
 
 .errorlist {
-    color: #cc0033;
+    color: #ff1a1a;
     float: left;
-    clear: both;
-    padding-left: 10px;
+    padding-left: 20px;
+    font-size: 13px;
+    margin-bottom: 10px;
+    font-weight: bold;
 }
 
 .login-form {
@@ -120,14 +129,38 @@ input[type=submit], a.button {
 }
 
 .helptext, ul {
-    margin: 0 0 1px 0;
     color: #aaa;
-    clear: both;
     float: left;
-    font-size: 13px;
+    font-size: 12px;
 }
 
+.helptext {
+    margin: 7px;
+}
 
+ul {
+    padding-left: 20px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+
+footer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    background-color: #33334d;
+    color: #ffffff;
+    font-size: 13px;
+    text-align: center;
+}
+
+#alert {
+    color: #ff1a1a;
+    font-weight: bold;
+    font-size: 14px;
+}
 
 
 

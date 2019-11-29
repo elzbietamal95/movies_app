@@ -13,11 +13,11 @@ def user_login(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return HttpResponse('Authentication succeeded.')
+                    return render(request, 'accounts/panel.html', {'form': form})
                 else:
-                    return HttpResponse('Account is locked.')
+                    print('Account is locked.')
             else:
-                return HttpResponse('Invalid credentials.')
+                print('Invalid credentials.')
     else:
         form = LoginForm()
     return render(request, 'accounts/login.html', {'form': form})
@@ -33,13 +33,11 @@ def user_signup(request):
             form.save()
             email = form.cleaned_data.get('email')
             password = form.cleaned_data.get('password1')
-            user = authenticate(email=email, password=password)
-            login(request, user)
-            return redirect('account')
+            return render(request, 'accounts/registration_done.html', {'form': form})
     else:
         form = RegistrationForm()
     return render(request, 'accounts/signup.html', {'form': form})
 
 @login_required
 def user_panel(request):
-    return render(request, 'accounts/panel.html', {'section': 'panel'})
+    return render(request, 'accounts/panel.html')
