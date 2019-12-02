@@ -1,8 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, get_user_model
 from accounts.forms import LoginForm, RegistrationForm
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
+
+User = get_user_model()
 
 def user_login(request):
     if request.method == 'POST':
@@ -41,3 +43,22 @@ def user_signup(request):
 @login_required
 def user_panel(request):
     return render(request, 'accounts/panel.html')
+
+def is_superuser(user):
+    return user.is_superuser
+
+@user_passes_test(is_superuser)
+def user_list_view(request):
+    users = User.objects.exclude(id=request.user.id)
+    return render(request, 'accounts/user_list.html', context={'users': users})
+
+def user_edit_view(request, username):
+    return render(request, 'base.html')
+
+def user_delete_view(request, username):
+    user = get_object_or_404(User, username=username)
+    if request.method == 'POST':
+        user.delete()
+        return redirect('user-list')
+    else:
+        return render(request, 'accounts/user_delete.html', context={'user': user})

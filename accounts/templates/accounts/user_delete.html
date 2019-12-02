@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Delete {{ user.username }}{% endblock %}
+
+{% block content %}
+    <h1>Delete {{ user.username }}?</h1>
+    <a href="{% url 'accounts:user-list' %}">No, go back to accounts list.</a>
+    <form action="{% url 'accounts:user-delete' user.username %}" method="post">
+        {% csrf_token %}
+        <button type="submit" >Yes, I want to delete {{ user.username }}.</button>
+    </form>
+{% endblock %}

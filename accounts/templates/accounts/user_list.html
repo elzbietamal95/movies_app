@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <ul>
+        {% for user in users %}
+            <li>
+                {{ user.username }}
+                <span>
+                    <a href="{% url 'accounts:user-edit' user.username %}">Edit</a>
+                    <a href="{% url 'accounts:user-delete' user.username %}">Delete</a>
+                </span>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
