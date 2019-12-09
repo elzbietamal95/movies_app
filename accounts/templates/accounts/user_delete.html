@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
-{% block title %}Delete {{ user.username }}{% endblock %}
+{% block title %}Delete {{ user_to_delete.username }}{% endblock %}
 
 {% block content %}
-    <h1>Delete {{ user.username }}?</h1>
+    <h1>Are you sure you want to delete user {{ user_to_delete.username }}?</h1>
     <a href="{% url 'accounts:user-list' %}">No, go back to accounts list.</a>
-    <form action="{% url 'accounts:user-delete' user.username %}" method="post">
+    <form action="{% url 'accounts:user-delete' user_to_delete.username %}" method="post">
         {% csrf_token %}
-        <button type="submit" >Yes, I want to delete {{ user.username }}.</button>
+        <button type="submit" >Yes, I'm sure.</button>
     </form>
 {% endblock %}

@@ -10,7 +10,7 @@
     <header>
         <span class="logo">Movies App</span>
         <span class="action">
-            {% if user.is_authenticated %}
+            {% if request.user.is_authenticated %}
             <span class="logged">Logged in: {{ user.username }}</span>
                 <a href="{% url 'accounts:logout' %}">Log out</a>
             {% else %}
