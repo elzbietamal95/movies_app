@@ -1,10 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
 from accounts.models import User
 from django.contrib.auth import authenticate, login, logout
 from accounts.forms import LoginForm, RegistrationForm
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.contrib import messages
+from django.views.generic import View
 
 
 def user_login(request):
@@ -24,9 +23,10 @@ def user_login(request):
     return render(request, 'accounts/login.html', {'form': form})
 
 
-def user_logout(request):
-    logout(request)
-    return render(request, 'accounts/logout.html')
+class UserLoqoutView(View):
+    def get(self, request):
+        logout(request)
+        return render(request, 'accounts/logout.html')
 
 
 def user_signup(request):

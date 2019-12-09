@@ -125,12 +125,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 AUTH_USER_MODEL = 'accounts.User'
 
 AUTHENTICATION_BACKENDS = (
-    'accounts.authentication.EmailAuthBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 
-LOGIN_REDIRECT_URL = reverse_lazy('accounts:panel')
-LOGIN_URL = reverse_lazy('accounts:login')
-LOGOUT_URL = reverse_lazy('accounts:logout')
+LOGIN_REDIRECT_URL = 'accounts:panel'
+LOGIN_URL = 'accounts:login'
+LOGOUT_URL = 'accounts:logout'
 
 from movies_app.local_settings import *
