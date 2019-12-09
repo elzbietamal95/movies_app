@@ -23,7 +23,7 @@ def user_login(request):
     return render(request, 'accounts/login.html', {'form': form})
 
 
-class UserLoqoutView(View):
+class UserLogoutView(View):
     def get(self, request):
         logout(request)
         return render(request, 'accounts/logout.html')
