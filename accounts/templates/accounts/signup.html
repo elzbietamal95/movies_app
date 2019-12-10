@@ -5,15 +5,14 @@
 {% block content %}
     {% if user.is_authenticated %}
         <h2>You are logged in as {{ user.username }}!</h2>
-        <p>Do you want to <a href="{% url 'accounts:logout' %}">log out</a>?</p>
-    {% else %}
-        <h1>Create account</h1>
-        <div class="signup-form">
-            <form action="{% url 'accounts:signup' %}" method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <p><input type="submit" value="Sign up"></p>
-            </form>
-        </div>
+        <p>Would you like to create a new account?</p>
     {% endif %}
+    <h1>Create account</h1>
+    <div class="signup-form">
+        <form action="{% url 'accounts:signup' %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <p><input type="submit" value="Sign up"></p>
+        </form>
+    </div>
 {% endblock %}

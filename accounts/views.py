@@ -6,6 +6,27 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views.generic import View
 
 
+class UserLoginView(View):
+    def form_valid(self, form):
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password')
+        user = authenticate(username=username, password=password)
+        if user is not None and user.is_active:
+            login(self.request, user)
+            return redirect('accounts:panel')
+
+    def get(self, request):
+        return render(request, 'accounts/login.html', {'form': LoginForm})
+
+    def post(self, request):
+        form = LoginForm(request, data=request.POST)
+        if form.is_valid():
+            return self.form_valid(form)
+        #TO DO
+        #else:
+           # return self.form_invalid(form)
+
+
 def user_login(request):
     if request.method == 'POST':
         form = LoginForm(data=request.POST)
@@ -14,10 +35,9 @@ def user_login(request):
             password = form.cleaned_data.get('password')
             user = authenticate(username=username, password=password)
             # user = form.get_user()
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
-                    return redirect('accounts:panel')
+            if user is not None and user.is_active:
+                login(request, user)
+                return redirect('accounts:panel')
     else:
         form = LoginForm()
     return render(request, 'accounts/login.html', {'form': form})

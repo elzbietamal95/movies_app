@@ -4,15 +4,19 @@
 
 {% block content %}
     <h1>Users list</h1>
-    <ul>
-        {% for user in users %}
-            <li>
-                {{ user.username }}
-                <span>
-                    <a href="{% url 'accounts:user-edit' user.username %}">Edit</a>
-                    <a href="{% url 'accounts:user-delete' user.username %}">Delete</a>
-                </span>
-            </li>
-        {% endfor %}
-    </ul>
+    <div class="user-table">
+        <table class="list-group">
+            {% for user in users %}
+                <tr class="list-group-item">
+                    <td>
+                        {{ user.username }}
+                        <span class="float-right">
+                            <a href="{% url 'accounts:user-edit' user.username %}" class="warning">Edit</a>
+                            <a href="{% url 'accounts:user-delete' user.username %}" class="danger">Delete</a>
+                        </span>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
 {% endblock %}
