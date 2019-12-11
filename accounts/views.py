@@ -24,34 +24,26 @@ class UserLoginView(View):
             return redirect('accounts:panel')
 
     def post(self, request):
-        form = self.form_class(request, data=request.POST)
+        form = self.form_class(data=request.POST)
         if form.is_valid():
             return self.form_valid(form)
         else:
-            return render(self.request, self.template_name, {'form': form})
+            return render(request, self.template_name, {'form': form})
 
 
 class UserLogoutView(View):
     def get(self, request):
         logout(request)
-        return render(request, 'accounts/logout.html')
+        return render(self.request, 'accounts/logout.html')
 
 
-class UserRegistrationView(View):
+class UserRegistrationView(UserLoginView):
     form_class = RegistrationForm
     template_name = 'accounts/signup.html'
 
-    def get(self, request):
-        form = self.form_class()
-        return render(request, self.template_name, {'form': form})
-
-    def post(self, request):
-        form = self.form_class(data=request.POST)
-        if form.is_valid():
-            form.save()
-            return render(request, 'accounts/registration_done.html', {'form': form})
-        else:
-            return render(request, self.template_name, {'form': form})
+    def form_valid(self, form):
+        form.save()
+        return render(self.request, 'accounts/registration_done.html', {'form': form})
 
 
 @login_required(login_url="/accounts/login/")

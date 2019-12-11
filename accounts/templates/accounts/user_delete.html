@@ -4,9 +4,11 @@
 
 {% block content %}
     <h1>Are you sure you want to delete user {{ user_to_delete.username }}?</h1>
-    <a href="{% url 'accounts:user-list' %}">No, go back to accounts list.</a>
-    <form action="{% url 'accounts:user-delete' user_to_delete.username %}" method="post">
-        {% csrf_token %}
-        <button type="submit" >Yes, I'm sure.</button>
-    </form>
+    <div class="user-delete-or-not">
+        <a href="{% url 'accounts:user-list' %}" class="warning">No, take me back.</a>
+        <form action="{% url 'accounts:user-delete' user_to_delete.username %}" method="post" class="delete-user">
+            {% csrf_token %}
+            <button type="submit" >Yes, I'm sure.</button>
+        </form>
+    </div>
 {% endblock %}
