@@ -4,27 +4,37 @@ from django.contrib.auth import authenticate, login, logout
 from accounts.forms import LoginForm, RegistrationForm
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views.generic import View
+from django.contrib.auth.views import LoginView
 
 
 class UserLoginView(View):
+    template_name = 'accounts/login.html'
+    form_class = LoginForm
+    # redirect_field_name = 'next'
+    # TO DO: fix the parameter next!
+
+    def get(self, request):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
+
     def form_valid(self, form):
         username = form.cleaned_data.get('username')
         password = form.cleaned_data.get('password')
         user = authenticate(username=username, password=password)
-        if user is not None and user.is_active:
+        if user is None:
+            return render(self.request, self.template_name, {'form': form, 'invalid_login': True})
+        elif user.is_active:
             login(self.request, user)
             return redirect('accounts:panel')
-
-    def get(self, request):
-        return render(request, 'accounts/login.html', {'form': LoginForm})
+        else:
+            return render(self.request, self.template_name, {'form': form, 'inactive': True})
 
     def post(self, request):
-        form = LoginForm(request, data=request.POST)
+        form = self.form_class(request, data=request.POST)
         if form.is_valid():
             return self.form_valid(form)
-        #TO DO
-        #else:
-           # return self.form_invalid(form)
+        else:
+            return render(self.request, self.template_name, {'form': form, 'invalid_login': True})
 
 
 def user_login(request):
