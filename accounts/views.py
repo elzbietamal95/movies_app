@@ -18,39 +18,17 @@ class UserLoginView(View):
         return render(request, self.template_name, {'form': form})
 
     def form_valid(self, form):
-        username = form.cleaned_data.get('username')
-        password = form.cleaned_data.get('password')
-        user = authenticate(username=username, password=password)
-        if user is None:
-            return render(self.request, self.template_name, {'form': form, 'invalid_login': True})
-        elif user.is_active:
+        user = form.get_user()
+        if user is not None and user.is_active:
             login(self.request, user)
             return redirect('accounts:panel')
-        else:
-            return render(self.request, self.template_name, {'form': form, 'inactive': True})
 
     def post(self, request):
         form = self.form_class(request, data=request.POST)
         if form.is_valid():
             return self.form_valid(form)
         else:
-            return render(self.request, self.template_name, {'form': form, 'invalid_login': True})
-
-
-def user_login(request):
-    if request.method == 'POST':
-        form = LoginForm(data=request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
-            # user = form.get_user()
-            if user is not None and user.is_active:
-                login(request, user)
-                return redirect('accounts:panel')
-    else:
-        form = LoginForm()
-    return render(request, 'accounts/login.html', {'form': form})
+            return render(self.request, self.template_name, {'form': form})
 
 
 class UserLogoutView(View):
@@ -59,15 +37,21 @@ class UserLogoutView(View):
         return render(request, 'accounts/logout.html')
 
 
-def user_signup(request):
-    if request.method == 'POST':
-        form = RegistrationForm(request.POST)
+class UserRegistrationView(View):
+    form_class = RegistrationForm
+    template_name = 'accounts/signup.html'
+
+    def get(self, request):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = self.form_class(data=request.POST)
         if form.is_valid():
             form.save()
             return render(request, 'accounts/registration_done.html', {'form': form})
-    else:
-        form = RegistrationForm()
-    return render(request, 'accounts/signup.html', {'form': form})
+        else:
+            return render(request, self.template_name, {'form': form})
 
 
 @login_required(login_url="/accounts/login/")
