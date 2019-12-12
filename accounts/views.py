@@ -4,24 +4,15 @@ from django.contrib.auth import authenticate, login, logout
 from accounts.forms import LoginForm, RegistrationForm
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views.generic import View
-from django.contrib.auth.views import LoginView
 
 
-class UserLoginView(View):
-    template_name = 'accounts/login.html'
-    form_class = LoginForm
-    # redirect_field_name = 'next'
-    # TO DO: fix the parameter next!
+class UserAuthBaseView(View):
+    template_name = None
+    form_class = None
 
     def get(self, request):
         form = self.form_class()
         return render(request, self.template_name, {'form': form})
-
-    def form_valid(self, form):
-        user = form.get_user()
-        if user is not None and user.is_active:
-            login(self.request, user)
-            return redirect('accounts:panel')
 
     def post(self, request):
         form = self.form_class(data=request.POST)
@@ -30,20 +21,39 @@ class UserLoginView(View):
         else:
             return render(request, self.template_name, {'form': form})
 
-
-class UserLogoutView(View):
-    def get(self, request):
-        logout(request)
-        return render(self.request, 'accounts/logout.html')
+    def form_valid(self, form):
+        pass
 
 
-class UserRegistrationView(UserLoginView):
+class UserLoginView(UserAuthBaseView):
+    template_name = 'accounts/login.html'
+    success_url = 'accounts:panel'
+    form_class = LoginForm
+    # redirect_field_name = 'next'
+    # TO DO: fix the parameter next!
+
+    def form_valid(self, form):
+        user = form.get_user()
+        if user is not None and user.is_active:
+            login(self.request, user)
+            return redirect(self.success_url)
+
+
+class UserRegistrationView(UserAuthBaseView):
     form_class = RegistrationForm
     template_name = 'accounts/signup.html'
 
     def form_valid(self, form):
         form.save()
         return render(self.request, 'accounts/registration_done.html', {'form': form})
+
+
+class UserLogoutView(View):
+    template_name = 'accounts/logout.html'
+
+    def get(self, request):
+        logout(request)
+        return render(self.request, self.template_name)
 
 
 @login_required(login_url="/accounts/login/")
