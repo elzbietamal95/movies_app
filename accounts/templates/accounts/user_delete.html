@@ -3,7 +3,11 @@
 {% block title %}Delete {{ user_to_delete.username }}{% endblock %}
 
 {% block content %}
-    <h1>Are you sure you want to delete user {{ user_to_delete.username }}?</h1>
+    {% if user == user_to_delete %}
+        <h1>Are you sure you want to delete <strong>your account</strong>?</h1>
+    {% else %}
+        <h1>Are you sure you want to delete user {{ user_to_delete.username }}?</h1>
+    {% endif %}
     <div class="user-delete-or-not">
         <a href="{% url 'accounts:user-list' %}" class="warning">No, take me back.</a>
         <form action="{% url 'accounts:user-delete' user_to_delete.username %}" method="post" class="delete-user">
