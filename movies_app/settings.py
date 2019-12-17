@@ -132,4 +132,5 @@ LOGIN_REDIRECT_URL = 'accounts:panel'
 LOGIN_URL = 'accounts:login'
 LOGOUT_URL = 'accounts:logout'
 
+
 from movies_app.local_settings import *

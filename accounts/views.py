@@ -1,9 +1,12 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, resolve_url
+from django.http import HttpResponseRedirect
 from accounts.models import User
 from django.contrib.auth import authenticate, login, logout
 from accounts.forms import LoginForm, RegistrationForm
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views.generic import View
+from movies_app import settings
+from django.contrib.auth.views import LoginView
 
 
 class UserAuthBaseView(View):
@@ -27,16 +30,21 @@ class UserAuthBaseView(View):
 
 class UserLoginView(UserAuthBaseView):
     template_name = 'accounts/login.html'
-    success_url = 'accounts:panel'
     form_class = LoginForm
-    # redirect_field_name = 'next'
-    # TO DO: fix the parameter next!
+    redirect_field_name = 'next'
+
+    def get_success_url(self):
+        url = self.request.POST.get(
+            self.redirect_field_name,
+            self.request.GET.get(self.redirect_field_name, '')
+        )
+        return url or resolve_url(settings.LOGIN_REDIRECT_URL)
 
     def form_valid(self, form):
         user = form.get_user()
         if user is not None and user.is_active:
             login(self.request, user)
-            return redirect(self.success_url)
+            return HttpResponseRedirect(self.get_success_url())
 
 
 class UserRegistrationView(UserAuthBaseView):
