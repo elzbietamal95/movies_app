@@ -10,6 +10,6 @@ urlpatterns = [
     path('logout/', UserLogoutView.as_view(), name='logout'),
     path('registration/', UserRegistrationView.as_view(), name='signup'),
     path('user-list/', views.user_list_view, name='user-list'),
-    path('<username>/', views.user_edit_view, name='user-edit'),
+    path('<username>/edit/', views.user_edit_view, name='user-edit'),
     path('<username>/delete/', views.user_delete_view, name='user-delete')
 ]

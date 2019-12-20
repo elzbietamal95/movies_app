@@ -1,12 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404, resolve_url
 from django.http import HttpResponseRedirect
-from accounts.models import User
-from django.contrib.auth import authenticate, login, logout
-from accounts.forms import LoginForm, RegistrationForm
+# from accounts.models import User
+from django.contrib.auth import login, logout, get_user_model
+from accounts.forms import LoginForm, CustomUserCreationForm
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views.generic import View
 from movies_app import settings
-from django.contrib.auth.views import LoginView
+
+User = get_user_model()
+login_redirect_url = settings.LOGIN_REDIRECT_URL
 
 
 class UserAuthBaseView(View):
@@ -29,6 +31,7 @@ class UserAuthBaseView(View):
 
 
 class UserLoginView(UserAuthBaseView):
+    # TO DO: add method form_invalid (parameter 'next' doesn't always work!)
     template_name = 'accounts/login.html'
     form_class = LoginForm
     redirect_field_name = 'next'
@@ -38,7 +41,7 @@ class UserLoginView(UserAuthBaseView):
             self.redirect_field_name,
             self.request.GET.get(self.redirect_field_name, '')
         )
-        return url or resolve_url(settings.LOGIN_REDIRECT_URL)
+        return url or resolve_url(login_redirect_url)
 
     def form_valid(self, form):
         user = form.get_user()
@@ -48,7 +51,7 @@ class UserLoginView(UserAuthBaseView):
 
 
 class UserRegistrationView(UserAuthBaseView):
-    form_class = RegistrationForm
+    form_class = CustomUserCreationForm
     template_name = 'accounts/signup.html'
 
     def form_valid(self, form):
@@ -69,11 +72,11 @@ def user_panel(request):
     return render(request, 'accounts/panel.html')
 
 
-def is_superuser(user):
-    return user.is_superuser
+def is_admin(user):
+    return user.is_admin
 
 
-@user_passes_test(is_superuser)
+@user_passes_test(is_admin)
 def user_list_view(request):
     users = User.objects.exclude(id=request.user.id)
     return render(request, 'accounts/user_list.html', context={'users': users})
