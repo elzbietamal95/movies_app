@@ -41,7 +41,7 @@ h1 {
 }
 
 header {
-    padding: 10px 100px;
+    padding: 10px 50px;
     font-size: 16px;
     background: #8080ff;
     color: #fff;
@@ -50,16 +50,22 @@ header {
 
 header .logo {
     font-family: 'Montserrat', sans-serif;
-    float: left;
     color: #ffffff;
     font-size: 27px;
-    margin-right: 10%;
 }
 
-header .action {
+header .auth-status {
     float: right;
     font-size: 16px;
+}
+
+header .menu {
+    font-size: 16px;
     margin: 6px;
+}
+
+span.menu, span.auth-status {
+    margin: 10px;
 }
 
 header .logged {
@@ -68,9 +74,14 @@ header .logged {
 
 header a {
     color: #ffffff;
-    border: 2px solid #fff;
+    border: 1px solid #fff;
     border-radius: 5px;
     padding: 5px;
+}
+
+span.logged a {
+    border: none;
+    color: white;
 }
 
 header a:hover {
@@ -183,28 +194,32 @@ td {
     height: 45px;
 }
 
+td a {
+    color: #aaa;
+}
+
 
 span.float-right {
     float: right;
 }
 
 a.danger, form.delete-user button {
-    font-size: 22px;
+    font-size: 18px;
     color: #ffffff;
     border: 2px solid #ff8080;
     border-radius: 5px;
     background: #ff8080;
-    padding: 2px;
+    padding: 3px 8px;
     font-family: 'Montserrat', sans-serif;
 }
 
 a.warning {
-    font-size: 22px;
+    font-size: 18px;
     color: #ffffff;
     border: 2px solid #8080ff;
     border-radius: 5px;
     background: #8080ff;
-    padding: 2px;
+    padding: 3px 8px;
 }
 
 a.warning:hover, a.danger:hover, form.delete-user button:hover {
@@ -233,5 +248,41 @@ div.user-delete-or-not a.warning, form.delete-user button {
     margin: 10px 20px;
 }
 
+ul.messages {
+    margin:10px 100px;
+    padding:0;
+    list-style-type:
+    none;
+}
+ul.messages li.success,
+ul.messages li.warning,
+ul.messages li.error,
+ul.messages li.info {
+    margin:0;
+    padding:14px 20px;
+    list-style:none;
+    color:#fff;
+}
+
+ul.messages li.success { background:#81ce81; }
+ul.messages li.success a { color:#0ac33e; }
+
+ul.messages li.error { background:#a30029; color:#e9828e; }
+ul.messages li.error a { color:#e9828e; }
+
+ul.messages li.info { background:#faffae; color:#696b4e; }
+ul.messages li.info a { color:#1586de; }
+
+ul.messages li.warning { background:#de9404; }
+ul.messages li.warning a { color:#f49000; }
+
+ul.messages li a.close {
+    margin:0;
+    float:right;
+    opacity:1;
+    border:0;
+    box-shadow:none;
+    text-shadow:none;
+}
 
 

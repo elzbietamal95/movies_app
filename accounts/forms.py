@@ -19,3 +19,9 @@ class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = User
         fields = '__all__'
+
+
+class UserEditForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('email', 'first_name', 'last_name', 'is_active', 'is_admin')

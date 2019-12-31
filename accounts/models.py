@@ -94,7 +94,7 @@ class CustomPermissions(models.Model):
         Return True if the user has any permissions in the given app label.
         Use similar logic as has_perm(), above.
         """
-        # Active superusers have all permissions.
+        # Active admins have all permissions.
         if self.is_active and self.is_admin:
             return True
 
@@ -103,7 +103,7 @@ class CustomPermissions(models.Model):
 
 class User(AbstractBaseUser, CustomPermissions):
     """
-    A base class implementing a fully featured User model with
+    A class implementing a fully featured User model with
     admin-compliant permissions.
 
     Email address, username and password are required. Other fields are optional.
@@ -152,3 +152,5 @@ class User(AbstractBaseUser, CustomPermissions):
     @property
     def is_staff(self):
         return self.is_admin
+
+

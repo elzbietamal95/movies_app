@@ -1,13 +1,14 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404, resolve_url
 from django.http import HttpResponseRedirect
-# from accounts.models import User
+from accounts.models import User
 from django.contrib.auth import login, logout, get_user_model
-from accounts.forms import LoginForm, CustomUserCreationForm
+from accounts.forms import LoginForm, CustomUserCreationForm, CustomUserChangeForm, UserEditForm
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views.generic import View
 from movies_app import settings
 
-User = get_user_model()
+# User = get_user_model()
 login_redirect_url = settings.LOGIN_REDIRECT_URL
 
 
@@ -72,20 +73,42 @@ def user_panel(request):
     return render(request, 'accounts/panel.html')
 
 
+@login_required(login_url="/accounts/login/")
+def user_profile(request, username):
+    profile_of_user = get_object_or_404(User, username=username)
+    return render(request, 'accounts/profile.html', context={'profile_of_user': profile_of_user})
+
+
 def is_admin(user):
     return user.is_admin
 
 
+@login_required(login_url="/accounts/login/")
 @user_passes_test(is_admin)
 def user_list_view(request):
     users = User.objects.exclude(id=request.user.id)
     return render(request, 'accounts/user_list.html', context={'users': users})
 
 
+@login_required(login_url="/accounts/login/")
+@user_passes_test(is_admin)
 def user_edit_view(request, username):
-    return render(request, 'base.html')
+    user_to_edit = get_object_or_404(User, username=username)
+    if request.method == 'POST':
+        user_edit_form = UserEditForm(data=request.POST, instance=user_to_edit)
+        if user_edit_form.is_valid():
+            user_edit_form.save()
+            messages.success(request, 'User was successfully updated!')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        user_edit_form = UserEditForm(instance=user_to_edit)
+    return render(request, 'accounts/user_edit.html', context={'user_edit_form': user_edit_form,
+                                                               'user_to_edit': user_to_edit})
 
 
+@login_required(login_url="/accounts/login/")
+@user_passes_test(is_admin)
 def user_delete_view(request, username):
     user_to_delete = get_object_or_404(User, username=username)
     if request.method == 'POST':

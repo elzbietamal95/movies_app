@@ -1,18 +1,18 @@
 {% extends "base.html" %}
 
-{% block title %} Users list {% endblock %}
+{% block title %} User list {% endblock %}
 
 {% block content %}
-    <h1>Users list</h1>
+    <h1>User list</h1>
     <div class="user-table">
         <table class="list-group">
             {% for user in users %}
                 <tr class="list-group-item">
                     <td>
-                        {{ user.username }}
+                        <a href="{% url 'accounts:profile' user.username %}">{{ user.username }}</a>
                         <span class="float-right">
-                            <a href="{% url 'accounts:user-edit' user.username %}" class="warning">Edit</a>
-                            <a href="{% url 'accounts:user-delete' user.username %}" class="danger">Delete</a>
+                            <a href="{% url 'accounts:user-edit' user.username %}" class="warning">EDIT</a>
+                            <a href="{% url 'accounts:user-delete' user.username %}" class="danger">DELETE</a>
                         </span>
                     </td>
                 </tr>

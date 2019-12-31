@@ -8,15 +8,30 @@
 <body>
     <header>
         <span class="logo">Movies App</span>
-        <span class="action">
+        <span class="menu">
+            {% if user.is_admin %}
+                <a href="{% url 'accounts:user-list' %}">User list</a>
+            {% endif %}
+        </span>
+        <span class="auth-status">
             {% if request.user.is_authenticated %}
-            <span class="logged">Logged in: {{ user.username }}</span>
+                <span class="logged">Logged in:  <a href="{% url 'accounts:profile' user.username %}">{{ user.username }}</a></span>
                 <a href="{% url 'accounts:logout' %}">Log out</a>
             {% else %}
-                <a href="{% url 'accounts:login' %}">Log in</a>  <a href="{% url 'accounts:signup' %}">Register</a>
+                <a href="{% url 'accounts:login' %}">Log in</a>
+                <a href="{% url 'accounts:signup' %}">Register</a>
             {% endif %}
         </span>
     </header>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">
+                    {{ message|safe }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
     <div id="content">
         {% block content %}
         {% endblock %}
