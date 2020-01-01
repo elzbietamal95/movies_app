@@ -86,7 +86,7 @@ def is_admin(user):
 @login_required(login_url="/accounts/login/")
 @user_passes_test(is_admin)
 def user_list_view(request):
-    users = User.objects.exclude(id=request.user.id)
+    users = User.objects.all().order_by('date_joined')
     return render(request, 'accounts/user_list.html', context={'users': users})
 
 

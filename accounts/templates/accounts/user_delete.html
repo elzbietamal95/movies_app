@@ -9,10 +9,10 @@
         <h1>Are you sure you want to delete user {{ user_to_delete.username }}?</h1>
     {% endif %}
     <div class="user-delete-or-not">
-        <a href="{% url 'accounts:user-list' %}" class="warning">No, take me back.</a>
+        <a href="{{request.META.HTTP_REFERER|escape}}" class="warning">NO, TAKE ME BACK.</a>
         <form action="{% url 'accounts:user-delete' user_to_delete.username %}" method="post" class="delete-user">
             {% csrf_token %}
-            <button type="submit" >Yes, I'm sure.</button>
+            <button type="submit" >YES, I'M SURE.</button>
         </form>
     </div>
 {% endblock %}
