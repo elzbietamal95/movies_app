@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm, ReadOnlyPasswordHashField
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -24,4 +24,4 @@ class CustomUserChangeForm(UserChangeForm):
 class UserEditForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name', 'is_active', 'is_admin')
+        fields = ('email', 'username', 'first_name', 'last_name', 'is_active', 'is_admin')

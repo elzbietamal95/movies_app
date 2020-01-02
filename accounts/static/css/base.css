@@ -90,6 +90,7 @@ header a:hover {
 
 #content {
     padding: 30px 100px;
+    margin-bottom: 60px;
 }
 
 form {
@@ -136,7 +137,7 @@ button {
 }
 
 ul.errorlist li {
-    color: #ff1a1a;
+    color: #ff4d4d;
     float: left;
     font-size: 13px;
     margin-bottom: 10px;
@@ -212,8 +213,18 @@ span.float-right {
     float: right;
 }
 
+span.float-left {
+    float: left;
+    display: inline-flex;
+}
+
+span.float-left a.warning {
+    margin-bottom: 8px;
+    margin-left: 8px;
+}
+
 a.danger, form.delete-user button {
-    background: #ff8080;
+    background: #ff6666;
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -247,6 +258,7 @@ ul.messages {
     margin:10px 100px;
     padding:0;
     list-style-type: none;
+    font-weight: bold;
 }
 
 ul.messages li.success,
@@ -262,7 +274,7 @@ ul.messages li.success {
 }
 
 ul.messages li.error {
-    background: #a30029;
+    background: #ff6666;
     color: #fff;
 }
 

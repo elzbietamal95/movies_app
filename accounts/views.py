@@ -100,7 +100,7 @@ def user_edit_view(request, username):
             user_edit_form.save()
             messages.success(request, 'User was successfully updated!')
         else:
-            messages.error(request, 'Please correct the error below.')
+            messages.error(request, 'Please correct the error below!')
     else:
         user_edit_form = UserEditForm(instance=user_to_edit)
     return render(request, 'accounts/user_edit.html', context={'user_edit_form': user_edit_form,
