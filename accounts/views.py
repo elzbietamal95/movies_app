@@ -1,14 +1,13 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404, resolve_url
 from django.http import HttpResponseRedirect
-from accounts.models import User
 from django.contrib.auth import login, logout, get_user_model
 from accounts.forms import LoginForm, CustomUserCreationForm, CustomUserChangeForm, UserEditForm
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views.generic import View
 from movies_app import settings
 
-# User = get_user_model()
+User = get_user_model()
 login_redirect_url = settings.LOGIN_REDIRECT_URL
 
 
