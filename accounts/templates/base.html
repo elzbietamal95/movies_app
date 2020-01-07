@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %} {% endblock %}</title>
+    <link href="{% static "css/sb-admin-2.css" %}" rel="stylesheet">
     <link href="{% static "css/base.css" %}" rel="stylesheet">
 </head>
 <body>
     <header>
-        <span class="logo">Movies App</span>
+        <span class="logo">
+            <a href="{% url 'movies:movie-list' %}">Movies App</a>
+        </span>
         <span class="menu">
             {% if user.is_admin %}
                 <a href="{% url 'accounts:user-list' %}">User list</a>

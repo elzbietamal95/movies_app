@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Movie list{% endblock %}
+
+{% block content %}
+    <h1>List of all movies</h1>
+    <div class="row">
+        {% for movie in movies %}
+        <div class="col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h4 class="m-0 font-weight-bold text-primary">{{ movie.title }} ({{ movie.year_of_production }})</h4>
+                </div>
+                <img class="card-img" src="{{ movie.image.url }}" alt="{{ movie.slug }}">
+                <div class="card-body">
+                    <p class="card-text">{{ movie.short_description }}</p>
+                    <p class="card-text text-right">
+                        <small class="text-muted"><em>by {{ movie.added_by }}</em></small>
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

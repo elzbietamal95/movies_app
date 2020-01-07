@@ -8,35 +8,33 @@
     {% else %}
         <h1>{{ profile_of_user.username }}'s Profile</h1>
     {% endif %}
-    <div class="container">
-        <h2>Email address: {{ profile_of_user.email }}</h2>
-        <h2>Username: {{ profile_of_user.username }}</h2>
-        <h2>First name:
-            {% if not profile_of_user.first_name %}
-                -
-            {% else %}
-                {{ profile_of_user.first_name }}
-            {% endif %}
-        </h2>
-        <h2>Last name:
-            {% if not profile_of_user.last_name %}
-                -
-            {% else %}
-                {{ profile_of_user.last_name }}
-            {% endif %}
-        </h2>
-        <h2>Active: {{ profile_of_user.is_active }}</h2>
-        <h2>Status:
-            {% if profile_of_user.is_admin %}
-                Admin
-            {% else %}
-                Regular User
-            {% endif %}
-        </h2>
-        <p></p>
-        <p>Date joined: {{ profile_of_user.date_joined }}</p>
-        <p>Last login: {{ profile_of_user.last_login }}</p>
-    </div>
+    <h3>Email address: {{ profile_of_user.email }}</h3>
+    <h3>Username: {{ profile_of_user.username }}</h3>
+    <h3>First name:
+        {% if not profile_of_user.first_name %}
+            -
+        {% else %}
+            {{ profile_of_user.first_name }}
+        {% endif %}
+    </h3>
+    <h3>Last name:
+        {% if not profile_of_user.last_name %}
+            -
+        {% else %}
+            {{ profile_of_user.last_name }}
+        {% endif %}
+    </h3>
+    <h3>Active: {{ profile_of_user.is_active }}</h3>
+    <h3>Status:
+        {% if profile_of_user.is_admin %}
+            Admin
+        {% else %}
+            Regular User
+        {% endif %}
+    </h3>
+    <p></p>
+    <p>Date joined: {{ profile_of_user.date_joined }}</p>
+    <p>Last login: {{ profile_of_user.last_login }}</p>
     {% if user.is_admin%}
         <span>
             <a href="{% url 'accounts:user-edit' profile_of_user.username %}" class="warning">EDIT</a>
