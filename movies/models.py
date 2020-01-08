@@ -31,3 +31,10 @@ class Movie(models.Model):
         if not self.slug:
             self.slug = slugify(self.title)
         super(Movie, self).save(*args, **kwargs)
+
+    def has_image(self):
+        if self.image:
+            return True
+        else:
+            return False
+
