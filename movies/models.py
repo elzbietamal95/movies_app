@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 from django.contrib.auth import get_user_model
-
+from movies.utils import get_unique_slug
 
 User = get_user_model()
 
@@ -29,7 +29,7 @@ class Movie(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title)
+            self.slug = get_unique_slug(self.pk, self.title, Movie.objects)
         super(Movie, self).save(*args, **kwargs)
 
     def has_image(self):
@@ -37,4 +37,3 @@ class Movie(models.Model):
             return True
         else:
             return False
-

@@ -27,7 +27,7 @@ class UserAuthBaseView(View):
             return render(request, self.template_name, {'form': form})
 
     def form_valid(self, form):
-        pass
+        return render(self.request, self.template_name)
 
 
 class UserLoginView(UserAuthBaseView):
