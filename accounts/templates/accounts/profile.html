@@ -3,42 +3,49 @@
 {% block title %}{{ profile_of_user.username }}'s Profile{% endblock %}
 
 {% block content %}
-    {% if user == profile_of_user %}
-        <h1>Your profile</h1>
-    {% else %}
-        <h1>{{ profile_of_user.username }}'s Profile</h1>
-    {% endif %}
-    <h3>Email address: {{ profile_of_user.email }}</h3>
-    <h3>Username: {{ profile_of_user.username }}</h3>
-    <h3>First name:
-        {% if not profile_of_user.first_name %}
-            -
-        {% else %}
-            {{ profile_of_user.first_name }}
-        {% endif %}
-    </h3>
-    <h3>Last name:
-        {% if not profile_of_user.last_name %}
-            -
-        {% else %}
-            {{ profile_of_user.last_name }}
-        {% endif %}
-    </h3>
-    <h3>Active: {{ profile_of_user.is_active }}</h3>
-    <h3>Status:
-        {% if profile_of_user.is_admin %}
-            Admin
-        {% else %}
-            Regular User
-        {% endif %}
-    </h3>
-    <p></p>
-    <p>Date joined: {{ profile_of_user.date_joined }}</p>
-    <p>Last login: {{ profile_of_user.last_login }}</p>
-    {% if user.is_admin%}
-        <span>
-            <a href="{% url 'accounts:user-edit' profile_of_user.username %}" class="warning">EDIT</a>
-            <a href="{% url 'accounts:user-delete' profile_of_user.username %}" class="danger">DELETE</a>
-        </span>
-    {% endif %}
+    <div class="card text-center" style="min-width: 300px; margin: 0 20%;">
+        <div class="card-body">
+            <h1 class="card-title">
+                {% if user == profile_of_user %}
+                    Your profile
+                {% else %}
+                    {{ profile_of_user.username }}'s Profile
+                {% endif %}
+            </h1>
+            <h6 class="card-subtitle mb-2 text-muted">
+                {% if profile_of_user.is_admin %}
+                    Admin
+                {% else %}
+                    Regular User
+                {% endif %}
+            </h6>
+            <hr>
+            <p class="card-text">Email address: {{ profile_of_user.email }}</p>
+            <p class="card-text">First name:
+            {% if not profile_of_user.first_name %}
+                -
+            {% else %}
+                {{ profile_of_user.first_name }}
+            {% endif %}
+            </p>
+            <p class="card-text">Last name:
+            {% if not profile_of_user.last_name %}
+                -
+            {% else %}
+                {{ profile_of_user.last_name }}
+            {% endif %}
+            </p>
+            <p class="card-text">Active: {{ profile_of_user.is_active }}</p>
+            <p class="card-text">
+                <small class="text-muted"><em>Date joined: {{ profile_of_user.date_joined }}</em></small>
+            </p>
+            <p class="card-text">
+                <small class="text-muted"><em>Last login: {{ profile_of_user.last_login }}</em></small>
+            </p>
+            {% if user.is_admin%}
+                <a href="{% url 'accounts:user-edit' profile_of_user.username %}" class="card-link warning">EDIT</a>
+                <a href="{% url 'accounts:user-delete' profile_of_user.username %}" class="card-link danger">DELETE</a>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}

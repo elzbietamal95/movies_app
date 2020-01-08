@@ -103,7 +103,7 @@ header a:hover {
     color: #3d3d5c;
 }
 
-#content {
+.content {
     padding: 30px 100px;
     margin-bottom: 60px;
 }
@@ -164,10 +164,6 @@ ul.errorlist.nonfield, ul.errorlist {
     padding: 0;
 }
 
-.login-form {
-    float: left;
-}
-
 .signup-form ul {
     color: #aaa;
     float: left;
@@ -191,23 +187,6 @@ ul {
     margin-bottom: 1px;
 }
 
-footer {
-    position: fixed;
-    height: 45px;
-    bottom: 0;
-    padding-top: 4px;
-    padding-bottom: 4px;
-    width: 100%;
-    background-color: #33334d;
-    color: #ffffff;
-    font-size: 13px;
-    text-align: center;
-}
-
-footer p {
-    padding: 10px;
-}
-
 table.list-group {
     width: 100%;
     padding: 5px 20%;
@@ -223,11 +202,6 @@ td {
 
 td a {
     color: #aaa;
-}
-
-
-span.float-right {
-    float: right;
 }
 
 span.float-left {
@@ -293,6 +267,31 @@ ul.messages li.success {
 ul.messages li.error {
     background: #ff6666;
     color: #fff;
+}
+
+footer {
+    position: fixed;
+    height: 45px;
+    bottom: 0;
+    width: 100%;
+    background-color: #33334d;
+    color: #ffffff;
+    padding: 12px;
+    font-size: 13px;
+    text-align: center;
+}
+
+hr {
+    border: none;
+}
+
+
+div.card {
+    text-align: center;
+}
+
+.row {
+    margin-left: 3%;
 }
 
 

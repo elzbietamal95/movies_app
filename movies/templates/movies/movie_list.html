@@ -3,11 +3,11 @@
 {% block title %}Movie list{% endblock %}
 
 {% block content %}
-    <h1>List of all movies</h1>
+    <h1>Movies</h1>
     <div class="row">
         {% for movie in movies %}
         <div class="col-lg-6">
-            <div class="card shadow mb-4">
+            <div class="card shadow mb-4" style="width:90%;">
                 <div class="card-header py-3">
                     <h4 class="m-0 font-weight-bold text-primary">{{ movie.title }} ({{ movie.year_of_production }})</h4>
                 </div>
