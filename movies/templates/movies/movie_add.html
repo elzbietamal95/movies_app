@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Add new movie{% endblock %}
+
+{% block content %}
+    <h1>Add new movie</h1>
+    <form action="." method="post" encypte="multipart/form-data">
+        {{ form.as_p}}
+        {% csrf_token %}
+        <p><input type="submit" value="SAVE CHANGES"></p>
+    </form>
+{% endblock %}
