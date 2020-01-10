@@ -4,9 +4,11 @@
 
 {% block content %}
     <h1>Add new movie</h1>
-    <form action="{% url 'movies:movie-add' %}" method="post" encypte="multipart/form-data">
-        {{ form.as_p}}
-        {% csrf_token %}
-        <p><input type="submit" value="SAVE"></p>
-    </form>
+    <div class="movie-add">
+        <form action="{% url 'movies:movie-add' %}" method="post" encypte="multipart/form-data">
+            {{ form.as_p}}
+            {% csrf_token %}
+            <p><input type="submit" value="SAVE"></p>
+        </form>
+    </div>
 {% endblock %}

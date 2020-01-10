@@ -189,6 +189,7 @@ ul {
 
 table.list-group {
     width: 100%;
+    min-width: 400px;
     padding: 5px 20%;
     color: #aaa;
     font-size: 24px;
@@ -294,6 +295,21 @@ div.card {
     margin-left: 3%;
 }
 
+.movie-add input[type=text], .movie-add input[type=number] {
+    width: 30%;
+    min-width: 200px;
+}
+
+.movie-add input[type=file] {
+    border: none;
+    background: none;
+    padding-left: 0;
+}
+
+textarea#id_short_description {
+    width: 70%;
+    min-width: 300px;
+}
 
 
 

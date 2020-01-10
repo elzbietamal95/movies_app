@@ -5,6 +5,14 @@
 {% block content %}
     <div class="card text-center" style="min-width: 300px; margin: 0 20%;">
         <div class="card-body">
+            <p class="card-text">
+                {% if profile_of_user.is_active %}
+                    <span style="color: #81ce81;"><strong>Active User</strong></span>
+                {% else %}
+                    <span style="color: #ff6666;"><strong>This account is locked!</strong></span>
+                {% endif %}
+            </p>
+            <hr>
             <h1 class="card-title">
                 {% if user == profile_of_user %}
                     Your profile
@@ -12,30 +20,29 @@
                     {{ profile_of_user.username }}'s Profile
                 {% endif %}
             </h1>
-            <h6 class="card-subtitle mb-2 text-muted">
+            <h5 class="card-subtitle mb-2 text-muted">
                 {% if profile_of_user.is_admin %}
                     Admin
                 {% else %}
                     Regular User
                 {% endif %}
-            </h6>
+            </h5>
             <hr>
             <p class="card-text">Email address: {{ profile_of_user.email }}</p>
             <p class="card-text">First name:
             {% if not profile_of_user.first_name %}
-                -
+                <small class="text-muted"><em>(not given)</em></small>
             {% else %}
                 {{ profile_of_user.first_name }}
             {% endif %}
             </p>
             <p class="card-text">Last name:
             {% if not profile_of_user.last_name %}
-                -
+                <small class="text-muted"><em>(not given)</em></small>
             {% else %}
                 {{ profile_of_user.last_name }}
             {% endif %}
             </p>
-            <p class="card-text">Active: {{ profile_of_user.is_active }}</p>
             <p class="card-text">
                 <small class="text-muted"><em>Date joined: {{ profile_of_user.date_joined }}</em></small>
             </p>
