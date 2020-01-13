@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    {% if request.GET.next %}
+        {% if user.is_authenticated %}
+            <h2>Your account doesn't have access to this page! To proceed, please login with an account that has access.</h2>
+        {% else %}
+            <h2>Please login to see this page.</h2>
+        {% endif %}
+    {% else %}
+        {% if request.user.is_authenticated %}
+            <h2>You are logged in as {{ user.username }}!</h2>
+            <p>Would you like to login to a different account?</p>
+        {% endif %}
+    {% endif %}
+    <h1>Login</h1>
+    <p>If you don't have an account yet, you can create one <a href="{% url 'accounts:signup' %}">here.</a></p>
+    <form action="{% url 'accounts:login' %}" method="post">
+            {{ form.as_p }}
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.GET.next }}" />
+            <p><input type="submit" value="Log in"></p>
+    </form>
+{% endblock %}

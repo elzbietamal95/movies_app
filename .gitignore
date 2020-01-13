@@ -1,3 +1,5 @@
 /.idea/
 /venv/
 *.pyc
+local_settings.py
+/media/

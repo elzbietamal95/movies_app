@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Edit {{ user_to_edit.username }}{% endblock %}
+
+{% block content %}
+    <h1>
+        Edit {{ user_to_edit.username }}
+    </h1>
+    <form action="." method="post">
+        {{ user_edit_form.as_p }}
+        {% csrf_token %}
+        <span class="float-left">
+            <input type="submit" value="Save changes">
+            <a href="{% url 'accounts:profile' user_to_edit.username %}" class="warning">SEE {{ user_to_edit.username }}'s PROFILE</a>
+        </span>
+    </form>
+{% endblock %}

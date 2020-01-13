@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Delete {{ user_to_delete.username }}{% endblock %}
+
+{% block content %}
+    {% if user == user_to_delete %}
+        <h1>Are you sure you want to delete <strong>your account</strong>?</h1>
+    {% else %}
+        <h1>Are you sure you want to delete user {{ user_to_delete.username }}?</h1>
+    {% endif %}
+    <div class="user-delete-or-not">
+        <a href="{{request.META.HTTP_REFERER|escape}}" class="warning">NO, TAKE ME BACK.</a>
+        <form action="{% url 'accounts:user-delete' user_to_delete.username %}" method="post" class="delete-user">
+            {% csrf_token %}
+            <button type="submit" >YES, I'M SURE.</button>
+        </form>
+    </div>
+{% endblock %}
