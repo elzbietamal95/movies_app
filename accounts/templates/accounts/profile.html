@@ -3,7 +3,7 @@
 {% block title %}{{ profile_of_user.username }}'s Profile{% endblock %}
 
 {% block content %}
-    <div class="card text-center" style="min-width: 300px; margin: 0 20%;">
+    <div class="card text-center shadow" style="min-width: 300px; margin: 0 20%;">
         <div class="card-body">
             <p class="card-text">
                 {% if profile_of_user.is_active %}

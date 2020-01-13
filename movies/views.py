@@ -1,13 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Movie
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, DetailView
 from movies.forms import MovieCreateForm
 
 
 class MovieList(ListView):
     context_object_name = 'movies'
-    queryset = Movie.objects.all()
     model = Movie
     template_name = 'movies/movie_list.html'
 
@@ -24,3 +23,7 @@ class MovieCreate(CreateView):
         movie.save()
         messages.success(self.request, 'The movie ' + movie.title + ' was added successfully!')
         return redirect('movies:movie-list')
+
+
+class MovieDetail(DetailView):
+    model = Movie

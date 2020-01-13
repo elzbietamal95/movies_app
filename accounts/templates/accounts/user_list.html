@@ -1,22 +1,56 @@
 {% extends "base.html" %}
 
-{% block title %} User list {% endblock %}
+{% load static %}
+
+{% block title %} Users {% endblock %}
 
 {% block content %}
+    {# Delete Modal #}
+
+    {% for user in users %}
+        <div class="modal fade" id="delete-modal-{{ user.username }}" tabindex="-1" role="dialog" aria-labelledby="delete-modal-{{ user.username }}-label" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="delete-modal-{{ user.username }}-label">Delete {{ user.username }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete user {{ user.username }}?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">NO, TAKE ME BACK.</button>
+                        <button type="button" class="btn btn-danger" onclick="deleteUser('{% url "accounts:api:delete-user" user.username %}', 'delete-modal-{{ user.username}}', 'users-table-row-{{ user.username }}', '{{ csrf_token }}')">YES, I'M SURE.</button>
+                    </div>
+                    <div class="modal-footer justify-content-center text-danger modal-error d-none"></div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
     <h1>User list</h1>
     <div class="user-table">
         <table class="list-group">
+            <tbody class="shadow">
             {% for user in users %}
-                <tr class="list-group-item">
+                <tr id="users-table-row-{{ user.username }}" class="list-group-item">
                     <td>
                         <a href="{% url 'accounts:profile' user.username %}">{{ user.username }}</a>
                         <span class="float-right">
                             <a href="{% url 'accounts:user-edit' user.username %}" class="warning">EDIT</a>
-                            <a href="{% url 'accounts:user-delete' user.username %}" class="danger">DELETE</a>
+                            <button data-toggle="modal" data-target="#delete-modal-{{ user.username }}" class="btn btn-danger">DELETE</button>
                         </span>
                     </td>
                 </tr>
             {% endfor %}
+            </tbody>
         </table>
     </div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/delete_user.js' %}"></script>
 {% endblock %}

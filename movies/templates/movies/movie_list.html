@@ -9,7 +9,12 @@
         <div class="col-lg-6">
             <div class="card shadow mb-4" style="width:90%;">
                 <div class="card-header py-3">
-                    <h4 class="m-0 font-weight-bold text-primary">{{ movie.title }} ({{ movie.year_of_production }})</h4>
+                    <h4 class="m-0 font-weight-bold text-primary">
+                        <a href="{% url 'movies:movie-detail' movie.slug %}">{{ movie.title }}</a>
+                        {% if movie.year_of_production %}
+                            ({{ movie.year_of_production }})
+                        {% endif %}
+                    </h4>
                 </div>
                 {% if movie.has_image %}
                     <img class="card-img" src="{{ movie.image.url }}" alt="{{ movie.slug }}">
