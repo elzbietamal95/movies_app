@@ -220,7 +220,7 @@ a.danger, form.delete-user button {
     font-family: 'Montserrat', sans-serif;
 }
 
-a.warning:hover, a.danger:hover, form.delete-user button:hover {
+a.warning:hover, a.danger:hover, form.delete-user button:hover, button.btn.btn-danger:hover, button.btn.btn-secondary:hover{
     color: #333333;
 }
 
@@ -311,6 +311,18 @@ textarea#id_short_description {
     min-width: 300px;
 }
 
+button.btn.btn-danger {
+    border-radius: 3px;
+    background: #ff6666;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+button.btn.btn-secondary {
+    border-radius: 3px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
 
 
 
