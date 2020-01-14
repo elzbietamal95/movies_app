@@ -1,4 +1,5 @@
 from django.contrib.auth.validators import UnicodeUsernameValidator
+from django.core.validators import EmailValidator
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import (BaseUserManager,
@@ -110,10 +111,13 @@ class User(AbstractBaseUser, CustomPermissions):
     """
     username_validator = UnicodeUsernameValidator()
 
+    email_validator = EmailValidator()
+
     email = models.EmailField(
         verbose_name='email address',
         unique=True,
         help_text='Required.',
+        validators=[email_validator],
         error_messages={
             'unique': "A user with that email address already exists.",
         },

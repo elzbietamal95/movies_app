@@ -201,8 +201,14 @@ td {
     width: 800px;
 }
 
+.table tbody tr:hover {background-color: #efeff5;}
+
 td a {
     color: #aaa;
+}
+
+.table thead th, .table td {
+    vertical-align: middle!important;
 }
 
 span.float-left {
@@ -311,17 +317,37 @@ textarea#id_short_description {
     min-width: 300px;
 }
 
-button.btn.btn-danger {
+button.btn.btn-danger, button.btn.btn-primary {
     border-radius: 3px;
     background: #ff6666;
     font-weight: bold;
     text-transform: uppercase;
+    font-size: 14px;
 }
+
+button.btn.btn-danger {
+    background: #ff6666;
+}
+
+button.btn.btn-primary {
+    background: #8080ff;
+}
+
+
 
 button.btn.btn-secondary {
     border-radius: 3px;
     font-weight: bold;
     text-transform: uppercase;
+}
+
+
+a.username {
+    color: #858796;
+}
+
+a.username:hover {
+    color: #333333;
 }
 
 
