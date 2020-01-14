@@ -30,24 +30,140 @@
         </div>
     {% endfor %}
 
-    <h1>User list</h1>
-    <div class="user-table">
-        <table class="list-group">
-            <tbody class="shadow">
-            {% for user in users %}
-                <tr id="users-table-row-{{ user.username }}" class="list-group-item">
-                    <td>
-                        <a href="{% url 'accounts:profile' user.username %}">{{ user.username }}</a>
-                        <span class="float-right">
-                            <a href="{% url 'accounts:user-edit' user.username %}" class="warning">EDIT</a>
-                            <button data-toggle="modal" data-target="#delete-modal-{{ user.username }}" class="btn btn-danger">DELETE</button>
-                        </span>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+    {# Edit Modal #}
+
+    <div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="edit-modal-label"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="edit-modal-form" class="edit-form" data-user-username="" novalidate>
+                        <div class="form-group">
+                            <label for="edit-modal-form-username">Username</label>
+                            <input type="text"
+                                   required
+                                   class="form-control"
+                                   id="edit-modal-form-username"
+                                   placeholder="Enter username"
+                                   name="username">
+                            <div class="valid-feedback">Looks good!</div>
+                            <div class="invalid-feedback">Please provide a unique and valid username.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-modal-form-email">Email address</label>
+                            <input type="email"
+                                   required
+                                   class="form-control"
+                                   id="edit-modal-form-email"
+                                   placeholder="Enter email address"
+                                   name="email">
+                            <div class="valid-feedback">Looks good!</div>
+                            <div class="invalid-feedback">Please provide a unique and valid email address.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-modal-form-first-name">First name</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="edit-modal-form-first-name"
+                                   placeholder="Enter first name"
+                                   name="first_name">
+                            <div class="valid-feedback">Looks good!</div>
+                            <div class="invalid-feedback">Please provide a valid first name</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-modal-form-last-name">Last name</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="edit-modal-form-last-name"
+                                   placeholder="Enter last name"
+                                   name="last_name">
+                            <div class="valid-feedback">Looks good!</div>
+                            <div class="invalid-feedback">Please provide a valid last name</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-modal-form-is-active">Active</label>
+                            <input type="checkbox"
+                                   class="form-control"
+                                   id="edit-modal-form-is-active"
+                                   name="is_active">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-modal-form-is-admin">Admin status</label>
+                            <input type="checkbox"
+                                   class="form-control"
+                                   id="edit-modal-form-is-admin"
+                                   name="is_admin">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success" form="edit-modal-form">Save changes</button>
+                </div>
+                <div class="modal-footer justify-content-center text-danger modal-error d-none"></div>
+            </div>
+        </div>
     </div>
+
+    <h1>User list</h1>
+    <table class="table shadow">
+        <thead style="background: #858796; color: #fff;">
+            <tr>
+                <th>Username</th>
+                <th>Email address</th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Active</th>
+                <th>Admin</th>
+                <th>Options</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr id="users-table-row-{{ user.username }}">
+                <td class="username">
+                    <strong><a href="{% url 'accounts:profile' user.username %}" style="color: #858796">{{ user.username }}</a></strong>
+                </td>
+                <td class="email">{{ user.email }}</td>
+                <td class="first_name">{{ user.first_name }}</td>
+                <td class="last_name">{{ user.last_name }}</td>
+                <td class="is_active">
+                    {% if user.is_active %}
+                        <div class="btn-sm btn-success btn-circle" style="font-size: 20px; font-weight: bold; background: #81ce81;">
+                            &check;
+                        </div>
+                    {% else %}
+                        <div class="btn-sm btn-danger btn-circle" style="font-size: 35px; font-weight: bold; background: #ff6666;">
+                            &times;
+                        </div>
+                    {% endif %}
+                </td>
+                <td class="is_admin">
+                    {% if user.is_admin %}
+                        <div class="btn-sm btn-success btn-circle" style="font-size: 20px; font-weight: bold; background: #81ce81;">
+                            &check;
+                        </div>
+                    {% else %}
+                        <div class="btn-sm btn-danger btn-circle" style="font-size: 35px; font-weight: bold; background: #ff6666;">
+                            &times;
+                        </div>
+                    {% endif %}
+                </td>
+                <td>
+                    <span class="float-right">
+                        <button>EDIT</button>
+                        <button data-toggle="modal" data-target="#delete-modal-{{ user.username }}" class="btn btn-danger">DELETE</button>
+                    </span>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
 {% endblock %}
 
