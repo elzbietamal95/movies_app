@@ -103,7 +103,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success" form="edit-modal-form">Save changes</button>
+                    <button type="submit" class="btn btn-primary" form="edit-modal-form">Save changes</button>
                 </div>
                 <div class="modal-footer justify-content-center text-danger modal-error d-none"></div>
             </div>
@@ -135,12 +135,12 @@
                 <td class="text-center">
                     {% if user.is_active %}
                         <input type="checkbox" class="is_active" hidden checked>
-                        <div class="btn-sm btn-success btn-circle" style="font-size: 20px; font-weight: bold; background: #81ce81;">
+                        <div class="btn-sm btn-success btn-circle img-is-active">
                             &check;
                         </div>
                     {% else %}
                         <input type="checkbox" class="is_active" hidden>
-                        <div class="btn-sm btn-danger btn-circle" style="font-size: 35px; font-weight: bold; background: #ff6666;">
+                        <div class="btn-sm btn-danger btn-circle img-is-active">
                             &times;
                         </div>
                     {% endif %}
@@ -148,12 +148,12 @@
                 <td class="text-center">
                     {% if user.is_admin %}
                         <input type="checkbox" class="is_admin" hidden checked>
-                        <div class="btn-sm btn-success btn-circle" style="font-size: 20px; font-weight: bold; background: #81ce81;">
+                        <div class="btn-sm btn-success btn-circle img-is-admin">
                             &check;
                         </div>
                     {% else %}
                         <input type="checkbox" class="is_admin" hidden>
-                        <div class="btn-sm btn-danger btn-circle" style="font-size: 35px; font-weight: bold; background: #ff6666;">
+                        <div class="btn-sm btn-danger btn-circle img-is-admin">
                             &times;
                         </div>
                     {% endif %}
@@ -184,7 +184,7 @@
 
             $editModal.find('.modal-title').text('Edit ' + user.username);
 
-            $editForm.removeClass('was_validated')
+            $editForm.removeClass('was_validated');
 
             $editForm.data('user-id', userId);
 
@@ -192,18 +192,8 @@
             $editForm.find('input[name="email"]').val(user.email);
             $editForm.find('input[name="first_name"]').val(user.first_name);
             $editForm.find('input[name="last_name"]').val(user.last_name);
-
-            if (user.is_active) {
-                $editForm.find('input[name="is_active"]').prop('checked', true);
-            } else {
-                $editForm.find('input[name="is_active"]').prop('checked', false);
-            }
-
-            if (user.is_admin) {
-                $editForm.find('input[name="is_admin"]').prop('checked', true);
-            } else {
-                $editForm.find('input[name="is_admin"]').prop('checked', false);
-            }
+            $editForm.find('input[name="is_active"]').prop('checked', user.is_active);
+            $editForm.find('input[name="is_admin"]').prop('checked', user.is_admin);
 
             $editModal.modal('show');
         }
@@ -213,15 +203,18 @@
 
             if (this.checkValidity()) {
                 const formData = $(this).serializeArray();
-                console.log(formData)
+                console.log(formData);
 
                 const jsonData = formData.reduce(function(result, field) {
                     result[field.name] = field.value;
                     return result;
                 }, {});
+
+                jsonData.is_active = jsonData.is_active === "on";
+
+                jsonData.is_admin = jsonData.is_admin === "on";
+
                 console.log(jsonData);
-                console.log(jsonData['is_active']);
-                console.log(jsonData['is_admin']);
 
                 const userRowId = '#users-table-row-' + $editForm.data('user-id');
                 const $userRow = $(userRowId);
@@ -229,6 +222,24 @@
                 $userRow.find('.email').text(jsonData.email);
                 $userRow.find('.first_name').text(jsonData.first_name);
                 $userRow.find('.last_name').text(jsonData.last_name);
+                $userRow.find('.is_active').prop('checked', jsonData.is_active);
+                $userRow.find('.is_admin').prop('checked', jsonData.is_admin);
+
+                if ($userRow.find('.is_active').is(':checked')) {
+                    $userRow.find('.img-is-active').addClass('btn-success').removeClass('btn-danger')
+                    $userRow.find('.img-is-active').html("&check;")
+                } else {
+                    $userRow.find('.img-is-active').addClass('btn-danger').removeClass('btn-success')
+                    $userRow.find('.img-is-active').html("&times;")
+                }
+
+                if ($userRow.find('.is_admin').is(':checked')) {
+                    $userRow.find('.img-is-admin').addClass('btn-success').removeClass('btn-danger')
+                    $userRow.find('.img-is-admin').html("&check;")
+                } else {
+                    $userRow.find('.img-is-admin').addClass('btn-danger').removeClass('btn-success')
+                    $userRow.find('.img-is-admin').html("&times;")
+                }
 
                 $editModal.modal('hide');
             } else {
