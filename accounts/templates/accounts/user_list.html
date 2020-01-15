@@ -225,21 +225,54 @@
                 $userRow.find('.is_active').prop('checked', jsonData.is_active);
                 $userRow.find('.is_admin').prop('checked', jsonData.is_admin);
 
+                const checkboxClass = {
+                    true: 'btn-success',
+                    false: 'btn-danger',
+                };
+                const checkboxContent = {
+                    true: '&check;',
+                    false: '&times;',
+                };
+
+                const isActiveChecked = $userRow.find('.is_active').is(':checked');
+
+                $userRow.find('.img-is-active')
+                    .addClass(checkboxClass[isActiveChecked])
+                    .removeClass(checkboxClass[!isActiveChecked])
+                    .html(checkboxContent[isActiveChecked]);
+
+                const isAdminChecked = $userRow.find('.is_admin').is(':checked');
+
+                $userRow.find('.img-is-admin')
+                    .addClass(checkboxClass[isAdminChecked])
+                    .removeClass(checkboxClass[!isAdminChecked])
+                    .html(checkboxContent[isAdminChecked]);
+
+                /*
                 if ($userRow.find('.is_active').is(':checked')) {
-                    $userRow.find('.img-is-active').addClass('btn-success').removeClass('btn-danger')
-                    $userRow.find('.img-is-active').html("&check;")
+                    $userRow.find('.img-is-active')
+                        .addClass('btn-success')
+                        .removeClass('btn-danger')
+                        .html("&check;");
                 } else {
-                    $userRow.find('.img-is-active').addClass('btn-danger').removeClass('btn-success')
-                    $userRow.find('.img-is-active').html("&times;")
+                    $userRow.find('.img-is-active')
+                        .addClass('btn-danger')
+                        .removeClass('btn-success')
+                        .html("&times;");
                 }
 
                 if ($userRow.find('.is_admin').is(':checked')) {
-                    $userRow.find('.img-is-admin').addClass('btn-success').removeClass('btn-danger')
-                    $userRow.find('.img-is-admin').html("&check;")
+                    $userRow.find('.img-is-admin')
+                        .addClass('btn-success')
+                        .removeClass('btn-danger')
+                        .html("&check;");
                 } else {
-                    $userRow.find('.img-is-admin').addClass('btn-danger').removeClass('btn-success')
-                    $userRow.find('.img-is-admin').html("&times;")
+                    $userRow.find('.img-is-admin')
+                        .addClass('btn-danger')
+                        .removeClass('btn-success')
+                        .html("&times;");
                 }
+                */
 
                 $editModal.modal('hide');
             } else {
