@@ -42,7 +42,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="edit-modal-form" class="edit-form" data-user-username="" novalidate>
+                    <form id="edit-modal-form" class="edit-form" data-username="" novalidate>
                         <div class="form-group">
                             <label for="edit-modal-form-username">Username</label>
                             <input type="text"
@@ -52,7 +52,7 @@
                                    placeholder="Enter username"
                                    name="username">
                             <div class="valid-feedback">Looks good!</div>
-                            <div class="invalid-feedback">Please provide a unique and valid username.</div>
+                            <div class="invalid-feedback"></div>
                         </div>
                         <div class="form-group">
                             <label for="edit-modal-form-email">Email address</label>
@@ -63,7 +63,7 @@
                                    placeholder="Enter email address"
                                    name="email">
                             <div class="valid-feedback">Looks good!</div>
-                            <div class="invalid-feedback">Please provide a unique and valid email address.</div>
+                            <div class="invalid-feedback"></div>
                         </div>
                         <div class="form-group">
                             <label for="edit-modal-form-first-name">First name</label>
@@ -73,7 +73,7 @@
                                    placeholder="Enter first name"
                                    name="first_name">
                             <div class="valid-feedback">Looks good!</div>
-                            <div class="invalid-feedback">Please provide a valid first name</div>
+                            <div class="invalid-feedback"></div>
                         </div>
                         <div class="form-group">
                             <label for="edit-modal-form-last-name">Last name</label>
@@ -83,7 +83,7 @@
                                    placeholder="Enter last name"
                                    name="last_name">
                             <div class="valid-feedback">Looks good!</div>
-                            <div class="invalid-feedback">Please provide a valid last name</div>
+                            <div class="invalid-feedback"></div>
                         </div>
                         <div class="form-group">
                             <label for="edit-modal-form-is-active">Active</label>
@@ -173,10 +173,17 @@
 
 {% block scripts %}
     <script src="{% static 'js/delete_user.js' %}"></script>
+    <script src="{% static 'js/utils.js' %}"></script>
 
     <script>
+        const csrfToken = '{{ csrf_token }}';
+
         const $editModal = $('#edit-modal');
         const $editForm = $('.edit-form');
+
+        $editModal.on('hidden.bs.modal', function () {
+            $editForm.removeClass('was-validated');
+        });
 
         function fillAndShowEditModal(userId) {
             const user = getUserData(userId);
@@ -187,9 +194,21 @@
             $editForm.removeClass('was_validated');
 
             $editForm.data('user-id', userId);
+            $editForm.data('username', user.username);
 
-            $editForm.find('input[name="username"]').val(user.username);
-            $editForm.find('input[name="email"]').val(user.email);
+            $editForm
+                .find('input[name="username"]')
+                .val(user.username)
+                .removeClass('is-valid').removeClass('is-invalid')
+                .siblings('.invalid-feedback')
+                .html('Please provide a unique and valid username.');
+
+            $editForm.find('input[name="email"]')
+                .val(user.email)
+                .siblings('.invalid-feedback')
+                .html('Please provide a unique and valid email address.');
+
+
             $editForm.find('input[name="first_name"]').val(user.first_name);
             $editForm.find('input[name="last_name"]').val(user.last_name);
             $editForm.find('input[name="is_active"]').prop('checked', user.is_active);
@@ -216,65 +235,96 @@
 
                 console.log(jsonData);
 
-                const userRowId = '#users-table-row-' + $editForm.data('user-id');
-                const $userRow = $(userRowId);
-                $userRow.find('.username').text(jsonData.username);
-                $userRow.find('.email').text(jsonData.email);
-                $userRow.find('.first_name').text(jsonData.first_name);
-                $userRow.find('.last_name').text(jsonData.last_name);
-                $userRow.find('.is_active').prop('checked', jsonData.is_active);
-                $userRow.find('.is_admin').prop('checked', jsonData.is_admin);
+                const xhr = new XMLHttpRequest();
 
-                const checkboxClass = {
-                    true: 'btn-success',
-                    false: 'btn-danger',
+                xhr.onreadystatechange = function () {
+                    // Only run if the request is complete
+                    if (xhr.readyState !== 4) return;
+
+                    if (xhr.status === 200) {
+                        const userRowId = '#users-table-row-' + $editForm.data('user-id');
+                        const $userRow = $(userRowId);
+                        $userRow.find('.username').text(jsonData.username);
+                        $userRow.find('.email').text(jsonData.email);
+                        $userRow.find('.first_name').text(jsonData.first_name);
+                        $userRow.find('.last_name').text(jsonData.last_name);
+                        $userRow.find('.is_active').prop('checked', jsonData.is_active);
+                        $userRow.find('.is_admin').prop('checked', jsonData.is_admin);
+
+                        const checkboxClass = {
+                            true: 'btn-success',
+                            false: 'btn-danger',
+                        };
+                        const checkboxContent = {
+                            true: '&check;',
+                            false: '&times;',
+                        };
+
+                        const isActiveChecked = $userRow.find('.is_active').is(':checked');
+
+                        $userRow.find('.img-is-active')
+                            .addClass(checkboxClass[isActiveChecked])
+                            .removeClass(checkboxClass[!isActiveChecked])
+                            .html(checkboxContent[isActiveChecked]);
+
+                        const isAdminChecked = $userRow.find('.is_admin').is(':checked');
+
+                        $userRow.find('.img-is-admin')
+                            .addClass(checkboxClass[isAdminChecked])
+                            .removeClass(checkboxClass[!isAdminChecked])
+                            .html(checkboxContent[isAdminChecked]);
+
+                        /*
+                        if ($userRow.find('.is_active').is(':checked')) {
+                            $userRow.find('.img-is-active')
+                                .addClass('btn-success')
+                                .removeClass('btn-danger')
+                                .html("&check;");
+                        } else {
+                            $userRow.find('.img-is-active')
+                                .addClass('btn-danger')
+                                .removeClass('btn-success')
+                                .html("&times;");
+                        }
+
+                        if ($userRow.find('.is_admin').is(':checked')) {
+                            $userRow.find('.img-is-admin')
+                                .addClass('btn-success')
+                                .removeClass('btn-danger')
+                                .html("&check;");
+                        } else {
+                            $userRow.find('.img-is-admin')
+                                .addClass('btn-danger')
+                                .removeClass('btn-success')
+                                .html("&times;");
+                        }
+                        */
+
+                        $editModal.modal('hide');
+                    } else if (xhr.status === 400) {
+                        const jsonResponse = JSON.parse(xhr.response);
+
+                        // setModalError('edit-modal', xhr.response);
+
+                        const jsonResponseKeys = Object.keys(jsonResponse);
+
+                        for (let i = 0; i < jsonResponseKeys.length; i++) {
+                            $editForm.find('input[name="'+ jsonResponseKeys[i] + '"]')
+                                .addClass('is-invalid')
+                                .siblings('.invalid-feedback')
+                                .html(jsonResponse[jsonResponseKeys[i]]);
+                        }
+                    } else {
+                        setModalError('edit-modal', 'Something went wrong.');
+                    }
                 };
-                const checkboxContent = {
-                    true: '&check;',
-                    false: '&times;',
-                };
 
-                const isActiveChecked = $userRow.find('.is_active').is(':checked');
+                xhr.open('PUT', '/accounts/api/' + $editForm.data('username') + '/edit/');
 
-                $userRow.find('.img-is-active')
-                    .addClass(checkboxClass[isActiveChecked])
-                    .removeClass(checkboxClass[!isActiveChecked])
-                    .html(checkboxContent[isActiveChecked]);
+                xhr.setRequestHeader('X-CSRFToken', csrfToken);
+                xhr.setRequestHeader("Content-Type", "application/json");
 
-                const isAdminChecked = $userRow.find('.is_admin').is(':checked');
-
-                $userRow.find('.img-is-admin')
-                    .addClass(checkboxClass[isAdminChecked])
-                    .removeClass(checkboxClass[!isAdminChecked])
-                    .html(checkboxContent[isAdminChecked]);
-
-                /*
-                if ($userRow.find('.is_active').is(':checked')) {
-                    $userRow.find('.img-is-active')
-                        .addClass('btn-success')
-                        .removeClass('btn-danger')
-                        .html("&check;");
-                } else {
-                    $userRow.find('.img-is-active')
-                        .addClass('btn-danger')
-                        .removeClass('btn-success')
-                        .html("&times;");
-                }
-
-                if ($userRow.find('.is_admin').is(':checked')) {
-                    $userRow.find('.img-is-admin')
-                        .addClass('btn-success')
-                        .removeClass('btn-danger')
-                        .html("&check;");
-                } else {
-                    $userRow.find('.img-is-admin')
-                        .addClass('btn-danger')
-                        .removeClass('btn-success')
-                        .html("&times;");
-                }
-                */
-
-                $editModal.modal('hide');
+                xhr.send(JSON.stringify(jsonData));
             } else {
                 $(this).addClass('was-validated');
             }
