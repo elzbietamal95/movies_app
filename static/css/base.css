@@ -374,6 +374,17 @@ div.btn-sm.btn-danger.btn-circle {
     font-weight: bold;
 }
 
+.movie-card-options {
+    display: inline-flex;
+    justify-content: space-between;
+    width: 250px;
+}
+
+.movie-card-options button {
+    font-size: 18px;
+    width: 100px;
+}
+
 
 
 

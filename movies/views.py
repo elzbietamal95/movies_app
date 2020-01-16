@@ -1,7 +1,10 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.contrib import messages
 from .models import Movie
 from django.views.generic import ListView, CreateView, DetailView
+from django.views.generic.edit import BaseDeleteView, DeleteView
 from movies.forms import MovieCreateForm
 
 
@@ -27,3 +30,15 @@ class MovieCreate(CreateView):
 
 class MovieDetail(DetailView):
     model = Movie
+
+
+class MovieDelete(DeleteView):
+    context_object_name = 'movie'
+    model = Movie
+    success_url = reverse_lazy('movies:movie-list')
+    template_name = 'movies/movie_detail.html'
+    success_message = "The movie was deleted successfully."
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, "The movie was deleted successfully.")
+        return super(MovieDelete, self).delete(request, *args, **kwargs)
