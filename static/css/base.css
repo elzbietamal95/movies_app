@@ -201,8 +201,14 @@ td {
     width: 800px;
 }
 
+.table tbody tr:hover {background-color: #efeff5;}
+
 td a {
     color: #aaa;
+}
+
+.table thead th, .table td {
+    vertical-align: middle!important;
 }
 
 span.float-left {
@@ -262,7 +268,7 @@ ul.messages li.error {
 }
 
 ul.messages li.success {
-    background:#81ce81;
+    background: #81ce81;
 }
 
 ul.messages li.error {
@@ -311,18 +317,60 @@ textarea#id_short_description {
     min-width: 300px;
 }
 
-button.btn.btn-danger {
+span.text-center button.btn.btn-danger, span.text-center button.btn.btn-primary {
     border-radius: 3px;
-    background: #ff6666;
+    font-size: 14px;
+}
+
+button.btn.btn-danger {
     font-weight: bold;
+    background: #ff6666;
     text-transform: uppercase;
 }
+
+button.btn.btn-primary {
+    font-weight: bold;
+    background: #8080ff;
+    text-transform: uppercase;
+}
+
+
 
 button.btn.btn-secondary {
     border-radius: 3px;
     font-weight: bold;
     text-transform: uppercase;
 }
+
+
+a.username {
+    color: #858796;
+}
+
+a.username:hover {
+    color: #333333;
+}
+
+div.btn-sm.btn-success.btn-circle:hover {
+    background: #81ce81;
+}
+
+div.btn-sm.btn-danger.btn-circle:hover {
+    background: #ff6666;
+}
+
+div.btn-sm.btn-success.btn-circle {
+    background: #81ce81;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+div.btn-sm.btn-danger.btn-circle {
+    background: #ff6666;
+    font-size: 35px;
+    font-weight: bold;
+}
+
 
 
 

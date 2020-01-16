@@ -12,7 +12,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="delete-modal-{{ user.username }}-label">Delete {{ user.username }}</h5>
+                        <h5 class="modal-title" id="delete-modal-{{ user.username }}-label"><strong>Delete {{ user.username }}</strong></h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -30,27 +30,324 @@
         </div>
     {% endfor %}
 
-    <h1>User list</h1>
-    <div class="user-table">
-        <table class="list-group">
-            <tbody class="shadow">
-            {% for user in users %}
-                <tr id="users-table-row-{{ user.username }}" class="list-group-item">
-                    <td>
-                        <a href="{% url 'accounts:profile' user.username %}">{{ user.username }}</a>
-                        <span class="float-right">
-                            <a href="{% url 'accounts:user-edit' user.username %}" class="warning">EDIT</a>
-                            <button data-toggle="modal" data-target="#delete-modal-{{ user.username }}" class="btn btn-danger">DELETE</button>
-                        </span>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+    {# Edit Modal #}
+
+    <div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="edit-modal-label"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="edit-modal-form" class="edit-form" data-username="" novalidate>
+                        <div class="form-group">
+                            <label for="edit-modal-form-username">Username</label>
+                            <input type="text"
+                                   required
+                                   class="form-control"
+                                   id="edit-modal-form-username"
+                                   placeholder="Enter username"
+                                   name="username">
+                            <div class="valid-feedback">Looks good!</div>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-modal-form-email">Email address</label>
+                            <input type="email"
+                                   required
+                                   class="form-control"
+                                   id="edit-modal-form-email"
+                                   placeholder="Enter email address"
+                                   name="email">
+                            <div class="valid-feedback">Looks good!</div>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-modal-form-first-name">First name</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="edit-modal-form-first-name"
+                                   placeholder="Enter first name"
+                                   name="first_name">
+                            <div class="valid-feedback">Looks good!</div>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-modal-form-last-name">Last name</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="edit-modal-form-last-name"
+                                   placeholder="Enter last name"
+                                   name="last_name">
+                            <div class="valid-feedback">Looks good!</div>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-modal-form-is-active">Active</label>
+                            <input type="checkbox"
+                                   class="form-control"
+                                   id="edit-modal-form-is-active"
+                                   name="is_active">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-modal-form-is-admin">Admin status</label>
+                            <input type="checkbox"
+                                   class="form-control"
+                                   id="edit-modal-form-is-admin"
+                                   name="is_admin">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" form="edit-modal-form">Save changes</button>
+                </div>
+                <div class="modal-footer justify-content-center text-danger modal-error d-none"></div>
+            </div>
+        </div>
     </div>
+
+    <h1>User list</h1>
+    <table class="table shadow">
+        <thead style="background: #858796; color: #fff;">
+            <tr>
+                <th>Username</th>
+                <th>Email address</th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th class="text-center">Active</th>
+                <th class="text-center">Admin</th>
+                <th class="text-center">Options</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr id="users-table-row-{{ user.id }}">
+                <td>
+                    <strong><a href="{% url 'accounts:profile' user.username %}" class="username">{{ user.username }}</a></strong>
+                </td>
+                <td class="email">{{ user.email }}</td>
+                <td class="first_name">{{ user.first_name }}</td>
+                <td class="last_name">{{ user.last_name }}</td>
+                <td class="text-center">
+                    {% if user.is_active %}
+                        <input type="checkbox" class="is_active" hidden checked>
+                        <div class="btn-sm btn-success btn-circle img-is-active">
+                            &check;
+                        </div>
+                    {% else %}
+                        <input type="checkbox" class="is_active" hidden>
+                        <div class="btn-sm btn-danger btn-circle img-is-active">
+                            &times;
+                        </div>
+                    {% endif %}
+                </td>
+                <td class="text-center">
+                    {% if user.is_admin %}
+                        <input type="checkbox" class="is_admin" hidden checked>
+                        <div class="btn-sm btn-success btn-circle img-is-admin">
+                            &check;
+                        </div>
+                    {% else %}
+                        <input type="checkbox" class="is_admin" hidden>
+                        <div class="btn-sm btn-danger btn-circle img-is-admin">
+                            &times;
+                        </div>
+                    {% endif %}
+                </td>
+                <td>
+                    <span class="text-center">
+                        <button onclick="fillAndShowEditModal({{ user.id }})" class="btn btn-primary">EDIT</button>
+                        <button data-toggle="modal" data-target="#delete-modal-{{ user.username }}" class="btn btn-danger">DELETE</button>
+                    </span>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
 {% endblock %}
 
 {% block scripts %}
     <script src="{% static 'js/delete_user.js' %}"></script>
+    <script src="{% static 'js/utils.js' %}"></script>
+
+    <script>
+        const csrfToken = '{{ csrf_token }}';
+
+        const $editModal = $('#edit-modal');
+        const $editForm = $('.edit-form');
+
+        function fillAndShowEditModal(userId) {
+            const user = getUserData(userId);
+            console.log(user);
+
+            $editModal.find('.modal-title').text('Edit ' + user.username);
+
+            $editForm.removeClass('was_validated');
+
+            $editForm.data('user-id', userId);
+            $editForm.data('username', user.username);
+
+            resetEditFormValidation($editForm);
+
+            $editForm
+                .find('input[name="username"]')
+                .val(user.username)
+                .siblings('.invalid-feedback')
+                .html('Please provide a unique and valid username.');
+
+            $editForm.find('input[name="email"]')
+                .val(user.email)
+                .siblings('.invalid-feedback')
+                .html('Please provide a unique and valid email address.');
+
+
+            $editForm.find('input[name="first_name"]').val(user.first_name);
+            $editForm.find('input[name="last_name"]').val(user.last_name);
+            $editForm.find('input[name="is_active"]').prop('checked', user.is_active);
+            $editForm.find('input[name="is_admin"]').prop('checked', user.is_admin);
+
+            $editModal.modal('show');
+        }
+
+        $editForm.submit(function (event) {
+            event.preventDefault();
+
+            if (this.checkValidity()) {
+                const formData = $(this).serializeArray();
+                console.log(formData);
+
+                const jsonData = formData.reduce(function(result, field) {
+                    result[field.name] = field.value;
+                    return result;
+                }, {});
+
+                jsonData.is_active = jsonData.is_active === "on";
+
+                jsonData.is_admin = jsonData.is_admin === "on";
+
+                console.log(jsonData);
+
+                const xhr = new XMLHttpRequest();
+
+                xhr.onreadystatechange = function () {
+                    // Only run if the request is complete
+                    if (xhr.readyState !== 4) return;
+
+                    if (xhr.status === 200) {
+                        const userRowId = '#users-table-row-' + $editForm.data('user-id');
+                        const $userRow = $(userRowId);
+                        $userRow.find('.username').text(jsonData.username);
+                        $userRow.find('.email').text(jsonData.email);
+                        $userRow.find('.first_name').text(jsonData.first_name);
+                        $userRow.find('.last_name').text(jsonData.last_name);
+                        $userRow.find('.is_active').prop('checked', jsonData.is_active);
+                        $userRow.find('.is_admin').prop('checked', jsonData.is_admin);
+
+                        const checkboxClass = {
+                            true: 'btn-success',
+                            false: 'btn-danger',
+                        };
+                        const checkboxContent = {
+                            true: '&check;',
+                            false: '&times;',
+                        };
+
+                        const isActiveChecked = $userRow.find('.is_active').is(':checked');
+
+                        $userRow.find('.img-is-active')
+                            .addClass(checkboxClass[isActiveChecked])
+                            .removeClass(checkboxClass[!isActiveChecked])
+                            .html(checkboxContent[isActiveChecked]);
+
+                        const isAdminChecked = $userRow.find('.is_admin').is(':checked');
+
+                        $userRow.find('.img-is-admin')
+                            .addClass(checkboxClass[isAdminChecked])
+                            .removeClass(checkboxClass[!isAdminChecked])
+                            .html(checkboxContent[isAdminChecked]);
+
+                        /*
+                        if ($userRow.find('.is_active').is(':checked')) {
+                            $userRow.find('.img-is-active')
+                                .addClass('btn-success')
+                                .removeClass('btn-danger')
+                                .html("&check;");
+                        } else {
+                            $userRow.find('.img-is-active')
+                                .addClass('btn-danger')
+                                .removeClass('btn-success')
+                                .html("&times;");
+                        }
+
+                        if ($userRow.find('.is_admin').is(':checked')) {
+                            $userRow.find('.img-is-admin')
+                                .addClass('btn-success')
+                                .removeClass('btn-danger')
+                                .html("&check;");
+                        } else {
+                            $userRow.find('.img-is-admin')
+                                .addClass('btn-danger')
+                                .removeClass('btn-success')
+                                .html("&times;");
+                        }
+                        */
+
+                        $editModal.modal('hide');
+                    } else if (xhr.status === 400) {
+                        resetEditFormValidation($editForm);
+
+                        const jsonResponse = JSON.parse(xhr.response);
+
+                        // setModalError('edit-modal', xhr.response);
+
+                        const jsonResponseKeys = Object.keys(jsonResponse);
+
+                        for (let i = 0; i < jsonResponseKeys.length; i++) {
+                            $editForm.find('input[name="'+ jsonResponseKeys[i] + '"]')
+                                .addClass('is-invalid')
+                                .siblings('.invalid-feedback')
+                                .html(jsonResponse[jsonResponseKeys[i]]);
+                        }
+                    } else {
+                        setModalError('edit-modal', 'Something went wrong.');
+                    }
+                };
+
+                xhr.open('PUT', '/accounts/api/' + $editForm.data('username') + '/edit/');
+
+                xhr.setRequestHeader('X-CSRFToken', csrfToken);
+                xhr.setRequestHeader("Content-Type", "application/json");
+
+                xhr.send(JSON.stringify(jsonData));
+            } else {
+                $(this).addClass('was-validated');
+            }
+        });
+
+        function getUserData(userId) {
+            const userRowId = '#users-table-row-' + userId;
+            const $userRow = $(userRowId);
+            return {
+                username: $userRow.find('.username').text(),
+                email: $userRow.find('.email').text(),
+                first_name: $userRow.find('.first_name').text(),
+                last_name: $userRow.find('.last_name').text(),
+                is_active: $userRow.find('.is_active').is(':checked'),
+                is_admin: $userRow.find('.is_admin').is(':checked'),
+            }
+        }
+
+        function resetEditFormValidation($editForm) {
+            $editForm
+                .removeClass('was-validated')
+                .find('input')
+                .removeClass('is-valid')
+                .removeClass('is-invalid');
+        }
+    </script>
 {% endblock %}
