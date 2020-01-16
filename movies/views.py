@@ -37,3 +37,8 @@ class MovieDelete(DeleteView):
     model = Movie
     success_url = reverse_lazy('movies:movie-list')
     template_name = 'movies/movie_detail.html'
+    success_message = "The movie was deleted successfully."
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, "The movie was deleted successfully.")
+        return super(MovieDelete, self).delete(request, *args, **kwargs)

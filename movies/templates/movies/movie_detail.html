@@ -49,12 +49,12 @@
                 <p class="card-text text-right">
                     <small class="text-muted"><em>by {{ movie.added_by }}</em></small>
                 </p>
-                 {% if user.is_authenticated and user.is_admin or user == movie.added_by %}
+                {% if user.is_authenticated and user.is_admin or user == movie.added_by %}
                     <div class="movie-card-options">
                         <button class="btn btn-primary">EDIT</button>
                         <button data-toggle="modal" data-target="#movie-delete-modal" class="btn btn-danger">DELETE</button>
                     </div>
-        {% endif %}
+                {% endif %}
             </div>
         </div>
 
