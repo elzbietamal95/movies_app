@@ -128,13 +128,16 @@ label {
 input, textarea {
     font-family: 'Montserrat', sans-serif;
     clear: both;
-    float: left;
     margin: 0 0 8px;
     background: #efefef;
-    border: 0.5px solid #8080ff;
+    border: 1px solid #8080ff;
     padding: 6px 10px;
     font-size: 15px;
     border-radius: 3px;
+}
+
+.signup-form input, .login-form input, .edit-user-form input, .movie-add input, .movie-add textarea {
+    float: left;
 }
 
 input[type=submit], a.button, a.warning, a.danger, a.danger, form.delete-user button {
