@@ -181,10 +181,6 @@
         const $editModal = $('#edit-modal');
         const $editForm = $('.edit-form');
 
-        $editModal.on('hidden.bs.modal', function () {
-            $editForm.removeClass('was-validated');
-        });
-
         function fillAndShowEditModal(userId) {
             const user = getUserData(userId);
             console.log(user);
@@ -196,10 +192,11 @@
             $editForm.data('user-id', userId);
             $editForm.data('username', user.username);
 
+            resetEditFormValidation($editForm);
+
             $editForm
                 .find('input[name="username"]')
                 .val(user.username)
-                .removeClass('is-valid').removeClass('is-invalid')
                 .siblings('.invalid-feedback')
                 .html('Please provide a unique and valid username.');
 
@@ -302,6 +299,8 @@
 
                         $editModal.modal('hide');
                     } else if (xhr.status === 400) {
+                        resetEditFormValidation($editForm);
+
                         const jsonResponse = JSON.parse(xhr.response);
 
                         // setModalError('edit-modal', xhr.response);
@@ -341,6 +340,14 @@
                 is_active: $userRow.find('.is_active').is(':checked'),
                 is_admin: $userRow.find('.is_admin').is(':checked'),
             }
+        }
+
+        function resetEditFormValidation($editForm) {
+            $editForm
+                .removeClass('was-validated')
+                .find('input')
+                .removeClass('is-valid')
+                .removeClass('is-invalid');
         }
     </script>
 {% endblock %}
