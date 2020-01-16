@@ -1,25 +1,59 @@
 {% extends "base.html" %}
 
-{% block title %}Add new movie{% endblock %}
+{% load static %}
+
+{% block title %}{{ movie }}{% endblock %}
 
 {% block content %}
-    <div class="card shadow mb-4" style="min-width: 600px; margin: 0 20%">
-        <div class="card-header py-3">
-            <h4 class="m-0 font-weight-bold text-primary">
-                {{ movie.title }}
-                {% if movie.year_of_production %}
-                    ({{ movie.year_of_production }})
-                {% endif %}
-            </h4>
+
+    {# Delete Modal #}
+    <div class="modal fade" id="movie-delete-modal" tabindex="-1" role="dialog" aria-labelledby="movie-delete-modal-label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="movie-delete-modal-label"><strong>Delete {{ movie }}</strong></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete movie {{ movie }}?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">NO, TAKE ME BACK.</button>
+                    <button type="button" class="btn btn-danger">YES, I'M SURE.</button>
+                </div>
+                <div class="modal-footer justify-content-center text-danger modal-error d-none"></div>
+            </div>
         </div>
-        {% if movie.has_image %}
-            <img class="card-img" src="{{ movie.image.url }}" alt="{{ movie.slug }}">
+    </div>
+
+    <div class="movie-detail">
+        <div class="card shadow mb-4" style="min-width: 600px; margin: 0 20%">
+            <div class="card-header py-3">
+                <h4 class="m-0 font-weight-bold text-primary">
+                    {{ movie.title }}
+                    {% if movie.year_of_production %}
+                        ({{ movie.year_of_production }})
+                    {% endif %}
+                </h4>
+            </div>
+            {% if movie.has_image %}
+                <img class="card-img" src="{{ movie.image.url }}" alt="{{ movie.slug }}">
+            {% endif %}
+            <div class="card-body">
+                <p class="card-text">{{ movie.short_description }}</p>
+                <p class="card-text text-right">
+                    <small class="text-muted"><em>by {{ movie.added_by }}</em></small>
+                </p>
+                 {% if user.is_authenticated and user.is_admin or user == movie.added_by %}
+                    <div class="movie-card-options">
+                        <button class="btn btn-primary">EDIT</button>
+                        <button data-toggle="modal" data-target="#movie-delete-modal" class="btn btn-danger">DELETE</button>
+                    </div>
         {% endif %}
-        <div class="card-body">
-            <p class="card-text">{{ movie.short_description }}</p>
-            <p class="card-text text-right">
-                <small class="text-muted"><em>by {{ movie.added_by }}</em></small>
-            </p>
+            </div>
         </div>
+
     </div>
 {% endblock %}
