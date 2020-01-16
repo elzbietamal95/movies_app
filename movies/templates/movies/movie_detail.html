@@ -21,7 +21,10 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">NO, TAKE ME BACK.</button>
-                    <button type="button" class="btn btn-danger">YES, I'M SURE.</button>
+                    <form action="{% url 'movies:movie-delete' movie.slug %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">YES, I'M SURE.</button>
+                    </form>
                 </div>
                 <div class="modal-footer justify-content-center text-danger modal-error d-none"></div>
             </div>
@@ -56,4 +59,12 @@
         </div>
 
     </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        if(window.location.hash.substr(1) === 'movie-delete-modal'){
+            $('#movie-delete-modal').modal('show');
+        }
+    </script>
 {% endblock %}
