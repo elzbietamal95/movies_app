@@ -24,7 +24,7 @@ class MovieCreate(CreateView):
         movie.added_by = self.request.user
         form.instance.added_by = self.request.user
         movie.save()
-        messages.success(self.request, 'The movie ' + movie.title + ' was added successfully!')
+        messages.success(self.request, 'The movie "' + movie.title + '" was added successfully!')
         return redirect('movies:movie-list')
 
 
@@ -37,8 +37,8 @@ class MovieDelete(DeleteView):
     model = Movie
     success_url = reverse_lazy('movies:movie-list')
     template_name = 'movies/movie_detail.html'
-    success_message = "The movie was deleted successfully."
 
     def delete(self, request, *args, **kwargs):
-        messages.success(self.request, "The movie was deleted successfully.")
+        movie = self.get_object()
+        messages.success(self.request, 'The movie "' + movie.title + '" was deleted successfully.')
         return super(MovieDelete, self).delete(request, *args, **kwargs)
