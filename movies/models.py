@@ -1,4 +1,7 @@
+from django.core.exceptions import ValidationError
+from django.core.validators import MinValueValidator
 from django.db import models
+from django.db.models.functions import datetime
 from django.utils.text import slugify
 from django.contrib.auth import get_user_model
 from movies.utils import get_unique_slug
@@ -6,13 +9,17 @@ from movies.utils import get_unique_slug
 User = get_user_model()
 
 
+def year_validator(value):
+    if value < 1850 or value > datetime.datetime.now().year + 5:
+        raise ValidationError("%(value)s is not a correct year!", params={'value': value},)
+
+
 class Movie(models.Model):
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200, help_text='Required')
     slug = models.SlugField(blank=True, max_length=200, unique=True)
     year_of_production = models.PositiveIntegerField(
-        blank=True,
-        null=True,
-        help_text="Use the following format < YYYY >.",
+        validators=[year_validator],
+        help_text="Required. Use the following format YYYY.",
     )
     image = models.ImageField(upload_to='images/', blank=True)
     short_description = models.TextField(blank=True, max_length=1000, verbose_name='Description')
@@ -21,6 +28,8 @@ class Movie(models.Model):
     class Meta:
         verbose_name = 'movie'
         verbose_name_plural = 'movies'
+        unique_together = ['title', 'year_of_production']
+        ordering = ['title']
 
     objects = models.Manager()
 
