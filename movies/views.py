@@ -11,7 +11,7 @@ from movies.forms import MovieCreateForm
 class MovieList(ListView):
     context_object_name = 'movies'
     model = Movie
-    template_name = 'movies/movie_list.html'
+    template_name = 'movies/movie_list_main.html'
 
 
 class MovieCreate(CreateView):

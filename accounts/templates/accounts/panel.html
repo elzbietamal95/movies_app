@@ -6,5 +6,9 @@
     <form action="{% url 'accounts:panel' %}" method="post">
         <h1>User Panel</h1>
         <h2>Welcome, {{ user.username }}!</h2>
+        {% with total_movies_created=request.user.movies_created.count %}
+            <p>You added {{ total_movies_created }} movie{{ total_movies_created|pluralize:"s" }}:</p>
+        {% endwith %}
+        {% include "movies/movie_list.html" with movies=user.movies_created.all %}
     </form>
 {% endblock %}

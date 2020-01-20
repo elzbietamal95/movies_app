@@ -23,7 +23,7 @@ class Movie(models.Model):
     )
     image = models.ImageField(upload_to='images/', blank=True)
     short_description = models.TextField(blank=True, max_length=1000, verbose_name='Description')
-    added_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    added_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='movies_created')
 
     class Meta:
         verbose_name = 'movie'
