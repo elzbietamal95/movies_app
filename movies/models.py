@@ -6,6 +6,14 @@ from movies.utils import get_unique_slug
 User = get_user_model()
 
 
+class Actor(models.Model):
+    first_name = models.CharField(verbose_name='first name', max_length=50)
+    last_name = models.CharField(verbose_name='last name', max_length=150)
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
+
+
 class Movie(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(blank=True, max_length=200, unique=True)
@@ -16,6 +24,7 @@ class Movie(models.Model):
     )
     image = models.ImageField(upload_to='images/', blank=True)
     short_description = models.TextField(blank=True, max_length=1000, verbose_name='Description')
+    actors = models.ManyToManyField(Actor, through='Role')
     added_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
@@ -39,14 +48,11 @@ class Movie(models.Model):
             return False
 
 
-#class Actor(models.Model):
-#   first_name = models.CharField(verbose_name='first name', max_length=50)
-#    last_name = models.CharField(verbose_name='last name', max_length=150)
-#
-#   def __str__(self):
-#        return f"{self.first_name} {self.last_name}"
-#
-#
+class Role(models.Model):
+    actor = models.ForeignKey(Actor, on_delete=models.CASCADE)
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+
+
 #class Director(models.Model):
 #    first_name = models.CharField(verbose_name='first name', max_length=50, blank=True)
 #    last_name = models.CharField(verbose_name='last name', max_length=150, blank=True)
