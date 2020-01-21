@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Movie
+from .models import Actor, Role, Movie
 
 
 class MovieAdmin(admin.ModelAdmin):
@@ -7,4 +7,6 @@ class MovieAdmin(admin.ModelAdmin):
     list_filter = ['year_of_production']
 
 
+admin.site.register(Actor)
+admin.site.register(Role)
 admin.site.register(Movie, MovieAdmin)
