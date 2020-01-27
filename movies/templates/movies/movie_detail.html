@@ -46,12 +46,15 @@
             {% endif %}
             <div class="card-body">
                 <p class="card-text">{{ movie.short_description }}</p>
+                {% for actor in movie.actors.all %}
+                    <p>{{ actor }}</p>
+                {% endfor %}
                 <p class="card-text text-right">
                     <small class="text-muted"><em>by {{ movie.added_by }}</em></small>
                 </p>
                 {% if user.is_authenticated and user.is_admin or user == movie.added_by %}
                     <div class="movie-card-options">
-                        <button class="btn btn-primary">EDIT</button>
+                        <a href="{% url 'movies:movie-edit' movie.slug %}" class="btn btn-primary">EDIT</a>
                         <button data-toggle="modal" data-target="#movie-delete-modal" class="btn btn-danger">DELETE</button>
                     </div>
                 {% endif %}
