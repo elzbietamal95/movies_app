@@ -27,7 +27,7 @@ class Actor(models.Model):
 
 
 class Movie(models.Model):
-    title = models.CharField(max_length=200, help_text='Required')
+    title = models.CharField(max_length=200, help_text='Required.')
     slug = models.SlugField(blank=True, max_length=200, unique=True)
     year_of_production = models.PositiveIntegerField(
         validators=[year_validator],

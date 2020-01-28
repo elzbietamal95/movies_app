@@ -140,6 +140,24 @@ input, textarea {
     float: left;
 }
 
+div.form-group label {
+    font-size: 20px;
+    padding-top: 0;
+}
+
+div.col-sm-10 a, input#id_image {
+    margin-left: 10px;
+}
+
+div.col-sm-10 label {
+    float: none;
+    font-size: 16px;
+}
+
+.form-group {
+    border-bottom: 1px solid #eee;
+}
+
 input[type=submit], a.button, a.warning, a.danger, a.danger, form.delete-user button {
     font-weight: bold;
     background: #8080ff;
@@ -229,7 +247,7 @@ a.danger, form.delete-user button {
     font-family: 'Montserrat', sans-serif;
 }
 
-a.warning:hover, a.danger:hover, form.delete-user button:hover, button.btn.btn-danger:hover, button.btn.btn-secondary:hover{
+a.warning:hover, a.danger:hover, form.delete-user button:hover, button.btn.btn-danger:hover, button.btn.btn-secondary:hover, a.btn.btn-primary:hover {
     color: #333333;
 }
 
@@ -331,7 +349,7 @@ button.btn.btn-danger {
     text-transform: uppercase;
 }
 
-button.btn.btn-primary {
+a.btn.btn-primary, button.btn.btn-primary {
     font-weight: bold;
     background: #8080ff;
     text-transform: uppercase;
@@ -380,9 +398,13 @@ div.btn-sm.btn-danger.btn-circle {
     width: 250px;
 }
 
-.movie-card-options button {
+.movie-card-options button, .movie-card-options a {
     font-size: 18px;
     width: 100px;
+}
+
+input#image-clear_id {
+    float: none;
 }
 
 
