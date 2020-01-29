@@ -50,8 +50,7 @@ class Movie(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = get_unique_slug(self.pk, self.title, Movie.objects)
+        self.slug = get_unique_slug(self.pk, self.title, Movie.objects)
         super(Movie, self).save(*args, **kwargs)
 
     def has_image(self):

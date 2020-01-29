@@ -2,6 +2,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.contrib import messages
+
+from movies.utils import get_unique_slug
 from .models import Movie
 from django.views.generic import ListView, CreateView, DetailView, UpdateView
 from django.views.generic.edit import DeleteView
@@ -53,6 +55,9 @@ class MovieEdit(UpdateView):
         return reverse(self.success_url, kwargs={'slug': self.object.slug})
 
     def form_valid(self, form):
-        movie = form.save()
+        movie = form.save(commit=False)
+        movie.slug = get_unique_slug(movie.pk, movie.title, Movie.objects)
+        movie.save()
         messages.success(self.request, 'The movie "' + movie.title + '" was updated successfully!')
         return redirect(self.get_success_url())
+
