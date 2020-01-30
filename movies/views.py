@@ -4,7 +4,7 @@ from django.urls import reverse_lazy, reverse
 from django.contrib import messages
 
 from movies.utils import get_unique_slug
-from .models import Movie
+from .models import Movie, Actor
 from django.views.generic import ListView, CreateView, DetailView, UpdateView
 from django.views.generic.edit import DeleteView
 from movies.forms import MovieCreateForm, MovieEditForm
@@ -61,3 +61,8 @@ class MovieEdit(UpdateView):
         messages.success(self.request, 'The movie "' + movie.title + '" was updated successfully!')
         return redirect(self.get_success_url())
 
+
+class ActorList(ListView):
+    context_object_name = 'actors'
+    model = Actor
+    template_name = 'movies/actor_list_main.html'

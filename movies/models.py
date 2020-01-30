@@ -17,13 +17,20 @@ def year_validator(value):
 class Actor(models.Model):
     first_name = models.CharField(verbose_name='first name', max_length=50)
     last_name = models.CharField(verbose_name='last name', max_length=150)
+    image = models.ImageField(upload_to='images/actors', blank=True)
 
     class Meta:
         verbose_name = 'actor'
         verbose_name_plural = 'actors'
+        ordering = ('last_name',)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+    def has_image(self):
+        if self.image:
+            return True
+        return False
 
 
 class Director(models.Model):
@@ -41,7 +48,7 @@ class Movie(models.Model):
         validators=[year_validator],
         help_text="Required. Use the following format YYYY.",
     )
-    image = models.ImageField(upload_to='images/', blank=True)
+    image = models.ImageField(upload_to='images/movies', blank=True)
     short_description = models.TextField(blank=True, max_length=1000, verbose_name='Description')
     added_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='movies_created')
     actors = models.ManyToManyField(Actor, blank=True, through='Role')
