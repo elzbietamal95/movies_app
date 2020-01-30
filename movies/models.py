@@ -26,6 +26,14 @@ class Actor(models.Model):
         return f"{self.first_name} {self.last_name}"
 
 
+class Director(models.Model):
+    first_name = models.CharField(verbose_name='first name', max_length=50, blank=True)
+    last_name = models.CharField(verbose_name='last name', max_length=150, blank=True)
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
+
+
 class Movie(models.Model):
     title = models.CharField(max_length=200, help_text='Required.')
     slug = models.SlugField(blank=True, max_length=200, unique=True)
@@ -37,6 +45,7 @@ class Movie(models.Model):
     short_description = models.TextField(blank=True, max_length=1000, verbose_name='Description')
     added_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='movies_created')
     actors = models.ManyToManyField(Actor, blank=True, through='Role')
+    directors = models.ManyToManyField(Director, blank=True)
 
     class Meta:
         verbose_name = 'movie'
@@ -63,11 +72,3 @@ class Role(models.Model):
     actor = models.ForeignKey(Actor, on_delete=models.CASCADE)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     role = models.CharField(max_length=200)
-
-
-#class Director(models.Model):
-#    first_name = models.CharField(verbose_name='first name', max_length=50, blank=True)
-#    last_name = models.CharField(verbose_name='last name', max_length=150, blank=True)
-#
-#    def __str__(self):
-#        return f"{self.first_name} {self.last_name}"

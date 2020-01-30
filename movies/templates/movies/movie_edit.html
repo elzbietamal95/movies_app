@@ -17,6 +17,11 @@
                         </div>
                     {% endfor %}
                 {% endfor %}
+                {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
             {% endif %}
             <div class="form-group">
                 <label for id="id_title" class="col-sm-2 col-form-label">Title:</label>
@@ -49,7 +54,7 @@
                 </div>
             </div>
             <div class="movie-edit-options">
-                <a href="{{request.META.HTTP_REFERER|escape}}" class="btn-secondary">BACK</a>
+                <a href="{% url 'movies:movie-detail' movie.slug %}" class="btn-secondary">BACK</a>
                 <input type="submit" value="Save changes">
             </div>
         </form>
