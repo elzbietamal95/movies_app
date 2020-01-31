@@ -18,3 +18,9 @@ class ActorCreateForm(forms.ModelForm):
     class Meta:
         model = Actor
         fields = '__all__'
+
+
+class ActorEditForm(forms.ModelForm):
+    class Meta:
+        model = Actor
+        fields = '__all__'
