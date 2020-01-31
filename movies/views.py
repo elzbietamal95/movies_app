@@ -7,7 +7,7 @@ from movies.utils import get_unique_slug
 from .models import Movie, Actor
 from django.views.generic import ListView, CreateView, DetailView, UpdateView
 from django.views.generic.edit import DeleteView
-from movies.forms import MovieCreateForm, MovieEditForm
+from movies.forms import MovieCreateForm, MovieEditForm, ActorCreateForm
 
 
 class MovieList(ListView):
@@ -66,3 +66,14 @@ class ActorList(ListView):
     context_object_name = 'actors'
     model = Actor
     template_name = 'movies/actor_list_main.html'
+
+
+class ActorCreate(CreateView):
+    model = Actor
+    form_class = ActorCreateForm
+    template_name = 'movies/actor_add.html'
+
+    def form_valid(self, form):
+        actor = form.save()
+        messages.success(self.request, 'The actor "' + str(actor) + '" was added successfully!')
+        return redirect('movies:actor-list')

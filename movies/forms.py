@@ -12,3 +12,9 @@ class MovieEditForm(forms.ModelForm):
     class Meta:
         model = Movie
         fields = ('title', 'year_of_production', 'image', 'short_description')
+
+
+class ActorCreateForm(forms.ModelForm):
+    class Meta:
+        model = Actor
+        fields = '__all__'
