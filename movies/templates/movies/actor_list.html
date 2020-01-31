@@ -10,6 +10,8 @@
                 </div>
                 {% if actor.has_image %}
                     <img class="card-img" src="{{ actor.image.url }}" alt="{{ actor.pk }}">
+                {% else %}
+                    <img class="card-img" src="https://zapodaj.net/images/70c8d7ca43df1.jpg" alt="{{ actor.pk }}">
                 {% endif %}
             </div>
         </div>
