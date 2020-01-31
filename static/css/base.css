@@ -335,10 +335,6 @@ div.card {
     text-align: center;
 }
 
-.row {
-    margin-left: 3%;
-}
-
 .movie-add input[type=text], .movie-add input[type=number] {
     width: 30%;
     min-width: 200px;
@@ -433,6 +429,10 @@ div.edit-movie-form a.btn-secondary {
     text-transform: uppercase;
     border-radius: 3px;
     padding: 13px 20px;
+}
+
+.actor-list {
+    padding: 20px 3%;
 }
 
 
