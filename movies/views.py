@@ -77,3 +77,7 @@ class ActorCreate(CreateView):
         actor = form.save()
         messages.success(self.request, 'The actor "' + str(actor) + '" was added successfully!')
         return redirect('movies:actor-list')
+
+
+class ActorDetail(DetailView):
+    model = Actor

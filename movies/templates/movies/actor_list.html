@@ -5,7 +5,7 @@
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h4 class="m-0 font-weight-bold text-primary">
-                        <a href="">{{ actor }}</a>
+                        <a href="{% url 'movies:actor-detail' actor.pk %}">{{ actor }}</a>
                     </h4>
                 </div>
                 {% if actor.has_image %}
