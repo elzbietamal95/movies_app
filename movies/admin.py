@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Actor, Role, Movie
+from .models import Actor, Role, Movie, Director
 
 
 class RoleInLine(admin.TabularInline):
@@ -13,5 +13,11 @@ class MovieAdmin(admin.ModelAdmin):
     inlines = [RoleInLine]
 
 
-admin.site.register(Actor)
+class ActorAdmin(admin.ModelAdmin):
+    list_display = ['first_name', 'last_name', 'image', 'added_by']
+    inlines = [RoleInLine]
+
+
+admin.site.register(Director)
+admin.site.register(Actor, ActorAdmin)
 admin.site.register(Movie, MovieAdmin)
