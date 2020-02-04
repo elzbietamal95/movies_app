@@ -452,6 +452,21 @@ div.edit-movie-form a.btn-secondary {
     min-width: 200px;
 }
 
+.card-img-left {
+    float: left;
+    padding-right: 10px;
+    width: 25%;
+    min-width: 150px;
+}
+
+.movie-detail div.card {
+    min-width: 300px;
+    width: 100%;
+}
+
+.movie-detail {
+    margin: 20px 12%;
+}
 
 
 
