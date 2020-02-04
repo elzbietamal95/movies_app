@@ -1,3 +1,5 @@
+{% load static %}
+
 <div class="row">
     {% for movie in movies %}
     <div class="col-lg-6">
@@ -10,14 +12,17 @@
                     {% endif %}
                 </h4>
             </div>
-            {% if movie.has_image %}
-                <img class="card-img" src="{{ movie.image.url }}" alt="{{ movie.slug }}">
-            {% endif %}
-            <div class="card-body">
-                <p class="card-text">{{ movie.short_description }}</p>
-                <p class="card-text text-right">
-                    <small class="text-muted"><em>by {{ movie.added_by }}</em></small>
-                </p>
+            <div data-toggle="popover"
+                 data-trigger="hover"
+                 title="Description"
+                 data-content="{{ movie.short_description }}">
+
+                {% if movie.has_image %}
+                    <img class="card-img" src="{{ movie.image.url }}" alt="{{ movie.slug }}">
+                {% else %}
+                    <img class="card-img" src="https://zapodaj.net/images/70c8d7ca43df1.jpg" alt="{{ movie.slug }}">
+                {% endif %}
+
             </div>
         </div>
     </div>
