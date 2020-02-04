@@ -1,9 +1,9 @@
 {% load static %}
 
-<div class="row">
+<div class="card-group">
     {% for movie in movies %}
-    <div class="col-lg-6">
-        <div class="card shadow mb-4" style="width:90%;">
+    <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h4 class="m-0 font-weight-bold text-primary">
                     <a href="{% url 'movies:movie-detail' movie.slug %}">{{ movie.title }}</a>
