@@ -74,6 +74,7 @@ class ActorCreate(CreateView):
     template_name = 'movies/actor_add.html'
 
     def form_valid(self, form):
+        form.instance.added_by = self.request.user
         actor = form.save()
         messages.success(self.request, 'The actor "' + str(actor) + '" was added successfully!')
         return redirect('movies:actor-list')
@@ -97,3 +98,15 @@ class ActorEdit(UpdateView):
         actor = form.save()
         messages.success(self.request, 'The actor "' + str(actor) + '" was updated successfully!')
         return redirect(self.get_success_url())
+
+
+class ActorDelete(DeleteView):
+    context_object_name = 'actor'
+    model = Actor
+    success_url = reverse_lazy('movies:actor-list')
+    template_name = 'movies/actor_detail.html'
+
+    def delete(self, request, *args, **kwargs):
+        actor = self.get_object()
+        messages.success(self.request, 'The actor "' + str(actor) + '" was deleted successfully.')
+        return super(ActorDelete, self).delete(request, *args, **kwargs)
