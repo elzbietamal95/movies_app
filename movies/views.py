@@ -4,10 +4,10 @@ from django.urls import reverse_lazy, reverse
 from django.contrib import messages
 
 from movies.utils import get_unique_slug
-from .models import Movie
+from .models import Movie, Actor
 from django.views.generic import ListView, CreateView, DetailView, UpdateView
 from django.views.generic.edit import DeleteView
-from movies.forms import MovieCreateForm, MovieEditForm
+from movies.forms import MovieCreateForm, MovieEditForm, ActorCreateForm, ActorEditForm
 
 
 class MovieList(ListView):
@@ -61,3 +61,52 @@ class MovieEdit(UpdateView):
         messages.success(self.request, 'The movie "' + movie.title + '" was updated successfully!')
         return redirect(self.get_success_url())
 
+
+class ActorList(ListView):
+    context_object_name = 'actors'
+    model = Actor
+    template_name = 'movies/actor_list_main.html'
+
+
+class ActorCreate(CreateView):
+    model = Actor
+    form_class = ActorCreateForm
+    template_name = 'movies/actor_add.html'
+
+    def form_valid(self, form):
+        form.instance.added_by = self.request.user
+        actor = form.save()
+        messages.success(self.request, 'The actor "' + str(actor) + '" was added successfully!')
+        return redirect('movies:actor-list')
+
+
+class ActorDetail(DetailView):
+    model = Actor
+
+
+class ActorEdit(UpdateView):
+    model = Actor
+    template_name = 'movies/actor_edit.html'
+    form_class = ActorEditForm
+    context_object_name = 'actor'
+    success_url = 'movies:actor-detail'
+
+    def get_success_url(self):
+        return reverse(self.success_url, kwargs={'pk': self.object.pk})
+
+    def form_valid(self, form):
+        actor = form.save()
+        messages.success(self.request, 'The actor "' + str(actor) + '" was updated successfully!')
+        return redirect(self.get_success_url())
+
+
+class ActorDelete(DeleteView):
+    context_object_name = 'actor'
+    model = Actor
+    success_url = reverse_lazy('movies:actor-list')
+    template_name = 'movies/actor_detail.html'
+
+    def delete(self, request, *args, **kwargs):
+        actor = self.get_object()
+        messages.success(self.request, 'The actor "' + str(actor) + '" was deleted successfully.')
+        return super(ActorDelete, self).delete(request, *args, **kwargs)

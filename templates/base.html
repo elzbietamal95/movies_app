@@ -17,6 +17,8 @@
             {% endif %}
             {% if request.user.is_authenticated %}
                 <a href="{% url 'movies:movie-add' %}">Add movie</a>
+                <a href="{% url 'movies:actor-list' %}">Actors</a>
+                <a href="{% url 'movies:actor-add' %}">Add actor</a>
             {% endif %}
         </span>
         <span class="auth-status">

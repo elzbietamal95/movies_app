@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}{{ actor }}{% endblock %}
+
+{% block content %}
+
+    {# Delete Modal #}
+    <div class="modal fade" id="actor-delete-modal" tabindex="-1" role="dialog" aria-labelledby="actor-delete-modal-label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="actor-delete-modal-label"><strong>Delete {{ actor }}</strong></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete actor {{ actor }}?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">NO, TAKE ME BACK.</button>
+                    <form action="{% url 'movies:actor-delete' actor.pk %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">YES, I'M SURE.</button>
+                    </form>
+                </div>
+                <div class="modal-footer justify-content-center text-danger modal-error d-none"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="actor-detail">
+        <div class="card shadow mb-4" style="min-width: 600px; margin: 0 20%">
+            <div class="card-header py-3">
+                <h4 class="m-0 font-weight-bold text-primary">
+                    {{ actor }}
+                </h4>
+            </div>
+            {% if actor.has_image %}
+                <img class="card-img" src="{{ actor.image.url }}" alt="{{ actor.pk }}">
+            {% endif %}
+            {% if user.is_authenticated and user.is_admin or user == movie.added_by %}
+                <div class="movie-card-options">
+                    <a href="{% url 'movies:actor-edit' actor.pk %}" class="btn btn-primary">EDIT</a>
+                    <button data-toggle="modal" data-target="#actor-delete-modal" class="btn btn-danger">DELETE</button>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
