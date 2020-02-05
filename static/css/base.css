@@ -97,6 +97,14 @@ header a {
     padding: 5px;
 }
 
+.link-new-object {
+    color: #ffffff;
+    background-color: #8080ff;
+    border-radius: 5px;
+    padding: 8px;
+    font-size: 16px;
+}
+
 span.logged a {
     border: none;
     color: white;
