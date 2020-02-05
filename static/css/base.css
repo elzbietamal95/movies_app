@@ -143,7 +143,7 @@ input, textarea {
     border-radius: 3px;
 }
 
-.signup-form input, .login-form input, .edit-user-form input, .movie-add input, .movie-add textarea {
+.signup-form input, .login-form input, .edit-user-form input {
     float: left;
 }
 
@@ -178,10 +178,14 @@ button {
 ul.errorlist li {
     color: #ff4d4d;
     float: left;
-    font-size: 13px;
+    font-size: 15px;
     margin-bottom: 10px;
     font-weight: bold;
     list-style-type: none;
+}
+
+.movie-add ul.errorlist li {
+    margin-left: 12px;
 }
 
 ul.errorlist.nonfield, ul.errorlist {

@@ -6,8 +6,26 @@
     <h1>Add new movie</h1>
     <div class="movie-add">
         <form action="{% url 'movies:movie-add' %}" method="post" enctype="multipart/form-data">
-            {{ form.as_p}}
             {% csrf_token %}
+            {% for error in form.non_field_errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+            {% for field in form %}
+                <div class="form-group">
+                    {% if field.errors %}
+                        <p>{{ field.errors }}</p>
+                    {% endif %}
+                    <label for id="{{ field.id_for_label }}" class="col-sm-8 col-md-3 col-lg-3 col-form-label">{{ field.label }}:</label>
+                    <div class="col-sm-12 col-md-10" style="margin-bottom: 10px;">
+                        {{ field }}
+                        {% if field.help_text %}
+                            <small class="text-muted" style="white-space: nowrap;">{{ field.help_text|safe }}</small>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
             <p><input type="submit" value="SAVE"></p>
         </form>
     </div>
