@@ -1,15 +1,12 @@
 @import url(https://fonts.googleapis.com/css?family=Montserrat);
 
-html {
-    margin: 0;
-    padding: 0;
+html, body {
     height: 100%;
 }
 
 body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
+    display: flex;
+    flex-direction: column;
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -55,7 +52,6 @@ header {
     font-size: 16px;
     background: #8080ff;
     color: #fff;
-    overflow: auto;
 }
 
 header .logo {
@@ -116,7 +112,7 @@ header a:hover {
 
 .content {
     padding: 30px 100px;
-    margin-bottom: 60px;
+    flex: 1 0 auto;
 }
 
 form {
@@ -316,18 +312,13 @@ ul.messages li.error {
     border-color: #ff6666;
 }
 
-footer {
-    position: fixed;
-    height: 45px;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    width: 100%;
+.footer {
     background-color: #33334d;
     color: #ffffff;
     padding: 12px;
     font-size: 13px;
     text-align: center;
+    flex-shrink: 0;
 }
 
 hr {
