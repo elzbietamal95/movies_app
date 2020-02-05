@@ -2,7 +2,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.contrib import messages
-
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required, user_passes_test
 from movies.utils import get_unique_slug
 from .models import Movie, Actor
 from django.views.generic import ListView, CreateView, DetailView, UpdateView
@@ -20,6 +21,10 @@ class MovieCreate(CreateView):
     model = Movie
     form_class = MovieCreateForm
     template_name = 'movies/movie_add.html'
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
 
     def form_valid(self, form):
         form.instance.added_by = self.request.user
@@ -72,6 +77,10 @@ class ActorCreate(CreateView):
     model = Actor
     form_class = ActorCreateForm
     template_name = 'movies/actor_add.html'
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
 
     def form_valid(self, form):
         form.instance.added_by = self.request.user
