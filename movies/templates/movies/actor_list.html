@@ -1,20 +1,24 @@
-<div class="actor-list">
-    <div class="row">
-        {% for actor in actors %}
-        <div class="col-sm-6 col-md-4">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h4 class="m-0 font-weight-bold text-primary">
-                        <a href="{% url 'movies:actor-detail' actor.pk %}">{{ actor }}</a>
-                    </h4>
-                </div>
-                {% if actor.has_image %}
-                    <img class="card-img" src="{{ actor.image.url }}" alt="{{ actor.pk }}">
-                {% else %}
-                    <img class="card-img" src="https://zapodaj.net/images/70c8d7ca43df1.jpg" alt="{{ actor.pk }}">
-                {% endif %}
+{% load static %}
+
+<div class="card-group">
+    {% for actor in actors %}
+    <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h4 class="m-0 font-weight-bold text-primary">
+                    <a href="{% url 'movies:actor-detail' actor.pk %}">{{ actor }}</a>
+                </h4>
             </div>
+            {% if actor.has_image %}
+                <a href="{% url 'movies:actor-detail' actor.pk %}">
+                    <img class="card-img" src="{{ actor.image.url }}" alt="{{ actor.pk }}">
+                </a>
+            {% else %}
+                <a href="{% url 'movies:actor-detail' actor.pk %}">
+                    <img class="card-img" src="https://zapodaj.net/images/70c8d7ca43df1.jpg" alt="{{ actor.pk }}">
+                </a>
+            {% endif %}
         </div>
-        {% endfor %}
     </div>
+    {% endfor %}
 </div>
