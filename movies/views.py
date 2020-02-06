@@ -9,7 +9,7 @@ from movies.utils import get_unique_slug
 from .models import Movie, Actor
 from django.views.generic import ListView, CreateView, DetailView, UpdateView
 from django.views.generic.edit import DeleteView
-from movies.forms import MovieCreateForm, MovieEditForm, ActorCreateForm, ActorEditForm
+from movies.forms import MovieCreateForm, MovieEditForm, ActorEditForm, RoleFormSet, ActorCreateForm
 
 
 class MovieList(ListView):
@@ -91,15 +91,45 @@ class ActorCreate(CreateView):
     form_class = ActorCreateForm
     template_name = 'movies/actor_add.html'
 
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
+    def post(self, request, *args, **kwargs):
+        formset = RoleFormSet(self.request.POST)
+        form = self.get_form()
+        if form.is_valid() and formset.is_valid():
+            return self.form_valid(form, formset)
+        else:
+            return self.form_invalid(form, formset)
 
-    def form_valid(self, form):
+    def form_valid(self, form, formset):
         form.instance.added_by = self.request.user
         actor = form.save()
+        formset.instance = actor
+        formset.save()
         messages.success(self.request, 'The actor "' + str(actor) + '" was added successfully!')
         return redirect('movies:actor-list')
+
+    def form_invalid(self, form, formset):
+        return self.render_to_response(self.get_context_data(form=form, formset=formset))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['role_formset'] = RoleFormSet()
+        return context
+
+
+# class ActorCreate(CreateView):
+#     model = Actor
+#     fields = ['first_name', 'last_name', 'image']
+#     template_name = 'movies/actor_add.html'
+#
+#     @method_decorator(login_required)
+#     def dispatch(self, *args, **kwargs):
+#         return super().dispatch(*args, **kwargs)
+#
+#     def form_valid(self, form):
+#         form.instance.added_by = self.request.user
+#         actor = form.save()
+#         messages.success(self.request, 'The actor "' + str(actor) + '" was added successfully!')
+#         return redirect('movies:actor-list')
 
 
 class ActorDetail(DetailView):
