@@ -9,50 +9,25 @@
     <div class="edit-movie-form">
         <form action="{% url 'movies:movie-edit' movie.slug %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            {% if form.errors %}
-                {% for field in form %}
-                    {% for error in field.errors %}
-                        <div class="alert alert-danger">
-                            <strong>{{ error|escape }}</strong>
-                        </div>
-                    {% endfor %}
-                {% endfor %}
-                {% for error in form.non_field_errors %}
-                    <div class="alert alert-danger">
-                        <strong>{{ error|escape }}</strong>
+            {% for error in form.non_field_errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+            {% for field in form %}
+                <div class="form-group">
+                    {% if field.errors %}
+                        <p>{{ field.errors }}</p>
+                    {% endif %}
+                    <label for id="{{ field.id_for_label }}" class="col-sm-9 col-md-3 col-lg-3 col-form-label">{{ field.label }}:</label>
+                    <div class="col-sm-10 col-md-10 label-clear" style="margin-bottom: 10px;">
+                        {{ field }}
+                        {% if field.help_text %}
+                            <small class="text-muted" style="white-space: nowrap;">{{ field.help_text|safe }}</small>
+                        {% endif %}
                     </div>
-                {% endfor %}
-            {% endif %}
-            <div class="form-group">
-                <label for id="id_title" class="col-sm-2 col-form-label">Title:</label>
-                <div class="col-sm-10">
-                    {{ form.title }}
-                    <small class="text-muted">
-                        {{ form.title.help_text }}
-                    </small>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for id="id_year_of_production" class="col-sm-2 col-form-label">Year of production:</label>
-                <div class="col-sm-10">
-                    {{ form.year_of_production }}
-                    <small class="text-muted">
-                        {{ form.year_of_production.help_text }}
-                    </small>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for id="id_image" class="col-sm-2 col-form-label">Image:</label>
-                <div class="col-sm-10">
-                    {{ form.image }}
-                </div>
-            </div>
-            <div class="form-group">
-                <label for id="id_short_description" class="col-sm-2 col-form-label">Description:</label>
-                <div class="col-sm-10">
-                    {{ form.short_description }}
-                </div>
-            </div>
+            {% endfor %}
             <div class="movie-edit-options">
                 <a href="{% url 'movies:movie-detail' movie.slug %}" class="btn-secondary">BACK</a>
                 <input type="submit" value="Save changes">

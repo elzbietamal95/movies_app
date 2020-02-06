@@ -152,9 +152,9 @@ div.form-group label {
     padding-top: 0;
 }
 
-div.col-sm-10 label {
+.label-clear label {
     float: none;
-    font-size: 16px;
+    font-size: 16px!important;
 }
 
 .form-group {
@@ -184,7 +184,7 @@ ul.errorlist li {
     list-style-type: none;
 }
 
-.movie-add ul.errorlist li {
+.movie-add ul.errorlist li, .edit-movie-form ul.errorlist li {
     margin-left: 12px;
 }
 
@@ -334,9 +334,13 @@ div.card {
     text-align: center;
 }
 
-.movie-add input[type=text], .movie-add input[type=number] {
+.movie-add input[type=text], .movie-add input[type=number], .edit-movie-form input[type=text], .edit-movie-form input[type=number] {
     width: 30%;
     min-width: 200px;
+}
+
+.edit-movie-form input[type=file] {
+    width: 272px;
 }
 
 .movie-add input[type=file] {
@@ -346,7 +350,7 @@ div.card {
 }
 
 textarea#id_short_description {
-    width: 70%;
+    width: 60%;
     min-width: 300px;
 }
 
