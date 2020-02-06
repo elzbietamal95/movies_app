@@ -44,6 +44,12 @@ class MovieDelete(DeleteView):
     success_url = reverse_lazy('movies:movie-list')
     template_name = 'movies/movie_detail.html'
 
+    def get(self, request, *args, **kwargs):
+        movie = self.get_object()
+        if not (request.user.is_authenticated and request.user.is_admin or request.user == movie.added_by):
+            raise PermissionDenied()
+        return super().get(request, *args, **kwargs)
+
     def delete(self, request, *args, **kwargs):
         movie = self.get_object()
         messages.success(self.request, 'The movie "' + movie.title + '" was deleted successfully.')
