@@ -350,9 +350,10 @@ textarea#id_short_description {
     min-width: 300px;
 }
 
-span.text-center button.btn.btn-danger, span.text-center button.btn.btn-primary {
+div.user-list-options button.btn.btn-danger, div.user-list-options button.btn.btn-primary {
     border-radius: 3px;
     font-size: 14px;
+    width: 82px;
 }
 
 button.btn.btn-danger {
