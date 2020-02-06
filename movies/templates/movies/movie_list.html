@@ -17,9 +17,13 @@
                  data-content="{{ movie.short_description }}">
 
                 {% if movie.has_image %}
-                    <img class="card-img" src="{{ movie.image.url }}" alt="{{ movie.slug }}">
+                    <a href="{% url 'movies:movie-detail' movie.slug %}">
+                        <img class="card-img" src="{{ movie.image.url }}" alt="{{ movie.slug }}">
+                    </a>
                 {% else %}
-                    <img class="card-img" src="https://zapodaj.net/images/70c8d7ca43df1.jpg" alt="{{ movie.slug }}">
+                    <a href="{% url 'movies:movie-detail' movie.slug %}">
+                        <img class="card-img" src="https://zapodaj.net/images/70c8d7ca43df1.jpg" alt="{{ movie.slug }}">
+                    </a>
                 {% endif %}
 
             </div>
