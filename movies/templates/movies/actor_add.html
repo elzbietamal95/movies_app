@@ -6,8 +6,14 @@
     <h1>Add new actor</h1>
     <div class="actor-add">
         <form action="{% url 'movies:actor-add' %}" method="post" enctype="multipart/form-data">
-            {{ form.as_p}}
             {% csrf_token %}
+            {{ form.as_p}}
+            <hr>
+            {{ role_formset.management_form }}
+            {% for form in role_formset.forms %}
+                {{ form.as_p }}
+                <hr>
+            {% endfor %}
             <p><input type="submit" value="SAVE"></p>
         </form>
     </div>

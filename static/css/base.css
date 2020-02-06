@@ -1,15 +1,12 @@
 @import url(https://fonts.googleapis.com/css?family=Montserrat);
 
-html {
-    margin: 0;
-    padding: 0;
+html, body {
     height: 100%;
 }
 
 body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
+    display: flex;
+    flex-direction: column;
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -55,7 +52,6 @@ header {
     font-size: 16px;
     background: #8080ff;
     color: #fff;
-    overflow: auto;
 }
 
 header .logo {
@@ -97,6 +93,14 @@ header a {
     padding: 5px;
 }
 
+.link-new-object {
+    color: #ffffff;
+    background-color: #8080ff;
+    border-radius: 5px;
+    padding: 8px;
+    font-size: 16px;
+}
+
 span.logged a {
     border: none;
     color: white;
@@ -108,7 +112,7 @@ header a:hover {
 
 .content {
     padding: 30px 100px;
-    margin-bottom: 60px;
+    flex: 1 0 auto;
 }
 
 form {
@@ -139,7 +143,7 @@ input, textarea {
     border-radius: 3px;
 }
 
-.signup-form input, .login-form input, .edit-user-form input, .movie-add input, .movie-add textarea {
+.signup-form input, .login-form input, .edit-user-form input {
     float: left;
 }
 
@@ -148,13 +152,9 @@ div.form-group label {
     padding-top: 0;
 }
 
-div.col-sm-10 a, input#id_image {
-    margin-left: 10px;
-}
-
-div.col-sm-10 label {
+.label-clear label {
     float: none;
-    font-size: 16px;
+    font-size: 16px!important;
 }
 
 .form-group {
@@ -178,10 +178,14 @@ button {
 ul.errorlist li {
     color: #ff4d4d;
     float: left;
-    font-size: 13px;
+    font-size: 15px;
     margin-bottom: 10px;
     font-weight: bold;
     list-style-type: none;
+}
+
+.movie-add ul.errorlist li, .edit-movie-form ul.errorlist li {
+    margin-left: 12px;
 }
 
 ul.errorlist.nonfield, ul.errorlist {
@@ -312,18 +316,13 @@ ul.messages li.error {
     border-color: #ff6666;
 }
 
-footer {
-    position: fixed;
-    height: 45px;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    width: 100%;
+.footer {
     background-color: #33334d;
     color: #ffffff;
     padding: 12px;
     font-size: 13px;
     text-align: center;
+    flex-shrink: 0;
 }
 
 hr {
@@ -335,9 +334,13 @@ div.card {
     text-align: center;
 }
 
-.movie-add input[type=text], .movie-add input[type=number] {
+.movie-add input[type=text], .movie-add input[type=number], .edit-movie-form input[type=text], .edit-movie-form input[type=number] {
     width: 30%;
     min-width: 200px;
+}
+
+.edit-movie-form input[type=file] {
+    width: 272px;
 }
 
 .movie-add input[type=file] {
@@ -347,13 +350,14 @@ div.card {
 }
 
 textarea#id_short_description {
-    width: 70%;
+    width: 60%;
     min-width: 300px;
 }
 
-span.text-center button.btn.btn-danger, span.text-center button.btn.btn-primary {
+div.user-list-options button.btn.btn-danger, div.user-list-options button.btn.btn-primary {
     border-radius: 3px;
     font-size: 14px;
+    width: 82px;
 }
 
 button.btn.btn-danger {
@@ -431,10 +435,42 @@ div.edit-movie-form a.btn-secondary {
     padding: 13px 20px;
 }
 
-.actor-list {
-    padding: 20px 3%;
+.popover {
+    max-width: 30%;
+    min-width: 200px;
 }
 
+.popover-header {
+    text-align: center;
+    color: #fff;
+    background-color: #8080ff;
+    font-size: 20px;
+}
+
+.popover-body {
+    text-align: center;
+    font-size: 18px;
+}
+
+.card {
+    min-width: 200px;
+}
+
+.card-img-left {
+    float: left;
+    padding-right: 10px;
+    width: 25%;
+    min-width: 150px;
+}
+
+.movie-detail div.card {
+    min-width: 300px;
+    width: 100%;
+}
+
+.movie-detail {
+    margin: 20px 12%;
+}
 
 
 

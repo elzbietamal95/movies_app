@@ -159,10 +159,11 @@
                     {% endif %}
                 </td>
                 <td>
-                    <span class="text-center">
+                    <div class="text-center user-list-options">
                         <button onclick="fillAndShowEditModal({{ user.id }})" class="btn btn-primary">EDIT</button>
+                        <hr>
                         <button data-toggle="modal" data-target="#delete-modal-{{ user.username }}" class="btn btn-danger">DELETE</button>
-                    </span>
+                    </div>
                 </td>
             </tr>
         {% endfor %}

@@ -18,6 +18,7 @@ class ActorAdmin(admin.ModelAdmin):
     inlines = [RoleInLine]
 
 
+admin.site.register(Role)
 admin.site.register(Director)
 admin.site.register(Actor, ActorAdmin)
 admin.site.register(Movie, MovieAdmin)

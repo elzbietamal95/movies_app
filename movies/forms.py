@@ -1,5 +1,5 @@
 from django import forms
-from movies.models import Movie, Actor
+from movies.models import Movie, Actor, Role
 
 
 class MovieCreateForm(forms.ModelForm):
@@ -17,7 +17,25 @@ class MovieEditForm(forms.ModelForm):
 class ActorCreateForm(forms.ModelForm):
     class Meta:
         model = Actor
-        fields = '__all__'
+        fields = ('first_name', 'last_name', 'image')
+
+
+class RoleCreateForm(forms.ModelForm):
+    movie = forms.ModelChoiceField(queryset=Movie.objects.all(), widget=forms.Select)
+
+    class Meta:
+        model = Role
+        fields = ('movie', 'role')
+
+
+RoleFormSet = forms.inlineformset_factory(
+    parent_model=Actor,
+    model=Role,
+    form=RoleCreateForm,
+    extra=3,
+    can_delete=False,
+
+)
 
 
 class ActorEditForm(forms.ModelForm):

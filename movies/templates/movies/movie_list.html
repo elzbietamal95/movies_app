@@ -1,23 +1,31 @@
-<div class="row">
+{% load static %}
+
+<div class="card-group">
     {% for movie in movies %}
-    <div class="col-lg-6">
-        <div class="card shadow mb-4" style="width:90%;">
+    <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h4 class="m-0 font-weight-bold text-primary">
-                    <a href="{% url 'movies:movie-detail' movie.slug %}">{{ movie.title }}</a>
-                    {% if movie.year_of_production %}
-                        ({{ movie.year_of_production }})
-                    {% endif %}
+                    <a href="{% url 'movies:movie-detail' movie.slug %}">
+                        {{ movie.title }} ({{ movie.year_of_production }})
+                    </a>
                 </h4>
             </div>
-            {% if movie.has_image %}
-                <img class="card-img" src="{{ movie.image.url }}" alt="{{ movie.slug }}">
-            {% endif %}
-            <div class="card-body">
-                <p class="card-text">{{ movie.short_description }}</p>
-                <p class="card-text text-right">
-                    <small class="text-muted"><em>by {{ movie.added_by }}</em></small>
-                </p>
+            <div data-toggle="popover"
+                 data-trigger="hover"
+                 title="Description"
+                 data-content="{{ movie.short_description }}">
+
+                {% if movie.has_image %}
+                    <a href="{% url 'movies:movie-detail' movie.slug %}">
+                        <img class="card-img" src="{{ movie.image.url }}" alt="{{ movie.slug }}">
+                    </a>
+                {% else %}
+                    <a href="{% url 'movies:movie-detail' movie.slug %}">
+                        <img class="card-img" src="https://zapodaj.net/images/70c8d7ca43df1.jpg" alt="{{ movie.slug }}">
+                    </a>
+                {% endif %}
+
             </div>
         </div>
     </div>

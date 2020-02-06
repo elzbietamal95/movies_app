@@ -32,23 +32,19 @@
     </div>
 
     <div class="movie-detail">
-        <div class="card shadow mb-4" style="min-width: 600px; margin: 0 20%">
+        <div class="card shadow">
             <div class="card-header py-3">
                 <h4 class="m-0 font-weight-bold text-primary">
-                    {{ movie.title }}
-                    {% if movie.year_of_production %}
-                        ({{ movie.year_of_production }})
-                    {% endif %}
+                    {{ movie.title }} ({{ movie.year_of_production }})
                 </h4>
             </div>
-            {% if movie.has_image %}
-                <img class="card-img" src="{{ movie.image.url }}" alt="{{ movie.slug }}">
-            {% endif %}
             <div class="card-body">
+                {% if movie.has_image %}
+                    <img class="card-img-left" src="{{ movie.image.url }}" alt="{{ movie.slug }}">
+                {% else %}
+                    <img class="card-img-left" src="https://zapodaj.net/images/70c8d7ca43df1.jpg" alt="{{ movie.slug }}">
+                {% endif %}
                 <p class="card-text">{{ movie.short_description }}</p>
-                {% for actor in movie.actors.all %}
-                    <p>{{ actor }}</p>
-                {% endfor %}
                 <p class="card-text text-right">
                     <small class="text-muted"><em>by {{ movie.added_by }}</em></small>
                 </p>
@@ -60,14 +56,5 @@
                 {% endif %}
             </div>
         </div>
-
     </div>
-{% endblock %}
-
-{% block scripts %}
-    <script>
-        if(window.location.hash.substr(1) === 'movie-delete-modal'){
-            $('#movie-delete-modal').modal('show');
-        }
-    </script>
 {% endblock %}
