@@ -1,3 +1,4 @@
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
@@ -55,6 +56,12 @@ class MovieEdit(UpdateView):
     form_class = MovieEditForm
     context_object_name = 'movie'
     success_url = 'movies:movie-detail'
+
+    def get(self, request, *args, **kwargs):
+        movie = self.get_object()
+        if not (request.user.is_authenticated and request.user.is_admin or request.user == movie.added_by):
+            raise PermissionDenied()
+        return super().get(request, *args, **kwargs)
 
     def get_success_url(self):
         return reverse(self.success_url, kwargs={'slug': self.object.slug})
