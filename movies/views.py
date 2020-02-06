@@ -113,6 +113,12 @@ class ActorEdit(UpdateView):
     context_object_name = 'actor'
     success_url = 'movies:actor-detail'
 
+    def get(self, request, *args, **kwargs):
+        actor = self.get_object()
+        if not (request.user.is_authenticated and request.user.is_admin or request.user == actor.added_by):
+            raise PermissionDenied()
+        return super().get(request, *args, **kwargs)
+
     def get_success_url(self):
         return reverse(self.success_url, kwargs={'pk': self.object.pk})
 
@@ -127,6 +133,12 @@ class ActorDelete(DeleteView):
     model = Actor
     success_url = reverse_lazy('movies:actor-list')
     template_name = 'movies/actor_detail.html'
+
+    def get(self, request, *args, **kwargs):
+        actor = self.get_object()
+        if not (request.user.is_authenticated and request.user.is_admin or request.user == actor.added_by):
+            raise PermissionDenied()
+        return super().get(request, *args, **kwargs)
 
     def delete(self, request, *args, **kwargs):
         actor = self.get_object()
