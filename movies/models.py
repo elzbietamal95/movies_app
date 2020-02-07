@@ -45,6 +45,8 @@ class Movie(models.Model):
     )
     image = models.ImageField(upload_to='images/movies', blank=True)
     short_description = models.TextField(blank=True, max_length=1000, verbose_name='Description')
+    date_of_creation = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    update_date = models.DateTimeField(auto_now=True, blank=True, null=True)
     added_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='movies_created')
     actors = models.ManyToManyField(Actor, blank=True, through='Role')
     directors = models.ManyToManyField(Director, blank=True)
