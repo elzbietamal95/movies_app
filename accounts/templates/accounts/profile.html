@@ -3,7 +3,7 @@
 {% block title %}{{ profile_of_user.username }}'s Profile{% endblock %}
 
 {% block content %}
-    <div class="card text-center shadow" style="min-width: 300px; margin: 0 20%;">
+    <div class="card text-center shadow" style="min-width: 400px; margin: 0 20%;">
         <div class="card-body">
             <p class="card-text">
                 {% if profile_of_user.is_active %}
@@ -43,16 +43,21 @@
                 {{ profile_of_user.last_name }}
             {% endif %}
             </p>
+            <br>
+            <div class="profile-options">
+                {% if request.user == profile_of_user %}
+                    <a href="" class="btn btn-primary">EDIT</a>
+                    <a href="" class="btn btn-danger">DELETE</a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="card-footer">
             <p class="card-text">
                 <small class="text-muted"><em>Date joined: {{ profile_of_user.date_joined }}</em></small>
             </p>
             <p class="card-text">
                 <small class="text-muted"><em>Last login: {{ profile_of_user.last_login }}</em></small>
             </p>
-            {% if user.is_admin%}
-                <a href="{% url 'accounts:user-edit' profile_of_user.username %}" class="card-link warning">EDIT</a>
-                <a href="{% url 'accounts:user-delete' profile_of_user.username %}" class="card-link danger">DELETE</a>
-            {% endif %}
         </div>
     </div>
 {% endblock %}
