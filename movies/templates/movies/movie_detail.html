@@ -69,7 +69,7 @@
                         <strong>Stars:</strong>
                         {% for actor in movie.actors.all %}
                             <a href="{% url 'movies:actor-detail' actor.pk %}">
-                                {{ actor }}
+                                {{ actor }},
                             </a>
                         {% endfor %}
                     </p>
