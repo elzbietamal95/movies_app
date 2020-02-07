@@ -8,8 +8,8 @@ class RoleInLine(admin.TabularInline):
 
 
 class MovieAdmin(admin.ModelAdmin):
-    list_display = ['title', 'slug', 'year_of_production', 'image', 'added_by']
-    list_filter = ['year_of_production']
+    list_display = ['title', 'slug', 'year_of_production', 'image', 'added_by', 'update_date', 'date_of_creation',]
+    list_filter = ['year_of_production', 'date_of_creation', 'update_date']
     inlines = [RoleInLine]
 
 

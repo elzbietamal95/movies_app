@@ -8,6 +8,9 @@ User = get_user_model()
 class Actor(models.Model):
     first_name = models.CharField(verbose_name='first name', max_length=50)
     last_name = models.CharField(verbose_name='last name', max_length=150)
+    date_of_birth = models.DateField(blank=True, null=True, default=None)
+    place_of_birth = models.CharField(blank=True, max_length=200, null=True, default='')
+    height = models.PositiveIntegerField(blank=True, null=True, default=None)
     image = models.ImageField(upload_to='images/actors', blank=True)
     added_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='actors_created', blank=True, null=True)
 
@@ -42,6 +45,8 @@ class Movie(models.Model):
     )
     image = models.ImageField(upload_to='images/movies', blank=True)
     short_description = models.TextField(blank=True, max_length=1000, verbose_name='Description')
+    date_of_creation = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    update_date = models.DateTimeField(auto_now=True, blank=True, null=True)
     added_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='movies_created')
     actors = models.ManyToManyField(Actor, blank=True, through='Role')
     directors = models.ManyToManyField(Director, blank=True)
@@ -55,7 +60,7 @@ class Movie(models.Model):
     objects = models.Manager()
 
     def __str__(self):
-        return self.title
+        return f"{self.title} ({self.year_of_production})"
 
     def save(self, *args, **kwargs):
         self.slug = get_unique_slug(self.pk, self.title, Movie.objects)
@@ -74,3 +79,6 @@ class Role(models.Model):
 
     def __str__(self):
         return self.role
+
+    class Meta:
+        unique_together = ['movie', 'role']
