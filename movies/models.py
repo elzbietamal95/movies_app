@@ -1,17 +1,8 @@
-from django.core.exceptions import ValidationError
-from django.core.validators import MinValueValidator
 from django.db import models
-from django.db.models.functions import datetime
-from django.utils.text import slugify
 from django.contrib.auth import get_user_model
-from movies.utils import get_unique_slug
+from movies.utils import get_unique_slug, year_validator
 
 User = get_user_model()
-
-
-def year_validator(value):
-    if value < 1850 or value > datetime.datetime.now().year + 5:
-        raise ValidationError("%(value)s is not a correct year!", params={'value': value},)
 
 
 class Actor(models.Model):
