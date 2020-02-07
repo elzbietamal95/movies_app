@@ -60,7 +60,7 @@ class Movie(models.Model):
     objects = models.Manager()
 
     def __str__(self):
-        return self.title
+        return f"{self.title} {self.year_of_production}"
 
     def save(self, *args, **kwargs):
         self.slug = get_unique_slug(self.pk, self.title, Movie.objects)
