@@ -79,3 +79,6 @@ class Role(models.Model):
 
     def __str__(self):
         return self.role
+
+    class Meta:
+        unique_together = ['movie', 'role']
