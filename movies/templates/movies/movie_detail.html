@@ -32,8 +32,14 @@
     </div>
 
     <div class="movie-detail">
-        <div class="card shadow">
+        <div class="card shadow" style="min-width: 323px">
             <div class="card-header py-3">
+                {% if user.is_authenticated and user.is_admin or user == movie.added_by %}
+                    <span class="movie-card-options float-right">
+                        <a href="{% url 'movies:movie-edit' movie.slug %}" class="btn btn-primary">EDIT</a>
+                        <button data-toggle="modal" data-target="#movie-delete-modal" class="btn btn-danger">DELETE</button>
+                    </span>
+                {% endif %}
                 <h4 class="m-0 font-weight-bold text-primary">
                     {{ movie.title }} ({{ movie.year_of_production }})
                 </h4>
@@ -44,16 +50,33 @@
                 {% else %}
                     <img class="card-img-left" src="https://zapodaj.net/images/70c8d7ca43df1.jpg" alt="{{ movie.slug }}">
                 {% endif %}
-                <p class="card-text">{{ movie.short_description }}</p>
-                <p class="card-text text-right">
-                    <small class="text-muted"><em>by {{ movie.added_by }}</em></small>
-                </p>
-                {% if user.is_authenticated and user.is_admin or user == movie.added_by %}
-                    <div class="movie-card-options">
-                        <a href="{% url 'movies:movie-edit' movie.slug %}" class="btn btn-primary">EDIT</a>
-                        <button data-toggle="modal" data-target="#movie-delete-modal" class="btn btn-danger">DELETE</button>
-                    </div>
+                {% if movie.short_description %}
+                    <p class="card-text">
+                        <strong>Description:</strong>
+                        {{ movie.short_description }}
+                    </p>
                 {% endif %}
+                {% if movie.directors.all %}
+                    <p class="card-text">
+                        <strong>Direction:</strong>
+                        {% for director in movie.directors.all %}
+                            {{ director }},
+                        {% endfor %}
+                    </p>
+                {% endif %}
+            </div>
+            <div class="card-footer">
+                <div>
+                    <span style="margin-right: 10px;">
+                        <strong>Created Date:</strong> {{ movie.date_of_creation }}
+                    </span>
+                    <span style="white-space: nowrap;">
+                        <strong>Update Date:</strong> {{ movie.update_date }}
+                    </span>
+                    <span class="float-right">
+                        <span class="text-muted"><em>by {{ movie.added_by }}</em></span>
+                    </span>
+                </div>
             </div>
         </div>
     </div>

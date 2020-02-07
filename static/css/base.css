@@ -329,11 +329,6 @@ hr {
     border: none;
 }
 
-
-div.card {
-    text-align: center;
-}
-
 .movie-add input[type=text], .movie-add input[type=number], .edit-movie-form input[type=text], .edit-movie-form input[type=number] {
     width: 30%;
     min-width: 200px;
@@ -409,15 +404,9 @@ div.btn-sm.btn-danger.btn-circle {
     font-weight: bold;
 }
 
-.movie-card-options {
-    display: inline-flex;
-    justify-content: space-between;
-    width: 250px;
-}
-
 .movie-card-options button, .movie-card-options a {
-    font-size: 18px;
-    width: 100px;
+    font-size: 16px;
+    width: 90px;
 }
 
 .alert-danger {
@@ -454,6 +443,15 @@ div.edit-movie-form a.btn-secondary {
 
 .card {
     min-width: 200px;
+    text-align: center;
+}
+
+.movie-detail .card-text {
+    text-align: justify;
+}
+
+.movie-detail .card-footer {
+    text-align: left;
 }
 
 .card-img-left {
