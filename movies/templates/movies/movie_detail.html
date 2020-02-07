@@ -64,6 +64,16 @@
                         {% endfor %}
                     </p>
                 {% endif %}
+                {% if movie.actors.all %}
+                    <p class="card-text">
+                        <strong>Stars:</strong>
+                        {% for actor in movie.actors.all %}
+                            <a href="{% url 'movies:actor-detail' actor.pk %}">
+                                {{ actor }}
+                            </a>
+                        {% endfor %}
+                    </p>
+                {% endif %}
             </div>
             <div class="card-footer">
                 <div>
