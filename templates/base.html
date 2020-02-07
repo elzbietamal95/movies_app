@@ -16,7 +16,7 @@
         <span class="logo">
             <a href="{% url 'movies:movie-list' %}">Movies App</a>
         </span>
-        <span class="menu">
+        <span class="menu" style="white-space: nowrap;">
             {% if user.is_admin %}
                 <a href="{% url 'accounts:user-list' %}">User list</a>
             {% endif %}
