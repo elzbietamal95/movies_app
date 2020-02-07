@@ -8,9 +8,9 @@ User = get_user_model()
 class Actor(models.Model):
     first_name = models.CharField(verbose_name='first name', max_length=50)
     last_name = models.CharField(verbose_name='last name', max_length=150)
-    date_of_birth = models.DateField(blank=True, default=None)
-    place_of_birth = models.CharField(blank=True, default='')
-    height = models.PositiveIntegerField(blank=True, null=True)
+    date_of_birth = models.DateField(blank=True, null=True, default=None)
+    place_of_birth = models.CharField(blank=True, max_length=200, null=True, default='')
+    height = models.PositiveIntegerField(blank=True, null=True, default=None)
     image = models.ImageField(upload_to='images/actors', blank=True)
     added_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='actors_created', blank=True, null=True)
 
