@@ -58,7 +58,7 @@
                 {% else %}
                     <img class="card-img-left mr-4" src="https://zapodaj.net/images/70c8d7ca43df1.jpg" alt="{{ movie.slug }}">
                 {% endif %}
-                <div class="pl-sm-4">
+                <div class="pl-4">
                     <p class="card-text mt-4">
                         <strong>Date of birth:</strong>
                         {{ actor.date_of_birth|default:'(not given)' }}
@@ -67,7 +67,7 @@
                         <strong>Place of birth:</strong>
                         {{ actor.place_of_birth|default:'(not given)' }}
                     </p>
-                    <p class="card-text" style="white-space: nowrap">
+                    <p class="card-text">
                         {% if actor.height %}
                             <strong>Height:</strong>
                             {{ actor.height }} cm
