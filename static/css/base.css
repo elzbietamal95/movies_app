@@ -254,7 +254,7 @@ a.danger, form.delete-user button {
     font-family: 'Montserrat', sans-serif;
 }
 
-a.warning:hover, a.danger:hover, form.delete-user button:hover, button.btn.btn-danger:hover, button.btn.btn-secondary:hover, a.btn.btn-primary:hover {
+a.warning:hover, a.danger:hover, form.delete-user button:hover, button.btn.btn-danger:hover, button.btn.btn-secondary:hover, a.btn.btn-primary:hover, a.btn.btn-danger:hover {
     color: #333333;
 }
 
@@ -329,11 +329,6 @@ hr {
     border: none;
 }
 
-
-div.card {
-    text-align: center;
-}
-
 .movie-add input[type=text], .movie-add input[type=number], .edit-movie-form input[type=text], .edit-movie-form input[type=number] {
     width: 30%;
     min-width: 200px;
@@ -360,7 +355,7 @@ div.user-list-options button.btn.btn-danger, div.user-list-options button.btn.bt
     width: 82px;
 }
 
-button.btn.btn-danger {
+button.btn.btn-danger, a.btn.btn-danger {
     font-weight: bold;
     background: #ff6666;
     text-transform: uppercase;
@@ -409,15 +404,9 @@ div.btn-sm.btn-danger.btn-circle {
     font-weight: bold;
 }
 
-.movie-card-options {
-    display: inline-flex;
-    justify-content: space-between;
-    width: 250px;
-}
-
-.movie-card-options button, .movie-card-options a {
-    font-size: 18px;
-    width: 100px;
+.movie-card-options button, .movie-card-options a, .profile-options a {
+    font-size: 16px;
+    width: 90px;
 }
 
 .alert-danger {
@@ -454,22 +443,26 @@ div.edit-movie-form a.btn-secondary {
 
 .card {
     min-width: 200px;
+    text-align: center;
 }
 
 .card-img-left {
     float: left;
     padding-right: 10px;
-    width: 25%;
+    width: 30%;
     min-width: 150px;
 }
 
-.movie-detail div.card {
-    min-width: 300px;
-    width: 100%;
+.actor-detail .card-img-left {
+    width: 35%;
 }
 
 .movie-detail {
-    margin: 20px 12%;
+    margin: 20px 10%;
+}
+
+.actor-detail {
+    margin: 20px 15%;
 }
 
 

@@ -32,28 +32,69 @@
     </div>
 
     <div class="movie-detail">
-        <div class="card shadow">
-            <div class="card-header py-3">
-                <h4 class="m-0 font-weight-bold text-primary">
-                    {{ movie.title }} ({{ movie.year_of_production }})
-                </h4>
-            </div>
-            <div class="card-body">
-                {% if movie.has_image %}
-                    <img class="card-img-left" src="{{ movie.image.url }}" alt="{{ movie.slug }}">
-                {% else %}
-                    <img class="card-img-left" src="https://zapodaj.net/images/70c8d7ca43df1.jpg" alt="{{ movie.slug }}">
-                {% endif %}
-                <p class="card-text">{{ movie.short_description }}</p>
-                <p class="card-text text-right">
-                    <small class="text-muted"><em>by {{ movie.added_by }}</em></small>
-                </p>
+        <div class="card shadow" style="min-width: 323px">
+            <div class="card-header">
                 {% if user.is_authenticated and user.is_admin or user == movie.added_by %}
-                    <div class="movie-card-options">
-                        <a href="{% url 'movies:movie-edit' movie.slug %}" class="btn btn-primary">EDIT</a>
-                        <button data-toggle="modal" data-target="#movie-delete-modal" class="btn btn-danger">DELETE</button>
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <h4 class="col offset-lg-3 text-center font-weight-bold text-primary my-2">
+                                {{ movie.title }} ({{ movie.year_of_production }})
+                            </h4>
+                            <div class="movie-card-options col-12 col-lg-3 text-center text-lg-right mt-1">
+                                <a href="{% url 'movies:movie-edit' movie.slug %}" class="btn btn-primary mb-1">EDIT</a>
+                                <button data-toggle="modal" data-target="#movie-delete-modal" class="btn btn-danger mb-1">DELETE</button>
+                            </div>
+                        </div>
                     </div>
+                {% else %}
+                    <h4 class="text-center font-weight-bold text-primary my-2">
+                        {{ movie.title }} ({{ movie.year_of_production }})
+                    </h4>
                 {% endif %}
+            </div>
+            <div class="card-body p-0">
+                {% if movie.has_image %}
+                    <img class="card-img-left mr-4" src="{{ movie.image.url }}" alt="{{ movie.slug }}">
+                {% else %}
+                    <img class="card-img-left mr-4" src="https://zapodaj.net/images/70c8d7ca43df1.jpg" alt="{{ movie.slug }}">
+                {% endif %}
+                <div class="px-4 pb-4">
+                    <p class="card-text mt-4 text-justify">
+                        <strong>Description:</strong>
+                        {{ movie.short_description|default:'(not given)' }}
+                    </p>
+                    {% if movie.directors.all %}
+                        <p class="card-text text-left">
+                            <strong>Direction:</strong>
+                            {% for director in movie.directors.all %}
+                                {{ director }},
+                            {% endfor %}
+                        </p>
+                    {% endif %}
+                    {% if movie.actors.all %}
+                        <p class="card-text text-left">
+                            <strong>Stars:</strong>
+                            {% for actor in movie.actors.all %}
+                                <a href="{% url 'movies:actor-detail' actor.pk %}">
+                                    {{ actor }},
+                                </a>
+                            {% endfor %}
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card-footer text-left">
+                <div>
+                    <span style="margin-right: 10px;">
+                        <strong>Created Date:</strong> {{ movie.date_of_creation }}
+                    </span>
+                    <span style="white-space: nowrap;">
+                        <strong>Update Date:</strong> {{ movie.update_date }}
+                    </span>
+                    <span class="float-right">
+                        <span class="text-muted"><em>by {{ movie.added_by }}</em></span>
+                    </span>
+                </div>
             </div>
         </div>
     </div>
