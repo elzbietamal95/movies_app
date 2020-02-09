@@ -52,38 +52,38 @@
                     </h4>
                 {% endif %}
             </div>
-            <div class="card-body">
+            <div class="card-body p-0">
                 {% if movie.has_image %}
-                    <img class="card-img-left" src="{{ movie.image.url }}" alt="{{ movie.slug }}">
+                    <img class="card-img-left mr-4" src="{{ movie.image.url }}" alt="{{ movie.slug }}">
                 {% else %}
-                    <img class="card-img-left" src="https://zapodaj.net/images/70c8d7ca43df1.jpg" alt="{{ movie.slug }}">
+                    <img class="card-img-left mr-4" src="https://zapodaj.net/images/70c8d7ca43df1.jpg" alt="{{ movie.slug }}">
                 {% endif %}
-                {% if movie.short_description %}
-                    <p class="card-text">
+                <div class="px-4 pb-4">
+                    <p class="card-text mt-4 text-justify">
                         <strong>Description:</strong>
-                        {{ movie.short_description }}
+                        {{ movie.short_description|default:'(not given)' }}
                     </p>
-                {% endif %}
-                {% if movie.directors.all %}
-                    <p class="card-text">
-                        <strong>Direction:</strong>
-                        {% for director in movie.directors.all %}
-                            {{ director }},
-                        {% endfor %}
-                    </p>
-                {% endif %}
-                {% if movie.actors.all %}
-                    <p class="card-text">
-                        <strong>Stars:</strong>
-                        {% for actor in movie.actors.all %}
-                            <a href="{% url 'movies:actor-detail' actor.pk %}">
-                                {{ actor }},
-                            </a>
-                        {% endfor %}
-                    </p>
-                {% endif %}
+                    {% if movie.directors.all %}
+                        <p class="card-text text-left">
+                            <strong>Direction:</strong>
+                            {% for director in movie.directors.all %}
+                                {{ director }},
+                            {% endfor %}
+                        </p>
+                    {% endif %}
+                    {% if movie.actors.all %}
+                        <p class="card-text text-left">
+                            <strong>Stars:</strong>
+                            {% for actor in movie.actors.all %}
+                                <a href="{% url 'movies:actor-detail' actor.pk %}">
+                                    {{ actor }},
+                                </a>
+                            {% endfor %}
+                        </p>
+                    {% endif %}
+                </div>
             </div>
-            <div class="card-footer">
+            <div class="card-footer text-left">
                 <div>
                     <span style="margin-right: 10px;">
                         <strong>Created Date:</strong> {{ movie.date_of_creation }}
