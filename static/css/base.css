@@ -446,11 +446,11 @@ div.edit-movie-form a.btn-secondary {
     text-align: center;
 }
 
-.movie-detail .card-text {
-    text-align: justify;
+.movie-detail .card-text, .actor-detail .card-text {
+    text-align: left;
 }
 
-.movie-detail .card-footer {
+.movie-detail .card-footer, .actor-detail .card-footer {
     text-align: left;
 }
 
@@ -461,13 +461,16 @@ div.edit-movie-form a.btn-secondary {
     min-width: 150px;
 }
 
-.movie-detail div.card {
-    min-width: 300px;
-    width: 100%;
+.actor-detail .card-img-left {
+    width: 35%;
 }
 
 .movie-detail {
     margin: 20px 10%;
+}
+
+.actor-detail {
+    margin: 20px 15%;
 }
 
 
