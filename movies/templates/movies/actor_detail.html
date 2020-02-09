@@ -76,10 +76,10 @@
                             (not given)
                         {% endif %}
                     </p>
-                    {% if actor.movie_set.all %}
+                    {% if actor.movies.all %}
                         <p class="card-text">
                             <strong>Known for:</strong>
-                            {% for movie in actor.movie_set.all %}
+                            {% for movie in actor.movies.all %}
                                 <a href="{% url 'movies:movie-detail' movie.slug %}">
                                     {{ movie }},
                                 </a>
