@@ -465,6 +465,14 @@ div.edit-movie-form a.btn-secondary {
     margin: 20px 15%;
 }
 
+.cast-img {
+    width: 15%;
+}
+
+.movie-cast {
+    font-size: 20px;
+}
+
 
 
 

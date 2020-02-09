@@ -48,7 +48,7 @@ class Movie(models.Model):
     date_of_creation = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     update_date = models.DateTimeField(auto_now=True, blank=True, null=True)
     added_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='movies_created')
-    actors = models.ManyToManyField(Actor, blank=True, through='Role')
+    actors = models.ManyToManyField(Actor, blank=True, through='Role', related_name='movies')
     directors = models.ManyToManyField(Director, blank=True)
 
     class Meta:
@@ -73,8 +73,8 @@ class Movie(models.Model):
 
 
 class Role(models.Model):
-    actor = models.ForeignKey(Actor, on_delete=models.CASCADE)
-    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    actor = models.ForeignKey(Actor, on_delete=models.CASCADE, related_name='role')
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name='role')
     role = models.CharField(max_length=200)
 
     def __str__(self):

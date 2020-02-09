@@ -97,5 +97,34 @@
                 </div>
             </div>
         </div>
+        <hr>
+        <div class="card movie-cast" style="min-width: 323px">
+            <div class="card-header">
+                <h3 class="font-weight-bold">Cast</h3>
+            </div>
+            <ul class="list-group list-group-flush text-left">
+                {% for actor in movie.actors.all %}
+                    <li class="list-group-item">
+                        {% if actor.has_image %}
+                            <a href="{% url 'movies:actor-detail' actor.pk %}">
+                                <img class="cast-img mr-2" src="{{ actor.image.url }}" alt="{{ actor.pk }}">
+                            </a>
+                        {% else %}
+                            <a href="{% url 'movies:actor-detail' actor.pk %}">
+                                <img class="cast-img mr-2" src="https://zapodaj.net/images/70c8d7ca43df1.jpg" alt="{{ movie.slug }}">
+                            </a>
+                        {% endif %}
+                        <a href="{% url 'movies:actor-detail' actor.pk %}">
+                            {{ actor }}
+                        </a>
+                            as
+                            {% for role in actor.role.all %}
+                                {{ role }}
+                            {% endfor %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
     </div>
 {% endblock %}
