@@ -33,16 +33,24 @@
 
     <div class="movie-detail">
         <div class="card shadow" style="min-width: 323px">
-            <div class="card-header py-3">
+            <div class="card-header">
                 {% if user.is_authenticated and user.is_admin or user == movie.added_by %}
-                    <span class="movie-card-options float-right">
-                        <a href="{% url 'movies:movie-edit' movie.slug %}" class="btn btn-primary">EDIT</a>
-                        <button data-toggle="modal" data-target="#movie-delete-modal" class="btn btn-danger">DELETE</button>
-                    </span>
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <h4 class="col offset-lg-3 text-center font-weight-bold text-primary my-2">
+                                {{ movie.title }} ({{ movie.year_of_production }})
+                            </h4>
+                            <div class="movie-card-options col-12 col-lg-3 text-center text-lg-right mt-1">
+                                <a href="{% url 'movies:movie-edit' movie.slug %}" class="btn btn-primary mb-1">EDIT</a>
+                                <button data-toggle="modal" data-target="#movie-delete-modal" class="btn btn-danger mb-1">DELETE</button>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <h4 class="text-center font-weight-bold text-primary my-2">
+                        {{ movie.title }} ({{ movie.year_of_production }})
+                    </h4>
                 {% endif %}
-                <h4 class="m-0 font-weight-bold text-primary">
-                    {{ movie.title }} ({{ movie.year_of_production }})
-                </h4>
             </div>
             <div class="card-body">
                 {% if movie.has_image %}
