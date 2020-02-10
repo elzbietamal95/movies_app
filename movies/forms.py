@@ -1,5 +1,6 @@
 from django import forms
 from movies.models import Movie, Actor, Role
+from tempus_dominus.widgets import DatePicker
 
 
 class MovieCreateForm(forms.ModelForm):
@@ -15,9 +16,14 @@ class MovieEditForm(forms.ModelForm):
 
 
 class ActorCreateForm(forms.ModelForm):
+    date_of_birth = forms.DateField(widget=DatePicker(attrs={
+        'append': 'fa fa-calendar',
+        'icon_toggle': True,
+    }))
+
     class Meta:
         model = Actor
-        fields = ('first_name', 'last_name', 'image')
+        fields = ('first_name', 'last_name', 'date_of_birth', 'place_of_birth', 'height', 'image')
 
 
 class RoleCreateForm(forms.ModelForm):
