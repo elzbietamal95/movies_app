@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'tempus_dominus'
 ]
 
 MIDDLEWARE = [
@@ -71,11 +72,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'movies_app.wsgi.application'
-
-
-TEMPLATE_CONTEXT_PROCESSORS = [
-    'django.core.context_processors.request'
-]
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
