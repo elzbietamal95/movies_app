@@ -1,20 +1,57 @@
 {% extends "base.html" %}
 
-{% block title %}Add new actor{% endblock %}
+{% block title %}Add actor{% endblock %}
 
 {% block content %}
-    <h1>Add new actor</h1>
+    <h1>Add actor</h1>
     <div class="actor-add">
         <form action="{% url 'movies:actor-add' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p}}
-            <hr>
-            {{ role_formset.management_form }}
-            {% for form in role_formset.forms %}
-                {{ form.as_p }}
-                <hr>
-            {% endfor %}
+            <div class="card text-left mb-4 role-inline">
+                <div class="card-header text-white" style="background-color: #8080ff;">
+                    <h3>Roles</h3>
+                    <small><em>Optional. You can add it later.</em></small>
+                </div>
+                <ul class="list-group list-group-flush">
+                    {{ role_formset.management_form }}
+                    {% for form in role_formset.forms %}
+                        <li class="list-group-item">
+                            <div class="py-3">
+                                {{ form.as_p }}
+                            </div>
+                        </li>
+                    {% endfor %}
+                    <input type="button" value="+ Add another role" id="add_more" class="m-2">
+                </ul>
+            </div>
             <p><input type="submit" value="SAVE"></p>
         </form>
     </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        function cloneMore(selector, type) {
+            let newElement = $(selector).clone(true);
+            let total = $('#id_' + type + '-TOTAL_FORMS').val();
+            newElement.find(':input').each(function() {
+                let name = $(this).attr('name').replace('-' + (total-1) + '-','-' + total + '-');
+                let id = 'id_' + name;
+                $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+            });
+            newElement.find('label').each(function() {
+                let newFor = $(this).attr('for').replace('-' + (total-1) + '-','-' + total + '-');
+                $(this).attr('for', newFor);
+            });
+            total++;
+            $('#id_' + type + '-TOTAL_FORMS').val(total);
+            $(selector).after(newElement);
+        }
+
+        $('#add_more').click(function() {
+            cloneMore('li.list-group-item:last', 'role');
+            console.log('click');
+        });
+    </script>
 {% endblock %}
