@@ -8,7 +8,7 @@
         <form action="{% url 'movies:actor-add' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p}}
-            <div class="card text-left mb-4 role-inline">
+            <div class="card text-left mb-4 role-inline" style="min-width: 350px;">
                 <div class="card-header text-white" style="background-color: #8080ff;">
                     <h3>Roles</h3>
                     <small><em>Optional. You can add it later.</em></small>
@@ -16,9 +16,23 @@
                 <ul class="list-group list-group-flush">
                     {{ role_formset.management_form }}
                     {% for form in role_formset.forms %}
-                        <li class="list-group-item">
-                            <div class="py-3">
-                                {{ form.as_p }}
+                        <li class="list-group-item py-2">
+                            <div class="row align-items-center justify-content-around py-1 my-1">
+                                {{ form.non_field_errors }}
+                                <div class="col-md-12 col-lg-4 col-xl-6">
+                                    {{ form.movie.errors }}
+                                    {{ form.movie.label_tag }}
+                                    <span class="ml-sm-4 ml-lg-0 ml-xl-4">
+                                        {{ form.movie }}
+                                    </span>
+                                </div>
+                                <div class="col-md-12 mt-sm-4 mt-lg-1 col-lg-4 col-xl-6">
+                                    {{ form.role.errors }}
+                                    {{ form.role.label_tag }}
+                                    <span class="ml-sm-4 ml-lg-0 ml-xl-4">
+                                        {{ form.role }}
+                                    </span>
+                                </div>
                             </div>
                         </li>
                     {% endfor %}

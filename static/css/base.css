@@ -487,6 +487,22 @@ input#add_more:hover {
     background-color: #81ce81;
 }
 
+.role-inline label {
+    font-size: 20px;
+}
+
+.role-inline select {
+    height: 36.4px;
+    border-radius: 3px;
+    border-color: #8080ff;
+    background-color: #efefef;
+}
+
+.role-inline input {
+    width: 250px;
+}
+
+
 
 
 
