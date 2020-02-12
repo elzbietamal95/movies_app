@@ -16,10 +16,20 @@ class MovieEditForm(forms.ModelForm):
 
 
 class ActorCreateForm(forms.ModelForm):
-    date_of_birth = forms.DateField(widget=DatePicker(attrs={
-        'append': 'fa fa-calendar',
-        'icon_toggle': True,
-    }))
+    date_of_birth = forms.DateField(
+        required=False,
+        help_text='YYYY-MM-DD',
+        widget=DatePicker(
+            attrs={
+                'append': 'fa fa-calendar',
+            },
+            options={
+                'minDate': '1900-01-01',
+                'maxDate': '2025-01-01',
+                'useCurrent': False,
+            }
+        )
+    )
 
     class Meta:
         model = Actor

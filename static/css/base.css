@@ -116,7 +116,6 @@ header a:hover {
 }
 
 form {
-    overflow: auto;
     margin: 0;
 }
 
@@ -502,6 +501,13 @@ input#add_more:hover {
     width: 250px;
 }
 
+.actor-field input {
+    float: left;
+}
+
+#div_id_date_of_birth {
+    width: 210px;
+}
 
 
 

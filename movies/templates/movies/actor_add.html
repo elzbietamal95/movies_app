@@ -7,7 +7,9 @@
     <div class="actor-add">
         <form action="{% url 'movies:actor-add' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            {{ form.as_p}}
+            <div class="actor-field">
+                {{ form.as_p }}
+            </div>
             <div class="card text-left mb-4 role-inline" style="min-width: 350px;">
                 <div class="card-header text-white" style="background-color: #8080ff;">
                     <h3>Roles</h3>
