@@ -125,7 +125,6 @@ form p {
 }
 
 label {
-    float: left;
     clear: both;
     color: #4d4dff;
     margin-bottom: 4px;
@@ -142,18 +141,13 @@ input, textarea {
     border-radius: 3px;
 }
 
-.signup-form input, .login-form input, .edit-user-form input {
+.signup-form input, .signup-form label, .login-form input, .login-form label, .edit-user-form input {
     float: left;
 }
 
 div.form-group label {
     font-size: 20px;
     padding-top: 0;
-}
-
-.label-clear label {
-    float: none;
-    font-size: 16px!important;
 }
 
 .form-group {
@@ -333,10 +327,14 @@ hr {
     width: 272px;
 }
 
-.movie-add input[type=file] {
+.movie-add input[type=file], .edit-movie-form input[type=file] {
     border: none;
     background: none;
     padding-left: 0;
+}
+
+input#image-clear_id, .edit-movie-form input#id_image {
+    float: none;
 }
 
 textarea#id_short_description {
@@ -408,7 +406,7 @@ div.btn-sm.btn-danger.btn-circle {
     border-radius: 0;
 }
 
-div.edit-movie-form a.btn-secondary {
+div.movie-edit-options a.btn-secondary {
     font-weight: bold;
     font-size: 16px;
     text-transform: uppercase;
@@ -503,7 +501,7 @@ input#add_more:hover {
     min-width: 200px;
 }
 
-.actor-field input, .movie-add input {
+.actor-field input, .movie-add input, .edit-movie-form input {
     float: left;
 }
 
