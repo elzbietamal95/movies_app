@@ -115,11 +115,9 @@ class ActorCreate(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.request.POST:
-            context['form'] = ActorCreateForm(self.request.POST, instance=self.object)
-            context['role_formset'] = RoleFormSet(self.request.POST, instance=self.object)
+            context['role_formset'] = RoleFormSet(self.request.POST)
         else:
-            context['form'] = ActorCreateForm(instance=self.object)
-            context['role_formset'] = RoleFormSet(instance=self.object)
+            context['role_formset'] = RoleFormSet()
         return context
 
 

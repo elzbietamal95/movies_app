@@ -491,24 +491,55 @@ input#add_more:hover {
 }
 
 .role-inline select {
-    height: 36.4px;
+    height: 37px;
     border-radius: 3px;
     border-color: #8080ff;
     background-color: #efefef;
+    width: 230px;
+    margin: 0 0 8px;
+    padding: 6px 10px;
 }
 
 .role-inline input {
-    width: 250px;
+    width: 230px;
+    height: 37px;
+}
+
+.actor-field input, .actor-field #div_id_date_of_birth {
+    width: 40%;
+    min-width: 200px;
 }
 
 .actor-field input {
     float: left;
 }
 
-#div_id_date_of_birth {
-    width: 210px;
+.actor-field input[type=file] {
+    width: 100%;
+    min-width: 200px;
+    border: none;
+    background: none;
+    padding-left: 0;
 }
 
+.actor-field input#id_date_of_birth {
+    color: black;
+    border-color: #8080ff;
+    background-color: #efefef;
+    border-bottom-left-radius: 3px;
+    border-top-left-radius: 3px;
+}
+
+.actor-field div.input-group-text {
+    border-color: #8080ff;
+    background-color: #8080ff;
+    border-bottom-right-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.actor-field i.fa.fa-calendar {
+    color: #efefef;
+}
 
 
 

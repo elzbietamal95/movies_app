@@ -3,6 +3,7 @@ from django.core.exceptions import NON_FIELD_ERRORS
 
 from movies.models import Movie, Actor, Role
 from tempus_dominus.widgets import DatePicker
+from django.db.models.functions import datetime
 
 
 class MovieCreateForm(forms.ModelForm):
@@ -27,7 +28,7 @@ class ActorCreateForm(forms.ModelForm):
             },
             options={
                 'minDate': '1900-01-01',
-                'maxDate': '2025-01-01',
+                'maxDate': str(datetime.datetime.now()),
                 'useCurrent': False,
             }
         )
