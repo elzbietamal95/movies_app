@@ -160,7 +160,7 @@ div.form-group label {
     border-bottom: 1px solid #eee;
 }
 
-input[type=submit], a.button, a.warning, a.danger, a.danger, form.delete-user button {
+input[type=submit], a.button, a.warning, a.danger, form.delete-user button {
     font-weight: bold;
     background: #8080ff;
     color: #fff;
@@ -362,14 +362,11 @@ a.btn.btn-primary, button.btn.btn-primary {
     text-transform: uppercase;
 }
 
-
-
 button.btn.btn-secondary {
     border-radius: 3px;
     font-weight: bold;
     text-transform: uppercase;
 }
-
 
 a.username {
     color: #858796;
