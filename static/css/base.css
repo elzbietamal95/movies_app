@@ -121,7 +121,6 @@ form {
 
 form p {
     width: 100%;
-    overflow: auto;
 }
 
 label {
@@ -323,17 +322,7 @@ hr {
     min-width: 200px;
 }
 
-.edit-movie-form input[type=file] {
-    width: 272px;
-}
-
-.movie-add input[type=file], .edit-movie-form input[type=file] {
-    border: none;
-    background: none;
-    padding-left: 0;
-}
-
-input#image-clear_id, .edit-movie-form input#id_image {
+input#image-clear_id {
     float: none;
 }
 
@@ -496,24 +485,25 @@ input#add_more:hover {
     height: 37px;
 }
 
-.actor-field input, .actor-field #div_id_date_of_birth {
+.actor-field input, .actor-field #div_id_date_of_birth, .edit-actor-form input[type=text], .edit-actor-form #div_id_date_of_birth {
     width: 40%;
     min-width: 200px;
 }
 
-.actor-field input, .movie-add input, .edit-movie-form input {
+.actor-field input, .movie-add input, .edit-movie-form input, .edit-actor-form input {
     float: left;
 }
 
-.actor-field input[type=file] {
-    width: 100%;
+input[type=file] {
+    width: 300px;
     min-width: 200px;
     border: none;
     background: none;
     padding-left: 0;
+    float: none;
 }
 
-.actor-field input#id_date_of_birth {
+input#id_date_of_birth {
     color: black;
     border-color: #8080ff;
     background-color: #efefef;
@@ -521,14 +511,14 @@ input#add_more:hover {
     border-top-left-radius: 3px;
 }
 
-.actor-field div.input-group-text {
+div.input-group-text {
     border-color: #8080ff;
     background-color: #8080ff;
     border-bottom-right-radius: 3px;
     border-top-right-radius: 3px;
 }
 
-.actor-field i.fa.fa-calendar {
+i.fa.fa-calendar {
     color: #efefef;
 }
 
