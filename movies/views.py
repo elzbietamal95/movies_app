@@ -92,6 +92,7 @@ class ActorCreate(CreateView):
     template_name = 'movies/actor_add.html'
 
     def post(self, request, *args, **kwargs):
+        self.object = None
         formset = RoleFormSet(self.request.POST)
         form = self.get_form()
         if form.is_valid() and formset.is_valid():
@@ -108,11 +109,17 @@ class ActorCreate(CreateView):
         return redirect('movies:actor-list')
 
     def form_invalid(self, form, formset):
+        messages.error(self.request, 'Please correct the errors below.')
         return self.render_to_response(self.get_context_data(form=form, formset=formset))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['role_formset'] = RoleFormSet()
+        if self.request.POST:
+            context['form'] = ActorCreateForm(self.request.POST, instance=self.object)
+            context['role_formset'] = RoleFormSet(self.request.POST, instance=self.object)
+        else:
+            context['form'] = ActorCreateForm(instance=self.object)
+            context['role_formset'] = RoleFormSet(instance=self.object)
         return context
 
 

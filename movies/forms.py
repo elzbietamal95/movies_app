@@ -1,4 +1,6 @@
 from django import forms
+from django.core.exceptions import NON_FIELD_ERRORS
+
 from movies.models import Movie, Actor, Role
 from tempus_dominus.widgets import DatePicker
 
@@ -42,6 +44,11 @@ class RoleCreateForm(forms.ModelForm):
     class Meta:
         model = Role
         fields = ('movie', 'role')
+        error_messages = {
+            NON_FIELD_ERRORS: {
+                'unique_together': "The role given for this movie already exists.",
+            }
+        }
 
 
 RoleFormSet = forms.inlineformset_factory(
