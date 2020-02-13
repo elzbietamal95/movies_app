@@ -183,10 +183,6 @@ ul.errorlist li {
     list-style-type: none;
 }
 
-.movie-add ul.errorlist li, .edit-movie-form ul.errorlist li {
-    margin-left: 12px;
-}
-
 ul.errorlist.nonfield, ul.errorlist {
     padding: 0;
 }
@@ -510,7 +506,7 @@ input#add_more:hover {
     min-width: 200px;
 }
 
-.actor-field input {
+.actor-field input, .movie-add input {
     float: left;
 }
 
