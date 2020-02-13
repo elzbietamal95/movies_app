@@ -6,13 +6,15 @@ User = get_user_model()
 
 
 class Actor(models.Model):
-    first_name = models.CharField(verbose_name='first name', max_length=50)
-    last_name = models.CharField(verbose_name='last name', max_length=150)
-    date_of_birth = models.DateField(blank=True, null=True, default=None)
-    place_of_birth = models.CharField(blank=True, max_length=200, null=True, default='')
-    height = models.PositiveIntegerField(blank=True, null=True, default=None)
+    first_name = models.CharField(verbose_name='first name', max_length=50, help_text='Required.')
+    last_name = models.CharField(verbose_name='last name', max_length=150, help_text='Required.')
+    date_of_birth = models.DateField(blank=True, null=True, help_text='YYYY-MM-DD')
+    place_of_birth = models.CharField(blank=True, max_length=200, null=True)
+    height = models.PositiveIntegerField(blank=True, null=True, default=None, help_text='cm')
     image = models.ImageField(upload_to='images/actors', blank=True)
     added_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='actors_created', blank=True, null=True)
+    date_of_creation = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    update_date = models.DateTimeField(auto_now=True, blank=True, null=True)
 
     class Meta:
         verbose_name = 'actor'
@@ -31,6 +33,10 @@ class Actor(models.Model):
 class Director(models.Model):
     first_name = models.CharField(verbose_name='first name', max_length=50, blank=True)
     last_name = models.CharField(verbose_name='last name', max_length=150, blank=True)
+    date_of_birth = models.DateField(blank=True, null=True, help_text='YYYY-MM-DD')
+    place_of_birth = models.CharField(blank=True, max_length=200, null=True)
+    date_of_creation = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    update_date = models.DateTimeField(auto_now=True, blank=True, null=True)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"

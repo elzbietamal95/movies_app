@@ -1,5 +1,9 @@
 from django import forms
+from django.core.exceptions import NON_FIELD_ERRORS
+
 from movies.models import Movie, Actor, Role
+from tempus_dominus.widgets import DatePicker
+from django.db.models.functions import datetime
 
 
 class MovieCreateForm(forms.ModelForm):
@@ -15,9 +19,24 @@ class MovieEditForm(forms.ModelForm):
 
 
 class ActorCreateForm(forms.ModelForm):
+    date_of_birth = forms.DateField(
+        required=False,
+        help_text='YYYY-MM-DD',
+        widget=DatePicker(
+            attrs={
+                'append': 'fa fa-calendar',
+            },
+            options={
+                'minDate': '1900-01-01',
+                'maxDate': str(datetime.datetime.now()),
+                'useCurrent': False,
+            }
+        )
+    )
+
     class Meta:
         model = Actor
-        fields = ('first_name', 'last_name', 'image')
+        fields = ('first_name', 'last_name', 'date_of_birth', 'place_of_birth', 'height', 'image')
 
 
 class RoleCreateForm(forms.ModelForm):
@@ -26,6 +45,11 @@ class RoleCreateForm(forms.ModelForm):
     class Meta:
         model = Role
         fields = ('movie', 'role')
+        error_messages = {
+            NON_FIELD_ERRORS: {
+                'unique_together': "The role given for this movie already exists.",
+            }
+        }
 
 
 RoleFormSet = forms.inlineformset_factory(
