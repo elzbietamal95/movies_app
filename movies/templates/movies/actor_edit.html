@@ -46,12 +46,12 @@
                 {% for form in role_formset.forms %}
                     <li class="list-group-item py-2">
                         <div class="row align-items-center py-2 my-2">
-                            {{ form.id }}
+                            {% for hidden in form.hidden_fields %} {{ hidden }} {% endfor %}
                             <div class="col-12">
                                 {{ form.non_field_errors }}
                             </div>
                             <div class="col-12 text-right">
-                                {% if formset.can_delete %}
+                                {% if form.instance.pk %}
                                     Delete? {{ form.DELETE }}
                                 {% endif %}
                             </div>
@@ -88,4 +88,30 @@
             <input type="submit" value="Save changes">
         </div>
     </form>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        function cloneMore(selector, type) {
+            let newElement = $(selector).clone(true);
+            let total = $('#id_' + type + '-TOTAL_FORMS').val();
+            newElement.find(':input').each(function() {
+                let name = $(this).attr('name').replace('-' + (total-1) + '-','-' + total + '-');
+                let id = 'id_' + name;
+                $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+            });
+            newElement.find('label').each(function() {
+                let newFor = $(this).attr('for').replace('-' + (total-1) + '-','-' + total + '-');
+                $(this).attr('for', newFor);
+            });
+            total++;
+            $('#id_' + type + '-TOTAL_FORMS').val(total);
+            $(selector).after(newElement);
+        }
+
+        $('#add_more').click(function() {
+            cloneMore('li.list-group-item:last', 'role');
+            console.log('click');
+        });
+    </script>
 {% endblock %}

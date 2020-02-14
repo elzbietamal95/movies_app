@@ -154,36 +154,31 @@ class ActorEdit(UpdateView):
             raise PermissionDenied()
         return super().get(request, *args, **kwargs)
 
-    def get_success_url(self):
-        return reverse(self.success_url, kwargs={'pk': self.object.pk})
-
-    def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        formset = RoleFormSet(self.request.POST)
-        form = self.get_form()
-        if form.is_valid() and formset.is_valid():
-            return self.form_valid(form, formset)
-        else:
-            return self.form_invalid(form, formset)
-
-    def form_valid(self, form, formset):
-        actor = form.save()
-        formset.instance = self.object
-        formset.save()
-        messages.success(self.request, 'The actor "' + str(actor) + '" was updated successfully!')
-        return redirect(self.get_success_url())
-
-    def form_invalid(self, form, formset):
-        messages.error(self.request, 'Please correct the errors below.')
-        return self.render_to_response(self.get_context_data(form=form, formset=formset))
-
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        context = super(ActorEdit, self).get_context_data(**kwargs)
         if self.request.POST:
             context['role_formset'] = RoleFormSet(self.request.POST, instance=self.object)
+            context['role_formset'].full_clean()
         else:
             context['role_formset'] = RoleFormSet(instance=self.object)
         return context
+
+    def get_success_url(self):
+        return reverse(self.success_url, kwargs={'pk': self.object.pk})
+
+    def form_valid(self, form):
+        context = self.get_context_data(form=form)
+        formset = context['role_formset']
+        if formset.is_valid():
+            response = super().form_valid(form)
+            formset.instance = self.object
+            formset.save()
+            actor = form.save(commit=False)
+            messages.success(self.request, 'The actor "' + str(actor) + '" was updated successfully!')
+            return response
+        else:
+            messages.error(self.request, 'Please correct the errors below.')
+            return super().form_invalid(form)
 
 
 class ActorDelete(DeleteView):
