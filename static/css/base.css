@@ -327,7 +327,7 @@ input#image-clear_id {
 }
 
 textarea#id_short_description {
-    width: 60%;
+    width: 70%;
     min-width: 300px;
 }
 
@@ -385,7 +385,7 @@ div.btn-sm.btn-danger.btn-circle {
 
 .movie-card-options button, .movie-card-options a, .profile-options a {
     font-size: 16px;
-    width: 90px;
+    width: 92px;
 }
 
 .alert-danger {
@@ -480,23 +480,22 @@ input#add_more:hover {
     padding: 6px 10px;
 }
 
-.role-inline input {
+.role-inline input[type=text] {
     width: 230px;
     height: 37px;
 }
 
-.actor-field input, .actor-field #div_id_date_of_birth, .edit-actor-form input[type=text], .edit-actor-form #div_id_date_of_birth {
+.actor-field input#id_first_name, .actor-field input#id_last_name, .actor-field #div_id_date_of_birth, .actor-field input#id_place_of_birth, .actor-field input#id_height {
     width: 40%;
-    min-width: 200px;
+    min-width: 250px;
 }
 
-.actor-field input, .movie-add input, .edit-movie-form input, .edit-actor-form input {
+.actor-field input, .movie-add input, .edit-movie-form input{
     float: left;
 }
 
-input[type=file] {
-    width: 300px;
-    min-width: 200px;
+input#id_image {
+    width: 280px;
     border: none;
     background: none;
     padding-left: 0;
@@ -521,6 +520,7 @@ div.input-group-text {
 i.fa.fa-calendar {
     color: #efefef;
 }
+
 
 
 
