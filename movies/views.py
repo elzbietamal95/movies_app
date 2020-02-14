@@ -9,7 +9,7 @@ from movies.utils import get_unique_slug
 from .models import Movie, Actor
 from django.views.generic import ListView, CreateView, DetailView, UpdateView
 from django.views.generic.edit import DeleteView
-from movies.forms import MovieCreateForm, MovieEditForm, ActorEditForm, RoleFormSet, ActorCreateForm
+from movies.forms import MovieCreateForm, MovieEditForm, ActorForm, RoleFormSet
 
 
 class MovieList(ListView):
@@ -88,7 +88,7 @@ class ActorList(ListView):
 
 class ActorCreate(CreateView):
     model = Actor
-    form_class = ActorCreateForm
+    form_class = ActorForm
     template_name = 'movies/actor_add.html'
 
     def post(self, request, *args, **kwargs):
@@ -144,7 +144,7 @@ class ActorDetail(DetailView):
 class ActorEdit(UpdateView):
     model = Actor
     template_name = 'movies/actor_edit.html'
-    form_class = ActorEditForm
+    form_class = ActorForm
     context_object_name = 'actor'
     success_url = 'movies:actor-detail'
 
@@ -154,13 +154,31 @@ class ActorEdit(UpdateView):
             raise PermissionDenied()
         return super().get(request, *args, **kwargs)
 
+    def get_context_data(self, **kwargs):
+        context = super(ActorEdit, self).get_context_data(**kwargs)
+        if self.request.POST:
+            context['role_formset'] = RoleFormSet(self.request.POST, instance=self.object)
+            context['role_formset'].full_clean()
+        else:
+            context['role_formset'] = RoleFormSet(instance=self.object)
+        return context
+
     def get_success_url(self):
         return reverse(self.success_url, kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
-        actor = form.save()
-        messages.success(self.request, 'The actor "' + str(actor) + '" was updated successfully!')
-        return redirect(self.get_success_url())
+        context = self.get_context_data(form=form)
+        formset = context['role_formset']
+        if formset.is_valid():
+            response = super().form_valid(form)
+            formset.instance = self.object
+            formset.save()
+            actor = form.save(commit=False)
+            messages.success(self.request, 'The actor "' + str(actor) + '" was updated successfully!')
+            return response
+        else:
+            messages.error(self.request, 'Please correct the errors below.')
+            return super().form_invalid(form)
 
 
 class ActorDelete(DeleteView):

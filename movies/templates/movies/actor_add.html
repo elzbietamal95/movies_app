@@ -23,7 +23,9 @@
                         </div>
                         <div class="col-md-8">
                             {{ field }}
-                            <span class="helptext m-2">{{ field.help_text|safe }}</span>
+                            {% if field.help_text %}
+                                <span class="helptext m-2">{{ field.help_text|safe }}</span>
+                            {% endif %}
                         </div>
                     </div>
                 {% endfor %}

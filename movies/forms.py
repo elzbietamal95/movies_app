@@ -18,7 +18,7 @@ class MovieEditForm(forms.ModelForm):
         fields = ('title', 'year_of_production', 'image', 'short_description')
 
 
-class ActorCreateForm(forms.ModelForm):
+class ActorForm(forms.ModelForm):
     date_of_birth = forms.DateField(
         required=False,
         help_text='YYYY-MM-DD',
@@ -39,7 +39,7 @@ class ActorCreateForm(forms.ModelForm):
         fields = ('first_name', 'last_name', 'date_of_birth', 'place_of_birth', 'height', 'image')
 
 
-class RoleCreateForm(forms.ModelForm):
+class RoleForm(forms.ModelForm):
     movie = forms.ModelChoiceField(queryset=Movie.objects.all(), widget=forms.Select)
 
     class Meta:
@@ -55,10 +55,9 @@ class RoleCreateForm(forms.ModelForm):
 RoleFormSet = forms.inlineformset_factory(
     parent_model=Actor,
     model=Role,
-    form=RoleCreateForm,
+    form=RoleForm,
     extra=3,
-    can_delete=False,
-
+    can_delete=True,
 )
 
 
