@@ -90,6 +90,10 @@ class ActorCreate(CreateView):
     form_class = ActorForm
     template_name = 'movies/actor_add.html'
 
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
     def post(self, request, *args, **kwargs):
         self.object = None
         formset = RoleFormSet(self.request.POST)
@@ -118,22 +122,6 @@ class ActorCreate(CreateView):
         else:
             context['role_formset'] = RoleFormSet()
         return context
-
-
-# class ActorCreate(CreateView):
-#     model = Actor
-#     fields = ['first_name', 'last_name', 'image']
-#     template_name = 'movies/actor_add.html'
-#
-#     @method_decorator(login_required)
-#     def dispatch(self, *args, **kwargs):
-#         return super().dispatch(*args, **kwargs)
-#
-#     def form_valid(self, form):
-#         form.instance.added_by = self.request.user
-#         actor = form.save()
-#         messages.success(self.request, 'The actor "' + str(actor) + '" was added successfully!')
-#         return redirect('movies:actor-list')
 
 
 class ActorDetail(DetailView):
