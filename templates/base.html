@@ -25,13 +25,13 @@
             <a href="{% url 'movies:movie-list' %}">Movies App</a>
         </span>
         <span class="menu" style="white-space: nowrap;">
-            {% if user.is_admin %}
-                <a href="{% url 'accounts:user-list' %}">User list</a>
-            {% endif %}
+            <a href="{% url 'movies:actor-list' %}">Actors</a>
             {% if request.user.is_authenticated %}
                 <a href="{% url 'movies:movie-add' %}">Add movie</a>
-                <a href="{% url 'movies:actor-list' %}">Actors</a>
                 <a href="{% url 'movies:actor-add' %}">Add actor</a>
+            {% endif %}
+            {% if user.is_admin %}
+                <a href="{% url 'accounts:user-list' %}">User list</a>
             {% endif %}
         </span>
         <span class="auth-status">
