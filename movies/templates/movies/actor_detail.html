@@ -97,7 +97,7 @@
                         <strong>Update Date:</strong> {{ actor.update_date }}
                     </span>
                     <span class="float-right">
-                        <span class="text-muted"><em>by {{ actor.added_by }}</em></span>
+                        <em>by <a href="{% url 'accounts:profile' actor.added_by %}" class="text-muted">{{ actor.added_by }}</a></em>
                     </span>
                 </div>
             </div>

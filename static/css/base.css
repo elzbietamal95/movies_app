@@ -93,6 +93,10 @@ header a {
     padding: 5px;
 }
 
+.auth-form input {
+    width: 250px;
+}
+
 .link-new-object {
     color: #ffffff;
     background-color: #8080ff;
@@ -140,10 +144,6 @@ input, textarea {
     border-radius: 3px;
 }
 
-.signup-form input, .signup-form label, .login-form input, .login-form label, .edit-user-form input {
-    float: left;
-}
-
 div.form-group label {
     font-size: 20px;
     padding-top: 0;
@@ -178,16 +178,6 @@ ul.errorlist li {
 
 ul.errorlist.nonfield, ul.errorlist {
     padding: 0;
-}
-
-.signup-form ul {
-    color: #aaa;
-    float: left;
-    font-size: 12px;
-}
-
-div.signup-form {
-    margin-bottom: 20px;
 }
 
 span.helptext {
@@ -311,10 +301,6 @@ ul.messages li.error {
     font-size: 13px;
     text-align: center;
     flex-shrink: 0;
-}
-
-hr {
-    border: none;
 }
 
 .movie-add input[type=text], .movie-add input[type=number], .edit-movie-form input[type=text], .edit-movie-form input[type=number] {
@@ -490,7 +476,7 @@ input#add_more:hover {
     min-width: 250px;
 }
 
-.actor-field input, .movie-add input, .edit-movie-form input{
+.actor-field input, .movie-add input, .edit-movie-form input {
     float: left;
 }
 

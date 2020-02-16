@@ -17,12 +17,10 @@
     {% endif %}
     <h1>Login</h1>
     <p>If you don't have an account yet, you can create one <a href="{% url 'accounts:signup' %}">here.</a></p>
-    <div class="login-form">
         <form action="{% url 'accounts:login' %}" method="post">
-            {{ form.as_p }}
             {% csrf_token %}
+            {% include "accounts/auth_form_render.html" %}
             <input type="hidden" name="next" value="{{ request.GET.next }}" />
             <p><input type="submit" value="Log in"></p>
         </form>
-    </div>
 {% endblock %}

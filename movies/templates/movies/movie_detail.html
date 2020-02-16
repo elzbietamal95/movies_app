@@ -85,19 +85,19 @@
             </div>
             <div class="card-footer text-left">
                 <div>
-                    <span style="margin-right: 10px;">
+                    <span class="mr-2">
                         <strong>Created Date:</strong> {{ movie.date_of_creation }}
                     </span>
-                    <span style="white-space: nowrap;">
+                    <span class="text-nowrap">
                         <strong>Update Date:</strong> {{ movie.update_date }}
                     </span>
                     <span class="float-right">
-                        <span class="text-muted"><em>by {{ movie.added_by }}</em></span>
+                        <em>by <a href="{% url 'accounts:profile' movie.added_by %}" class="text-muted">{{ movie.added_by }}</a></em>
                     </span>
                 </div>
             </div>
         </div>
-        <hr>
+        <br>
         <div class="card movie-cast" style="min-width: 323px">
             <div class="card-header">
                 <h3 class="font-weight-bold">Cast</h3>

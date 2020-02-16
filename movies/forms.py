@@ -6,16 +6,10 @@ from tempus_dominus.widgets import DatePicker
 from django.db.models.functions import datetime
 
 
-class MovieCreateForm(forms.ModelForm):
+class MovieForm(forms.ModelForm):
     class Meta:
         model = Movie
         fields = ('title', 'year_of_production', 'image', 'short_description',)
-
-
-class MovieEditForm(forms.ModelForm):
-    class Meta:
-        model = Movie
-        fields = ('title', 'year_of_production', 'image', 'short_description')
 
 
 class ActorForm(forms.ModelForm):
@@ -56,12 +50,6 @@ RoleFormSet = forms.inlineformset_factory(
     parent_model=Actor,
     model=Role,
     form=RoleForm,
-    extra=3,
+    extra=1,
     can_delete=True,
 )
-
-
-class ActorEditForm(forms.ModelForm):
-    class Meta:
-        model = Actor
-        fields = '__all__'

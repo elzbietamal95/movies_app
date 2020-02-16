@@ -8,10 +8,10 @@
         <p>Would you like to create a new account?</p>
     {% endif %}
     <h1>Create account</h1>
-    <div class="signup-form">
+    <div class="mb-5">
         <form action="{% url 'accounts:signup' %}" method="post">
             {% csrf_token %}
-            {{ form.as_p }}
+            {% include "accounts/auth_form_render.html" %}
             <p><input type="submit" value="Sign up"></p>
         </form>
     </div>
