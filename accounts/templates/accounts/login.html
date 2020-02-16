@@ -17,7 +17,7 @@
     {% endif %}
     <h1>Login</h1>
     <p>If you don't have an account yet, you can create one <a href="{% url 'accounts:signup' %}">here.</a></p>
-    <div class="login-form">
+    <div class="auth-form">
         <form action="{% url 'accounts:login' %}" method="post">
             {% csrf_token %}
             {% include "accounts/auth_form_render.html" %}

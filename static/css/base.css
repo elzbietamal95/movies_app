@@ -140,10 +140,6 @@ input, textarea {
     border-radius: 3px;
 }
 
-.signup-form input, .signup-form label, .login-form input, .login-form label, .edit-user-form input {
-    float: left;
-}
-
 div.form-group label {
     font-size: 20px;
     padding-top: 0;
@@ -178,16 +174,6 @@ ul.errorlist li {
 
 ul.errorlist.nonfield, ul.errorlist {
     padding: 0;
-}
-
-.signup-form ul {
-    color: #aaa;
-    float: left;
-    font-size: 12px;
-}
-
-div.signup-form {
-    margin-bottom: 20px;
 }
 
 span.helptext {
@@ -486,7 +472,7 @@ input#add_more:hover {
     min-width: 250px;
 }
 
-.actor-field input, .movie-add input, .edit-movie-form input{
+.actor-field input, .movie-add input, .edit-movie-form input {
     float: left;
 }
 
