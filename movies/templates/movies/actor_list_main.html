@@ -3,6 +3,13 @@
 {% block title %}Actor list{% endblock %}
 
 {% block content %}
-    <h1>Actors</h1>
+    <h1>
+        Actors
+        {% if request.user.is_authenticated %}
+        <span class="float-right my-3">
+            <a href="{% url 'movies:actor-add' %}" class="link-new-object">Add new actor +</a>
+        </span>
+        {% endif %}
+    </h1>
     {% include "movies/actor_list.html" %}
 {% endblock %}
