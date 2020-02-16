@@ -50,6 +50,6 @@ RoleFormSet = forms.inlineformset_factory(
     parent_model=Actor,
     model=Role,
     form=RoleForm,
-    extra=3,
+    extra=1,
     can_delete=True,
 )
