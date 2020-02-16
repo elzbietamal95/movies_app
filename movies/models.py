@@ -37,6 +37,7 @@ class Director(models.Model):
     place_of_birth = models.CharField(blank=True, max_length=200, null=True)
     date_of_creation = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     update_date = models.DateTimeField(auto_now=True, blank=True, null=True)
+    added_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='directors_created', blank=True, null=True)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
