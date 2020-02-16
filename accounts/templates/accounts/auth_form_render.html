@@ -1,0 +1,21 @@
+{% for error in form.non_field_errors %}
+    <div class="alert alert-danger">
+        <strong>{{ error|escape }}</strong>
+    </div>
+{% endfor %}
+{% for field in form %}
+    <div class="form-group row py-2 my-2">
+        <div class="col-12">
+            {{ field.errors }}
+        </div>
+        <div class="col-lg-3">
+            {{ field.label_tag }}
+        </div>
+        <div class="col-md-10 col-lg-6">
+            {{ field }}
+            {% if field.help_text %}
+                <span class="helptext m-2">{{ field.help_text|safe }}</span>
+            {% endif %}
+        </div>
+    </div>
+{% endfor %}
