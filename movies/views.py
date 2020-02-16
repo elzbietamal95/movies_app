@@ -1,15 +1,14 @@
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.urls import reverse_lazy, reverse
 from django.contrib import messages
 from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required
 from movies.utils import get_unique_slug
 from .models import Movie, Actor
 from django.views.generic import ListView, CreateView, DetailView, UpdateView
 from django.views.generic.edit import DeleteView
-from movies.forms import MovieCreateForm, MovieEditForm, ActorForm, RoleFormSet
+from movies.forms import MovieForm, ActorForm, RoleFormSet
 
 
 class MovieList(ListView):
@@ -20,7 +19,7 @@ class MovieList(ListView):
 
 class MovieCreate(CreateView):
     model = Movie
-    form_class = MovieCreateForm
+    form_class = MovieForm
     template_name = 'movies/movie_add.html'
 
     @method_decorator(login_required)
@@ -59,7 +58,7 @@ class MovieDelete(DeleteView):
 class MovieEdit(UpdateView):
     model = Movie
     template_name = 'movies/movie_edit.html'
-    form_class = MovieEditForm
+    form_class = MovieForm
     context_object_name = 'movie'
     success_url = 'movies:movie-detail'
 
