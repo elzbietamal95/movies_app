@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from movies.utils import get_unique_slug
-from .models import Movie, Actor
+from .models import Movie, Actor, Director
 from django.views.generic import ListView, CreateView, DetailView, UpdateView
 from django.views.generic.edit import DeleteView
 from movies.forms import MovieForm, ActorForm, RoleFormSet
@@ -184,3 +184,9 @@ class ActorDelete(DeleteView):
         actor = self.get_object()
         messages.success(self.request, 'The actor "' + str(actor) + '" was deleted successfully.')
         return super(ActorDelete, self).delete(request, *args, **kwargs)
+
+
+class DirectorList(ListView):
+    context_object_name = 'directors'
+    model = Director
+    template_name = 'movies/director_list_main.html'
