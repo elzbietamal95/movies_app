@@ -7,29 +7,9 @@
         Edit {{ movie }}
     </h1>
     <form action="{% url 'movies:movie-edit' movie.slug %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
         <div class="edit-movie-form">
-            {% csrf_token %}
-            {% for error in form.non_field_errors %}
-                <div class="alert alert-danger">
-                    <strong>{{ error|escape }}</strong>
-                </div>
-            {% endfor %}
-            {% for field in form %}
-                <div class="form-group row py-2 my-2">
-                    <div class="col-12">
-                        {{ field.errors }}
-                    </div>
-                    <div class="col-md-4">
-                        {{ field.label_tag }}
-                    </div>
-                    <div class="col-md-8 text-left">
-                        {{ field }}
-                        {% if field.help_text %}
-                            <span class="helptext m-2">{{ field.help_text|safe }}</span>
-                        {% endif %}
-                    </div>
-                </div>
-            {% endfor %}
+            {% include "movies/form_render.html" %}
         </div>
         <div class="movie-edit-options">
             <a href="{% url 'movies:movie-detail' movie.slug %}" class="btn-secondary">BACK</a>

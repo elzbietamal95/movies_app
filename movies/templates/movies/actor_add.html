@@ -4,77 +4,55 @@
 
 {% block content %}
     <h1>Add actor</h1>
-    <div class="actor-add">
-        <form action="{% url 'movies:actor-add' %}" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="actor-field">
-                {% for error in form.non_field_errors %}
-                    <div class="alert alert-danger">
+    <form action="{% url 'movies:actor-add' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="actor-field">
+            {% include "movies/form_render.html" %}
+        </div>
+        <div class="card text-left mb-4 role-inline" style="min-width: 350px;">
+            <div class="card-header text-white" style="background-color: #8080ff;">
+                <h3>Roles</h3>
+                <small><em>Optional. You can add it later.</em></small>
+            </div>
+            <ul class="list-group list-group-flush">
+                {{ role_formset.management_form }}
+                {% for error in role_formset.non_form_errors %}
+                    <div class="col-12 alert alert-danger mb-0">
                         <strong>{{ error|escape }}</strong>
                     </div>
                 {% endfor %}
-                {% for field in form %}
-                    <div class="form-group row py-2 my-2">
-                        <div class="col-12">
-                            {{ field.errors }}
-                        </div>
-                        <div class="col-md-4">
-                            {{ field.label_tag }}
-                        </div>
-                        <div class="col-md-8">
-                            {{ field }}
-                            {% if field.help_text %}
-                                <span class="helptext m-2">{{ field.help_text|safe }}</span>
-                            {% endif %}
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-            <div class="card text-left mb-4 role-inline" style="min-width: 350px;">
-                <div class="card-header text-white" style="background-color: #8080ff;">
-                    <h3>Roles</h3>
-                    <small><em>Optional. You can add it later.</em></small>
-                </div>
-                <ul class="list-group list-group-flush">
-                    {{ role_formset.management_form }}
-                    {% for error in role_formset.non_form_errors %}
-                        <div class="col-12 alert alert-danger mb-0">
-                            <strong>{{ error|escape }}</strong>
-                        </div>
-                    {% endfor %}
-                    {% for form in role_formset.forms %}
-                        <li class="list-group-item py-2">
-                            <div class="row align-items-center py-2 my-2">
-                                <div class="col-12">
-                                    {{ form.non_field_errors }}
-                                    {{ form.movie.errors }}
-                                    {{ form.role.errors }}
+                {% for form in role_formset.forms %}
+                    <li class="list-group-item py-2">
+                        <div class="row align-items-center py-2 my-2">
+                            <div class="col-12">
+                                {{ form.non_field_errors }}
+                                {{ form.movie.errors }}
+                                {{ form.role.errors }}
+                            </div>
+                            <div class="row col-12 col-lg-6">
+                                <div class="col-3">
+                                    {{ form.movie.label_tag }}
                                 </div>
-                                <div class="row col-12 col-lg-6">
-                                    <div class="col-3">
-                                        {{ form.movie.label_tag }}
-                                    </div>
-                                    <div class="col-3">
-                                        {{ form.movie }}
-                                    </div>
-                                </div>
-                                <div class="row col-12 col-lg-6">
-                                    <div class="col-3">
-                                        {{ form.role.label_tag }}
-                                    </div>
-                                    <div class="col-3">
-                                        {{ form.role }}
-                                    </div>
+                                <div class="col-3">
+                                    {{ form.movie }}
                                 </div>
                             </div>
-                        </li>
-                    {% endfor %}
-                    <input type="button" value="+ Add another role" id="add_more" class="m-2">
-                </ul>
-            </div>
-            <p><input type="submit" value="SAVE"></p>
-        </form>
-    </div>
+                            <div class="row col-12 col-lg-6">
+                                <div class="col-3">
+                                    {{ form.role.label_tag }}
+                                </div>
+                                <div class="col-3">
+                                    {{ form.role }}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+                <input type="button" value="+ Add another role" id="add_more" class="m-2">
+            </ul>
+        </div>
+        <p><input type="submit" value="SAVE"></p>
+    </form>
 {% endblock %}
 
 {% block scripts %}
