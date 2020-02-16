@@ -313,10 +313,6 @@ ul.messages li.error {
     flex-shrink: 0;
 }
 
-hr {
-    border: none;
-}
-
 .movie-add input[type=text], .movie-add input[type=number], .edit-movie-form input[type=text], .edit-movie-form input[type=number] {
     width: 30%;
     min-width: 200px;

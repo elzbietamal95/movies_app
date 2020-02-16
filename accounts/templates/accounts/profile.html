@@ -12,7 +12,6 @@
                     <span style="color: #ff6666;"><strong>This account is locked!</strong></span>
                 {% endif %}
             </p>
-            <hr>
             <h1 class="card-title">
                 {% if user == profile_of_user %}
                     Your profile
@@ -27,7 +26,7 @@
                     Regular User
                 {% endif %}
             </h5>
-            <hr>
+            <br>
             <p class="card-text">Email address: {{ profile_of_user.email }}</p>
             <p class="card-text">First name:
             {% if not profile_of_user.first_name %}
