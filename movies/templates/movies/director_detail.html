@@ -67,10 +67,10 @@
                         <strong>Place of birth:</strong>
                         {{ director.place_of_birth|default:'(not given)' }}
                     </p>
-                    {% if director.movies.all %}
+                    {% if movies %}
                         <p class="card-text">
                             <strong>Director in:</strong>
-                            {% for movie in director.movies.all %}
+                            {% for movie in movies %}
                                 <a href="{% url 'movies:movie-detail' movie.slug %}">
                                     {{ movie }},
                                 </a>

@@ -39,6 +39,10 @@ class MovieDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         movie = self.object
+        actors = movie.actors.distinct()
+        directors = movie.directors.distinct()
+        context['actors'] = actors
+        context['directors'] = directors
         roles = movie.role.distinct().prefetch_related('actor')
         roles_by_actor = {}
         for role in roles:
@@ -141,6 +145,13 @@ class ActorCreate(CreateView):
 class ActorDetail(DetailView):
     model = Actor
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        actor = self.object
+        movies = actor.movies.distinct()
+        context['movies'] = movies
+        return context
+
 
 class ActorEdit(UpdateView):
     model = Actor
@@ -208,6 +219,13 @@ class DirectorList(ListView):
 
 class DirectorDetail(DetailView):
     model = Director
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        director = self.object
+        movies = director.movies.distinct()
+        context['movies'] = movies
+        return context
 
 
 class DirectorCreate(CreateView):
