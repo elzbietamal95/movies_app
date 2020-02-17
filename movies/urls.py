@@ -1,6 +1,6 @@
 from django.urls import path
 from movies.views import MovieList, MovieCreate, MovieDetail, MovieDelete, MovieEdit, ActorList, ActorCreate, \
-    ActorDetail, ActorEdit, ActorDelete, DirectorList, DirectorDetail
+    ActorDetail, ActorEdit, ActorDelete, DirectorList, DirectorDetail, DirectorCreate
 
 app_name = 'movies'
 
@@ -17,4 +17,5 @@ urlpatterns = [
     path('actors/<int:pk>/#actor-delete-modal', ActorDelete.as_view(), name='actor-delete'),
     path('directors/', DirectorList.as_view(), name='director-list'),
     path('directors/<int:pk>/', DirectorDetail.as_view(), name='director-detail'),
+    path('directors/director-add/', DirectorCreate.as_view(), name='director-add'),
 ]

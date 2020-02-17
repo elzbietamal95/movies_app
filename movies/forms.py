@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import NON_FIELD_ERRORS
 
-from movies.models import Movie, Actor, Role
+from movies.models import Movie, Actor, Role, Director
 from tempus_dominus.widgets import DatePicker
 from django.db.models.functions import datetime
 
@@ -53,3 +53,21 @@ RoleFormSet = forms.inlineformset_factory(
     extra=1,
     can_delete=True,
 )
+
+
+class DirectorForm(forms.ModelForm):
+    class Meta:
+        model = Director
+        fields = ('first_name', 'last_name', 'date_of_birth', 'place_of_birth', 'image')
+        widgets = {
+            'date_of_birth': DatePicker(
+                attrs={
+                    'append': 'fa fa-calendar',
+                },
+                options={
+                    'minDate': '1900-01-01',
+                    'maxDate': str(datetime.datetime.now()),
+                    'useCurrent': False,
+                }
+            )
+        }

@@ -8,7 +8,7 @@ from movies.utils import get_unique_slug
 from .models import Movie, Actor, Director
 from django.views.generic import ListView, CreateView, DetailView, UpdateView
 from django.views.generic.edit import DeleteView
-from movies.forms import MovieForm, ActorForm, RoleFormSet
+from movies.forms import MovieForm, ActorForm, RoleFormSet, DirectorForm
 
 
 class MovieList(ListView):
@@ -194,3 +194,19 @@ class DirectorList(ListView):
 
 class DirectorDetail(DetailView):
     model = Director
+
+
+class DirectorCreate(CreateView):
+    model = Director
+    form_class = DirectorForm
+    template_name = 'movies/director_add.html'
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def form_valid(self, form):
+        form.instance.added_by = self.request.user
+        director = form.save()
+        messages.success(self.request, 'The director "' + str(director) + '" was added successfully!')
+        return redirect('movies:director-list')
