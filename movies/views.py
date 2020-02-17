@@ -210,3 +210,21 @@ class DirectorCreate(CreateView):
         director = form.save()
         messages.success(self.request, 'The director "' + str(director) + '" was added successfully!')
         return redirect('movies:director-list')
+
+
+class DirectorDelete(DeleteView):
+    context_object_name = 'director'
+    model = Director
+    success_url = reverse_lazy('movies:director-list')
+    template_name = 'movies/director_detail.html'
+
+    def get(self, request, *args, **kwargs):
+        director = self.get_object()
+        if not (request.user.is_authenticated and request.user.is_admin or request.user == director.added_by):
+            raise PermissionDenied()
+        return super().get(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        director = self.get_object()
+        messages.success(self.request, 'The director "' + str(director) + '" was deleted successfully.')
+        return super(DirectorDelete, self).delete(request, *args, **kwargs)
