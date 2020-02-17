@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Add director{% endblock %}
+
+{% block content %}
+    <h1>Add director</h1>
+    <form action="{% url 'movies:director-add' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="actor-field">
+            {% include "movies/form_render.html" %}
+        </div>
+        <p><input type="submit" value="SAVE"></p>
+    </form>
+{% endblock %}

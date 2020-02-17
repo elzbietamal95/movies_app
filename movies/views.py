@@ -5,10 +5,10 @@ from django.contrib import messages
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from movies.utils import get_unique_slug
-from .models import Movie, Actor
+from .models import Movie, Actor, Director
 from django.views.generic import ListView, CreateView, DetailView, UpdateView
 from django.views.generic.edit import DeleteView
-from movies.forms import MovieForm, ActorForm, RoleFormSet
+from movies.forms import MovieForm, ActorForm, RoleFormSet, DirectorForm
 
 
 class MovieList(ListView):
@@ -184,3 +184,70 @@ class ActorDelete(DeleteView):
         actor = self.get_object()
         messages.success(self.request, 'The actor "' + str(actor) + '" was deleted successfully.')
         return super(ActorDelete, self).delete(request, *args, **kwargs)
+
+
+class DirectorList(ListView):
+    context_object_name = 'directors'
+    model = Director
+    template_name = 'movies/director_list_main.html'
+
+
+class DirectorDetail(DetailView):
+    model = Director
+
+
+class DirectorCreate(CreateView):
+    model = Director
+    form_class = DirectorForm
+    template_name = 'movies/director_add.html'
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def form_valid(self, form):
+        form.instance.added_by = self.request.user
+        director = form.save()
+        messages.success(self.request, 'The director "' + str(director) + '" was added successfully!')
+        return redirect('movies:director-list')
+
+
+class DirectorDelete(DeleteView):
+    context_object_name = 'director'
+    model = Director
+    success_url = reverse_lazy('movies:director-list')
+    template_name = 'movies/director_detail.html'
+
+    def get(self, request, *args, **kwargs):
+        director = self.get_object()
+        if not (request.user.is_authenticated and request.user.is_admin or request.user == director.added_by):
+            raise PermissionDenied()
+        return super().get(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        director = self.get_object()
+        messages.success(self.request, 'The director "' + str(director) + '" was deleted successfully.')
+        return super(DirectorDelete, self).delete(request, *args, **kwargs)
+
+
+class DirectorEdit(UpdateView):
+    model = Director
+    template_name = 'movies/director_edit.html'
+    form_class = DirectorForm
+    context_object_name = 'director'
+    success_url = 'movies:director-detail'
+
+    def get(self, request, *args, **kwargs):
+        director = self.get_object()
+        if not (request.user.is_authenticated and request.user.is_admin or request.user == director.added_by):
+            raise PermissionDenied()
+        return super().get(request, *args, **kwargs)
+
+    def get_success_url(self):
+        return reverse(self.success_url, kwargs={'pk': self.object.pk})
+
+    def form_valid(self, form):
+        director = form.save()
+        messages.success(self.request, 'The director "' + str(director) + '" was updated successfully!')
+        return redirect(self.get_success_url())
+

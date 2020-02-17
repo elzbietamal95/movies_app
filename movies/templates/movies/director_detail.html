@@ -2,26 +2,26 @@
 
 {% load static %}
 
-{% block title %}{{ actor }}{% endblock %}
+{% block title %}{{ director }}{% endblock %}
 
 {% block content %}
 
     {# Delete Modal #}
-    <div class="modal fade" id="actor-delete-modal" tabindex="-1" role="dialog" aria-labelledby="actor-delete-modal-label" aria-hidden="true">
+    <div class="modal fade" id="director-delete-modal" tabindex="-1" role="dialog" aria-labelledby="director-delete-modal-label" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="actor-delete-modal-label"><strong>Delete {{ actor }}</strong></h5>
+                    <h5 class="modal-title" id="director-delete-modal-label"><strong>Delete {{ director }}</strong></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    Are you sure you want to delete actor {{ actor }}?
+                    Are you sure you want to delete director {{ director }}?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">NO, TAKE ME BACK.</button>
-                    <form action="{% url 'movies:actor-delete' actor.pk %}" method="post">
+                    <form action="{% url 'movies:director-delete' director.pk %}" method="post">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-danger">YES, I'M SURE.</button>
                     </form>
@@ -31,55 +31,46 @@
         </div>
     </div>
 
-    <div class="actor-detail">
+    <div class="director-detail">
         <div class="card shadow mb-4" style="min-width: 323px">
             <div class="card-header">
-                {% if user.is_authenticated and user.is_admin or user == actor.added_by %}
+                {% if user.is_authenticated and user.is_admin or user == director.added_by %}
                     <div class="container">
                         <div class="row align-items-center">
                             <h4 class="col offset-lg-3 text-center font-weight-bold text-primary my-2">
-                                {{ actor }}
+                                {{ director }}
                             </h4>
                             <div class="movie-card-options col-12 col-lg-3 text-center text-lg-right mt-1">
-                                <a href="{% url 'movies:actor-edit' actor.pk %}" class="btn btn-primary mb-1">EDIT</a>
-                                <button data-toggle="modal" data-target="#actor-delete-modal" class="btn btn-danger mb-1">DELETE</button>
+                                <a href="{% url 'movies:director-edit' director.pk %}" class="btn btn-primary mb-1">EDIT</a>
+                                <button data-toggle="modal" data-target="#director-delete-modal" class="btn btn-danger mb-1">DELETE</button>
                             </div>
                         </div>
                     </div>
                 {% else %}
                     <h4 class="text-center font-weight-bold text-primary my-2">
-                        {{ actor }}
+                        {{ director }}
                     </h4>
                 {% endif %}
             </div>
             <div class="card-body p-0">
-                {% if actor.has_image %}
-                    <img class="card-img-left mr-4" src="{{ actor.image.url }}" alt="{{ actor.pk }}">
+                {% if director.has_image %}
+                    <img class="card-img-left mr-4" src="{{ director.image.url }}" alt="{{ director.pk }}">
                 {% else %}
-                    <img class="card-img-left mr-4" src="https://zapodaj.net/images/70c8d7ca43df1.jpg" alt="{{ actor.pk }}">
+                    <img class="card-img-left mr-4" src="https://zapodaj.net/images/70c8d7ca43df1.jpg" alt="{{ director.pk }}">
                 {% endif %}
                 <div class="px-4 pb-4 text-left">
                     <p class="card-text mt-4">
                         <strong>Date of birth:</strong>
-                        {{ actor.date_of_birth|default:'(not given)' }}
+                        {{ director.date_of_birth|default:'(not given)' }}
                     </p>
                     <p class="card-text">
                         <strong>Place of birth:</strong>
-                        {{ actor.place_of_birth|default:'(not given)' }}
+                        {{ director.place_of_birth|default:'(not given)' }}
                     </p>
-                    <p class="card-text" style="white-space: nowrap">
-                        {% if actor.height %}
-                            <strong>Height:</strong>
-                            {{ actor.height }} cm
-                        {% else %}
-                            <strong>Height:</strong>
-                            (not given)
-                        {% endif %}
-                    </p>
-                    {% if actor.movies.all %}
+                    {% if director.movies.all %}
                         <p class="card-text">
-                            <strong>Known for:</strong>
-                            {% for movie in actor.movies.all %}
+                            <strong>Director in:</strong>
+                            {% for movie in director.movies.all %}
                                 <a href="{% url 'movies:movie-detail' movie.slug %}">
                                     {{ movie }},
                                 </a>
@@ -90,14 +81,14 @@
             </div>
             <div class="card-footer text-left">
                 <div>
-                    <span style="margin-right: 10px;">
-                        <strong>Created Date:</strong> {{ actor.date_of_creation }}
+                    <span class="mr-2">
+                        <strong>Created Date:</strong> {{ director.date_of_creation }}
                     </span>
-                    <span style="white-space: nowrap;">
-                        <strong>Update Date:</strong> {{ actor.update_date }}
+                    <span class="text-nowrap">
+                        <strong>Update Date:</strong> {{ director.update_date }}
                     </span>
                     <span class="float-right">
-                        <em>by <a href="{% url 'accounts:profile' actor.added_by %}" class="text-muted">{{ actor.added_by }}</a></em>
+                        <em>by <a href="{% url 'accounts:profile' director.added_by %}" class="text-muted">{{ director.added_by }}</a></em>
                     </span>
                 </div>
             </div>

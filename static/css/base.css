@@ -426,7 +426,7 @@ div.movie-edit-options a.btn-secondary {
     margin: 20px 10%;
 }
 
-.actor-detail {
+.actor-detail, .director-detail {
     margin: 20px 15%;
 }
 

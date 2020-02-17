@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Director list{% endblock %}
+
+{% block content %}
+    <h1>
+        Directors
+        {% if request.user.is_authenticated %}
+        <span class="float-right my-3">
+            <a href="{% url 'movies:director-add' %}" class="link-new-object">Add new director +</a>
+        </span>
+        {% endif %}
+    </h1>
+
+    {% include "movies/director_list.html" %}
+{% endblock %}
