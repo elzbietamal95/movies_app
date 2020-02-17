@@ -63,21 +63,19 @@
                         <strong>Description:</strong>
                         {{ movie.short_description|default:'(not given)' }}
                     </p>
-                    {% if movie.directors.all %}
+                    {% if directors %}
                         <p class="card-text text-left">
                             <strong>Direction:</strong>
-                            {% for director in movie.directors.all %}
-                                {{ director }},
+                            {% for director in directors %}
+                                <a href="{% url 'movies:director-detail' director.pk %}">{{ director }},</a>
                             {% endfor %}
                         </p>
                     {% endif %}
-                    {% if movie.actors.all %}
+                    {% if actors %}
                         <p class="card-text text-left">
                             <strong>Stars:</strong>
-                            {% for actor in movie.actors.all %}
-                                <a href="{% url 'movies:actor-detail' actor.pk %}">
-                                    {{ actor }},
-                                </a>
+                            {% for actor in actors %}
+                                <a href="{% url 'movies:actor-detail' actor.pk %}">{{ actor }},</a>
                             {% endfor %}
                         </p>
                     {% endif %}
@@ -98,33 +96,30 @@
             </div>
         </div>
         <br>
-        <div class="card movie-cast" style="min-width: 323px">
-            <div class="card-header">
-                <h3 class="font-weight-bold">Cast</h3>
+        {% if actors %}
+            <div class="card movie-cast" style="min-width: 323px">
+                <div class="card-header">
+                    <h3 class="font-weight-bold">Cast</h3>
+                </div>
+                <ul class="list-group list-group-flush text-left">
+                    {% for actor_id, actor_map in roles_by_actor.items %}
+                        {% with actor=actor_map.actor roles=actor_map.roles %}
+                            <li class="list-group-item">
+                                {% if actor.has_image %}
+                                    <a href="{% url 'movies:actor-detail' actor.pk %}">
+                                        <img class="cast-img mr-2" src="{{ actor.image.url }}" alt="{{ actor.pk }}">
+                                    </a>
+                                {% else %}
+                                    <a href="{% url 'movies:actor-detail' actor.pk %}">
+                                        <img class="cast-img mr-2" src="https://zapodaj.net/images/70c8d7ca43df1.jpg" alt="{{ actor.pk }}">
+                                    </a>
+                                {% endif %}
+                                <a href="{% url 'movies:actor-detail' actor.pk %}">{{ actor }}</a> as {{ roles|join:', ' }}
+                            </li>
+                        {% endwith %}
+                    {% endfor %}
+                </ul>
             </div>
-            <ul class="list-group list-group-flush text-left">
-                {% for actor in movie.actors.all %}
-                    <li class="list-group-item">
-                        {% if actor.has_image %}
-                            <a href="{% url 'movies:actor-detail' actor.pk %}">
-                                <img class="cast-img mr-2" src="{{ actor.image.url }}" alt="{{ actor.pk }}">
-                            </a>
-                        {% else %}
-                            <a href="{% url 'movies:actor-detail' actor.pk %}">
-                                <img class="cast-img mr-2" src="https://zapodaj.net/images/70c8d7ca43df1.jpg" alt="{{ movie.slug }}">
-                            </a>
-                        {% endif %}
-                        <a href="{% url 'movies:actor-detail' actor.pk %}">
-                            {{ actor }}
-                        </a>
-                            as
-                            {% for role in actor.role.all %}
-                                {{ role }}
-                            {% endfor %}
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-
+        {% endif %}
     </div>
 {% endblock %}
