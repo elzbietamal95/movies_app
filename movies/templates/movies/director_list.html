@@ -6,13 +6,17 @@
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h4 class="m-0 font-weight-bold text-primary">
-                    {{ director }}
+                    <a href="{% url 'movies:director-detail' director.pk %}">{{ director }}</a>
                 </h4>
             </div>
             {% if director.has_image %}
-                <img class="card-img" src="{{ director.image.url }}" alt="{{ director.pk }}">
+                <a href="{% url 'movies:director-detail' director.pk %}">
+                    <img class="card-img" src="{{ director.image.url }}" alt="{{ director.pk }}">
+                </a>
             {% else %}
-                <img class="card-img" src="https://zapodaj.net/images/70c8d7ca43df1.jpg" alt="{{ director.pk }}">
+                <a href="{% url 'movies:director-detail' director.pk %}">
+                    <img class="card-img" src="https://zapodaj.net/images/70c8d7ca43df1.jpg" alt="{{ director.pk }}">
+                </a>
             {% endif %}
         </div>
     </div>
