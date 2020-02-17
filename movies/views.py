@@ -190,3 +190,7 @@ class DirectorList(ListView):
     context_object_name = 'directors'
     model = Director
     template_name = 'movies/director_list_main.html'
+
+
+class DirectorDetail(DetailView):
+    model = Director

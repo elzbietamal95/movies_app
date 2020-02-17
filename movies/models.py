@@ -56,7 +56,7 @@ class Movie(models.Model):
     update_date = models.DateTimeField(auto_now=True, blank=True, null=True)
     added_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='movies_created')
     actors = models.ManyToManyField(Actor, blank=True, through='Role', related_name='movies')
-    directors = models.ManyToManyField(Director, blank=True)
+    directors = models.ManyToManyField(Director, blank=True, related_name='movies')
 
     class Meta:
         verbose_name = 'movie'

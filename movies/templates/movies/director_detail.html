@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}{{ director }}{% endblock %}
+
+{% block content %}
+
+    <div class="director-detail">
+        <div class="card shadow mb-4" style="min-width: 323px">
+            <div class="card-header">
+                {% if user.is_authenticated and user.is_admin or user == director.added_by %}
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <h4 class="col offset-lg-3 text-center font-weight-bold text-primary my-2">
+                                {{ director }}
+                            </h4>
+                            <div class="movie-card-options col-12 col-lg-3 text-center text-lg-right mt-1">
+                                <a href="" class="btn btn-primary mb-1">EDIT</a>
+                                <button data-toggle="modal" data-target="#director-delete-modal" class="btn btn-danger mb-1">DELETE</button>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <h4 class="text-center font-weight-bold text-primary my-2">
+                        {{ director }}
+                    </h4>
+                {% endif %}
+            </div>
+            <div class="card-body p-0">
+                {% if director.has_image %}
+                    <img class="card-img-left mr-4" src="{{ director.image.url }}" alt="{{ director.pk }}">
+                {% else %}
+                    <img class="card-img-left mr-4" src="https://zapodaj.net/images/70c8d7ca43df1.jpg" alt="{{ director.pk }}">
+                {% endif %}
+                <div class="px-4 pb-4 text-left">
+                    <p class="card-text mt-4">
+                        <strong>Date of birth:</strong>
+                        {{ director.date_of_birth|default:'(not given)' }}
+                    </p>
+                    <p class="card-text">
+                        <strong>Place of birth:</strong>
+                        {{ director.place_of_birth|default:'(not given)' }}
+                    </p>
+                    {% if director.movies.all %}
+                        <p class="card-text">
+                            <strong>Director in:</strong>
+                            {% for movie in director.movies.all %}
+                                <a href="{% url 'movies:movie-detail' movie.slug %}">
+                                    {{ movie }},
+                                </a>
+                            {% endfor %}
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card-footer text-left">
+                <div>
+                    <span class="mr-2">
+                        <strong>Created Date:</strong> {{ director.date_of_creation }}
+                    </span>
+                    <span class="text-nowrap">
+                        <strong>Update Date:</strong> {{ director.update_date }}
+                    </span>
+                    <span class="float-right">
+                        <em>by <a href="{% url 'accounts:profile' director.added_by %}" class="text-muted">{{ director.added_by }}</a></em>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
