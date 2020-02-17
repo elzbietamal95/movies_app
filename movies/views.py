@@ -228,3 +228,26 @@ class DirectorDelete(DeleteView):
         director = self.get_object()
         messages.success(self.request, 'The director "' + str(director) + '" was deleted successfully.')
         return super(DirectorDelete, self).delete(request, *args, **kwargs)
+
+
+class DirectorEdit(UpdateView):
+    model = Director
+    template_name = 'movies/director_edit.html'
+    form_class = DirectorForm
+    context_object_name = 'director'
+    success_url = 'movies:director-detail'
+
+    def get(self, request, *args, **kwargs):
+        director = self.get_object()
+        if not (request.user.is_authenticated and request.user.is_admin or request.user == director.added_by):
+            raise PermissionDenied()
+        return super().get(request, *args, **kwargs)
+
+    def get_success_url(self):
+        return reverse(self.success_url, kwargs={'pk': self.object.pk})
+
+    def form_valid(self, form):
+        director = form.save()
+        messages.success(self.request, 'The director "' + str(director) + '" was updated successfully!')
+        return redirect(self.get_success_url())
+

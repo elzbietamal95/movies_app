@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Edit {{ director }}{% endblock %}
+
+{% block content %}
+    <h1>
+        Edit {{ director }}
+    </h1>
+    <form action="{% url 'movies:director-edit' director.pk %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="actor-field">
+            {% include "movies/form_render.html" %}
+        </div>
+        <div class="movie-edit-options">
+            <a href="{% url 'movies:director-detail' director.pk %}" class="btn-secondary">BACK</a>
+            <input type="submit" value="Save changes">
+        </div>
+    </form>
+{% endblock %}

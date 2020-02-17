@@ -41,7 +41,7 @@
                                 {{ director }}
                             </h4>
                             <div class="movie-card-options col-12 col-lg-3 text-center text-lg-right mt-1">
-                                <a href="" class="btn btn-primary mb-1">EDIT</a>
+                                <a href="{% url 'movies:director-edit' director.pk %}" class="btn btn-primary mb-1">EDIT</a>
                                 <button data-toggle="modal" data-target="#director-delete-modal" class="btn btn-danger mb-1">DELETE</button>
                             </div>
                         </div>
