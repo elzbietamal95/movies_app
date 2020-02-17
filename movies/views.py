@@ -36,6 +36,20 @@ class MovieCreate(CreateView):
 class MovieDetail(DetailView):
     model = Movie
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        movie = self.object
+        roles = movie.role.distinct().prefetch_related('actor')
+        roles_by_actor = {}
+        for role in roles:
+            actor_id = role.actor.id
+            if actor_id not in roles_by_actor:
+                roles_by_actor[actor_id] = {'actor': role.actor, 'roles': [role]}
+            else:
+                roles_by_actor[actor_id]['roles'].append(role)
+        context['roles_by_actor'] = roles_by_actor
+        return context
+
 
 class MovieDelete(DeleteView):
     context_object_name = 'movie'
