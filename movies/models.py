@@ -1,5 +1,8 @@
+from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 from django.contrib.auth import get_user_model
+from star_ratings.models import Rating
+
 from movies.utils import get_unique_slug, year_validator
 
 User = get_user_model()
@@ -63,6 +66,7 @@ class Movie(models.Model):
     added_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='movies_created')
     actors = models.ManyToManyField(Actor, blank=True, through='Role', related_name='movies')
     directors = models.ManyToManyField(Director, blank=True, related_name='movies')
+    rating = GenericRelation(Rating, related_query_name='movie')
 
     class Meta:
         verbose_name = 'movie'

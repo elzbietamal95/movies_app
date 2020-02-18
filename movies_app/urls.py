@@ -22,6 +22,7 @@ urlpatterns = [
     path('', include('movies.urls')),
     path('accounts/', include('accounts.urls')),
     path('admin/', admin.site.urls),
+    path('ratings/', include('star_ratings.urls', namespace='ratings')),
 ]
 
 if settings.DEBUG:

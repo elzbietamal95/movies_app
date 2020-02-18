@@ -1,4 +1,5 @@
 {% load static %}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -14,6 +15,8 @@
           integrity="sha256-XPTBwC3SBoWHSmKasAk01c08M6sIA5gF5+sRxqak2Qs="
           crossorigin="anonymous"
     />
+
+    <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
 
     <link href="{% static "css/sb-admin-2.css" %}" rel="stylesheet">
     <link href="{% static "css/base.css" %}" rel="stylesheet">
@@ -72,6 +75,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js" integrity="sha256-VBLiveTKyUZMEzJd6z2mhfxIqz3ZATCuVMawPZGzIfA=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js" integrity="sha256-z0oKYg6xiLq3yJGsp/LsY9XykbweQlHl42jHv2XTBz4=" crossorigin="anonymous"></script>
 
+    <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
 
     {% block scripts %}
         <script>

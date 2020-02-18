@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load static %}
+{% load ratings %}
 
 {% block title %}{{ movie }}{% endblock %}
 
@@ -31,6 +32,9 @@
         </div>
     </div>
 
+    <div class="movie-detail text-right">
+        {% ratings movie %}
+    </div>
     <div class="movie-detail">
         <div class="card shadow" style="min-width: 323px">
             <div class="card-header">
